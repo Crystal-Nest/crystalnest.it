@@ -1,4 +1,3 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
-  "recommendations": ["angular.ng-template"]
+  "recommendations": ["dbaeumer.vscode-eslint", "mhutchie.git-graph", "github.vscode-pull-request-github", "crystal-spider.jsdoc-generator", "esbenp.prettier-vscode"]
 }

@@ -7,14 +7,15 @@
     "type": "git",
     "url": "git+https://github.com/crystal-nest/crystalnest.it.git"
   },
+  "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "serve": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "eslint:show": "npx eslint . --ext .ts,.html",
+    "eslint:fix": "npx eslint . --ext .ts,.html --fix"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^17.1.0",
     "@angular/common": "^17.1.0",
@@ -30,15 +31,22 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.1.2",
+    "@angular-eslint/builder": "^17.2.1",
+    "@angular-eslint/eslint-plugin": "^17.2.1",
+    "@angular-eslint/eslint-plugin-template": "^17.2.1",
+    "@angular-eslint/schematics": "^17.2.1",
+    "@angular-eslint/template-parser": "^17.2.1",
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.1.0",
-    "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.1.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-deprecation": "^2.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.0.4",
+    "eslint-plugin-rxjs": "^5.0.3",
+    "eslint-plugin-sonarjs": "^0.23.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "typescript": "~5.3.2"
   }
 }

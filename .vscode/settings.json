@@ -1,0 +1,13 @@
+{
+  "files.autoSave": "off",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
+  "eslint.validate": ["typescript", "html"],
+  "eslint.options": {
+    "extensions": [".ts", ".html"]
+  },
+  "eslint.format.enable": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}
