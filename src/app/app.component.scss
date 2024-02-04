@@ -4,61 +4,38 @@
   width: 100%;
   height: 100%;
   padding: 16px;
+  background-color: #8f59b7;
+  background-image: none, radial-gradient(circle, rgba(255, 255, 255, 0.3021941198354342) 0%, rgba(130, 130, 130, 0.5963117668942577) 50%, rgba(0, 0, 0, 0.9016338957457983) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  background-clip: border-box;
+  font-family: "Silkscreen";
+  font-style: normal;
+  color: #fefefe;
 }
 
 header {
   display: flex;
-  padding: 16px;
+  align-items: center;
+  justify-content: center;
 
-  .spider {
-    width: 128px;
-    height: 128px;
-  }
-
-  .bubble {
-    position: relative;
-    display: inline-block;
-    margin-top: 20px;
-    margin-left: 40px;
-    margin-bottom: 40px;
-    text-align: center;
-    font-family: "Silkscreen";
-    font-size: 18px;
-    background-color: #fefefe;
-    color: #171717;
-    padding: 12px;
-    box-shadow: 0 -4px #fefefe, 0 -8px #171717, 4px 0 #fefefe, 4px -4px #171717, 8px 0 #171717, 0 4px #fefefe, 0 8px #171717, -4px 0 #fefefe, -4px 4px #171717, -8px 0 #171717, -4px -4px #171717, 4px 4px #171717;
-
-    box-sizing: border-box;
-    width: 200px;
-
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      box-sizing: border-box;
-      height: 4px;
-      width: 4px;
-      top: 20px;
-      left: -8px;
-      background: #fefefe;
-      box-shadow: -4px -4px #fefefe, -4px 0 #fefefe, -8px 0 #fefefe, 0 -8px #fefefe, -4px 4px #171717, -8px 4px #171717, -12px 4px #171717, -16px 4px #171717, -12px 0 #171717, -8px -4px #171717, -4px -8px #171717, 0 -4px #fefefe;
-    }
+  h1 {
+    font-size: 3em;
+    font-weight: 300;
   }
 }
 
 main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1;
 
-  h1 {
-    font-family: "Silkscreen";
+  h2 {
+    font-size: 2em;
     font-weight: 300;
-    font-style: normal;
-    color: #fefefe;
   }
 
   div {
@@ -66,59 +43,46 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    h2 {
-      font-family: "Silkscreen";
+
+    h3 {
+      font-size: 1.5em;
       font-weight: 300;
-      font-style: normal;
-      flex: 1;
-      color: #fefefe;
-    }
-
-    div {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-
-      a {
-        border-radius: 12px;
-        display: flex;
-        opacity: 0.9;
-        width: 80px;
-        height: 80px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-
-        &:hover {
-          opacity: 1;
-        }
-
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
     }
   }
 }
 
 footer {
-  display: flex;
-  width: 100%;
-  padding: 16px;
-  opacity: 0.9;
-  border-radius: 12px;
-  justify-content: center;
+  .social {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
 
-  &:hover {
-    opacity: 1;
+    .support {
+      width: 80px;
+      height: 80px;
+    }
   }
 
-  a {
+  .banner {
     display: flex;
-    width: fit-content;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+    border-radius: 12px;
+  }
+}
 
-    img {
-      border-radius: 12px;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+.support {
+  display: flex;
+
+  img {
+    border-radius: 12px;
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 2px 5px -1px, rgba(0, 0, 0, 0.5) 0px 1px 3px -1px;
+    transition-duration: 200ms;
+
+    &:hover {
+      box-shadow: rgba(50, 50, 93, 1) 0px 4px 10px -2px, rgba(0, 0, 0, 1) 0px 2px 6px -2px;
+      transform: translateY(-0.15em);
     }
   }
 }

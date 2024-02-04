@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Silkscreen:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");
 
 * {
   box-sizing: border-box;
@@ -12,13 +12,4 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
-  background-color: #8f59b7;
-  background-image: url("./assets/bg.png"), radial-gradient(circle, rgba(255, 255, 255, 0.3021941198354342) 0%, rgba(130, 130, 130, 0.5963117668942577) 50%, rgba(0, 0, 0, 0.9016338957457983) 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  background-clip: border-box;
 }
