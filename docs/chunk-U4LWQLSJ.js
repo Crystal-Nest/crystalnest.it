@@ -4,7 +4,7 @@ import{d as s,e as c,f as m,g as e,h as n,i,k as t,l as p,m as l,p as d,r as g}f
 
 `),e(6,"main"),t(7,`
   `),e(8,"h2"),t(9,"We are dusting off some cobwebs, in the meantime..."),n(),t(10,`
-  `),e(11,"button",0),t(12,"Get your multy loader template here!"),n(),t(13,`
+  `),e(11,"button",0),t(12,"Generate your Multi-Loader Skeleton"),n(),t(13,`
   `),e(14,"div"),t(15,`
     `),e(16,"h3"),t(17,"...consider supporting us!"),n(),t(18,`
   `),n(),t(19,`
