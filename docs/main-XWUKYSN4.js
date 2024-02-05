@@ -9,7 +9,7 @@ ${n.map((r,o)=>`${o+1}) ${r.toString()}`).join(`
 `),H(),C(5,`
 
 `),U(6,"main"),C(7,`
-  `),U(8,"h2"),C(9,"We are dusting off some cobwebs, in the meanwhile..."),H(),C(10,`
+  `),U(8,"h2"),C(9,"We are dusting off some cobwebs, in the meantime..."),H(),C(10,`
   `),U(11,"div"),C(12,`
     `),U(13,"h3"),C(14,"...consider supporting us!"),H(),C(15,`
   `),H(),C(16,`
