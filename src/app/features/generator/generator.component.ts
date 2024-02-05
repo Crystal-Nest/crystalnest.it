@@ -2,6 +2,7 @@
 /* eslint-disable capitalized-comments */
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import JSZip from 'jszip';
 
 @Component({
   selector: 'cn-generator',
@@ -24,4 +25,33 @@ export class GeneratorComponent {
    * mod_version = 1.0.0.0 (input)
    * description = Multiloader template for Minecraft mods! (textarea)
    */
+
+  public download() {
+    const zip = new JSZip();
+    const mod = zip.folder('cobweb-mod-template');
+    const idea = mod?.folder('.idea');
+    const scopes = idea?.folder('scopes');
+    scopes?.file('Fabric_sources.xml');
+    scopes?.file('Forge_sources.xml');
+    mod?.file('.gitattributes', '');
+    mod?.file('.gitignore', '');
+    mod?.file('.api-keys.properties', '');
+    mod?.file('.build.gradle', '');
+    mod?.file('CHANGELOG.md', '');
+    mod?.file('gradle.properties', '');
+    mod?.file('gradlew', '');
+    mod?.file('gradlew.bat', '');
+    mod?.file('LICENSE', '');
+    mod?.file('README.md', '');
+    mod?.file('settings.gradle', '');
+    zip.generateAsync({type: 'blob'}).then(content => {
+      const anchor = document.createElement('a');
+      anchor.style.display = 'none';
+      anchor.href = URL.createObjectURL(content);
+      anchor.download = 'cobweb-mod-template';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+    });
+  }
 }
