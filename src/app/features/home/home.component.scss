@@ -23,7 +23,7 @@ header {
   justify-content: center;
 
   h1 {
-    font-size: 2.3em;
+    font-size: 3em;
     font-weight: 300;
   }
 }
@@ -33,7 +33,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 32px;
+  margin-top: 2em;
   margin-bottom: auto;
 
   button {
@@ -57,32 +57,26 @@ main {
       transform: translateY(-0.15em);
     }
   }
+}
 
+footer {
   h2 {
     font-size: 1.6em;
     font-weight: 300;
     margin: 0.5em 0;
   }
 
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    h3 {
-      font-size: 1.3em;
-      font-weight: 300;
-      margin: 0.5em 0;
-    }
+  h3 {
+    font-size: 1.3em;
+    font-weight: 300;
+    margin: 0.5em 0;
   }
-}
 
-footer {
   .social {
     display: flex;
     justify-content: center;
     gap: 16px;
+    margin-top: 16px;
 
     .support {
       width: 80px;
@@ -94,7 +88,7 @@ footer {
     justify-content: center;
     width: 100%;
     margin-top: 16px;
-    border-radius: 12px;
+    border-radius: 8px;
   }
 }
 
@@ -103,7 +97,7 @@ footer {
 
   img {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: rgba(50, 50, 93, 0.5) 0px 2px 5px -1px, rgba(0, 0, 0, 0.5) 0px 1px 3px -1px;
     transition-duration: 200ms;
 
