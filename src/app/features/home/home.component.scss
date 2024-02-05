@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   min-width: 320px;
+  min-height: 100%;
   padding: 1em;
   background-color: #8f59b7;
   background-image: none, radial-gradient(circle, rgba(255, 255, 255, 0.3021941198354342) 0%, rgba(130, 130, 130, 0.5963117668942577) 50%, rgba(0, 0, 0, 0.9016338957457983) 100%);
@@ -60,6 +61,8 @@ main {
 }
 
 footer {
+  margin-top: 2em;
+
   h2 {
     font-size: 1.6em;
     font-weight: 300;
