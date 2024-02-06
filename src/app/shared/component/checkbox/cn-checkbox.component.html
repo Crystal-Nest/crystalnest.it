@@ -1,0 +1,3 @@
+<mat-checkbox #checkbox [disabled]="isDisabled" [indeterminate]="indeterminate" [required]="isRequired" [(ngModel)]="value" (change)="change($event)">
+  <ng-container *ngIf="label">{{ label }}</ng-container>
+</mat-checkbox>

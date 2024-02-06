@@ -13,8 +13,6 @@
   background-blend-mode: multiply;
   background-clip: border-box;
   text-align: center;
-  font-family: "Silkscreen";
-  font-style: normal;
   color: #fefefe;
 }
 
@@ -26,6 +24,8 @@ header {
   h1 {
     font-size: 3em;
     font-weight: 300;
+    font-family: "Silkscreen";
+    font-style: normal;
   }
 }
 
@@ -67,12 +67,16 @@ footer {
     font-size: 1.6em;
     font-weight: 300;
     margin: 0.5em 0;
+    font-family: "Silkscreen";
+    font-style: normal;
   }
 
   h3 {
     font-size: 1.3em;
     font-weight: 300;
     margin: 0.5em 0;
+    font-family: "Silkscreen";
+    font-style: normal;
   }
 
   .social {

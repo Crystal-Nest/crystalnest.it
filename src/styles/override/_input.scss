@@ -1,0 +1,12 @@
+.mat-mdc-form-field {
+  width: 100%;
+  max-width: 600px;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline {
+  &__leading,
+  &__notch,
+  &__trailing {
+    border-color: #8f59b7 !important;
+  }
+}

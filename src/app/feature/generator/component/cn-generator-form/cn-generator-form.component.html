@@ -1,0 +1,13 @@
+<form class="cn-grid" [formGroup]="form">
+  <cn-input class="cn-cell-3" formControlName="minecraftVersion" label="Minecraft version" />
+  <cn-input class="cn-cell-3" formControlName="group" label="Java group" />
+  <cn-input class="cn-cell-3" formControlName="authors" label="Mod authors" />
+  <cn-input class="cn-cell-3" formControlName="modTitle" label="Mod title" />
+  <cn-input class="cn-cell-3" formControlName="modId" label="Mod ID" />
+  <cn-input class="cn-cell-3" formControlName="modIdKebab" label="Mod ID kebab-case" />
+  <cn-input class="cn-cell-3" formControlName="githubOwner" label="GitHub owner" />
+  <textarea class="cn-cell-3" formControlName="description"></textarea>
+  <cn-checkbox class="cn-cell-3" formControlName="crystalNestMod" label="Crystal Nest mod"></cn-checkbox>
+  <cn-checkbox class="cn-cell-3" formControlName="autogenModId" label="Autogenerate mod id"></cn-checkbox>
+</form>
+<button [disabled]="!validity" (click)="emitSubmit()">Download</button>
