@@ -5,7 +5,8 @@ import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import JSZip from '@progress/jszip-esm';
 
-import {TemplateService} from './template.service';
+import {TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE} from './model/template.constants';
+import {TemplateService} from './service/template.service';
 
 @Component({
   selector: 'cn-generator',
@@ -32,8 +33,6 @@ export class GeneratorComponent {
 
   private template?: ArrayBuffer;
 
-  private readonly zip = new JSZip();
-
   /**
    * @constructor
    * @public
@@ -43,42 +42,34 @@ export class GeneratorComponent {
     this.templateService.getTemplate().subscribe(template => (this.template = template));
   }
 
-  public download() {
+  public createSkeleton() {
+    const modId = 'cobweb_mod_skeleton', modIdKebab = 'cobweb_mod_skeleton', modTitle = 'Cobweb Mod Skeleton';
     if (this.template) {
-      this.zip.loadAsync(this.template).then(template => template.generateAsync({type: 'blob'}).then(zip => {
-        const anchor = document.createElement('a');
-        anchor.style.display = 'none';
-        anchor.href = URL.createObjectURL(zip);
-        anchor.download = 'cobweb-mod-skeleton';
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
-      }));
+      const zip = new JSZip();
+      new JSZip().loadAsync(this.template).then(template => {
+        template.forEach((path, entry) => {
+          console.log(path, entry.name, entry.dir);
+          if (entry.dir) {
+            zip.folder(entry.name.replaceAll(TEMPLATE_MOD_ID, modId));
+          } else {
+            zip.file(
+              entry.name.replaceAll(TEMPLATE_MOD_ID, modId),
+              entry.async('string').then(content => content.replaceAll(TEMPLATE_MOD_ID, modId).replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_TITLE, modTitle))
+            );
+          }
+        });
+        zip.generateAsync({type: 'blob'}).then(this.download);
+      });
     }
-    // const mod = this.zip.folder('cobweb-mod-template');
-    // const idea = mod?.folder('.idea');
-    // const scopes = idea?.folder('scopes');
-    // scopes?.file('Fabric_sources.xml');
-    // scopes?.file('Forge_sources.xml');
-    // mod?.file('.gitattributes', '');
-    // mod?.file('.gitignore', '');
-    // mod?.file('.api-keys.properties', '');
-    // mod?.file('.build.gradle', '');
-    // mod?.file('CHANGELOG.md', '');
-    // mod?.file('gradle.properties', '');
-    // mod?.file('gradlew', '');
-    // mod?.file('gradlew.bat', '');
-    // mod?.file('LICENSE', '');
-    // mod?.file('README.md', '');
-    // mod?.file('settings.gradle', '');
-    // this.zip.generateAsync({type: 'blob'}).then(content => {
-    // const anchor = document.createElement('a');
-    // anchor.style.display = 'none';
-    // anchor.href = URL.createObjectURL(content);
-    // anchor.download = 'cobweb-mod-template';
-    // document.body.appendChild(anchor);
-    // anchor.click();
-    // anchor.remove();
-    // });
+  }
+
+  private download(file: Blob) {
+    const anchor = document.createElement('a');
+    anchor.style.display = 'none';
+    anchor.href = URL.createObjectURL(file);
+    anchor.download = 'cobweb-mod-skeleton';
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
   }
 }

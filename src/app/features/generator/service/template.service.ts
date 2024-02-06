@@ -1,6 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
+import {TEMPLATE_MOD_ID} from '../model/template.constants';
+
 /**
  * Handles HTTP calls regarding the mod template.
  *
@@ -24,6 +26,6 @@ export class TemplateService {
    * @returns {Observable<ArrayBuffer>}
    */
   public getTemplate() {
-    return this.http.get('assets/template.zip', {responseType: 'arraybuffer'});
+    return this.http.get(`assets/${TEMPLATE_MOD_ID}.zip`, {responseType: 'arraybuffer'});
   }
 }
