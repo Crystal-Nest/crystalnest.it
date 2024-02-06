@@ -81,7 +81,7 @@ export class GeneratorComponent {
               );
               break;
             case path.endsWith('README.md'):
-              zip.file(entry.name, entry.async('string').then(content => content
+              zip.file(entry.name.replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
                 .replace('bannerlink', crystalNestMod ? `https://raw.githubusercontent.com/${group}/mod-fancy-assets/main/${modId}/banner.png` : 'Insert your banner link here...')
                 .replaceAll(`github.com/${TEMPLATE_GROUP}`, `github.com/${group}`)
                 .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
