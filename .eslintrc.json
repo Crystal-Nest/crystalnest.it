@@ -153,8 +153,8 @@
           "warn",
           {
             "ignorePattern": "^import .*",
-            "code": 180,
-            "comments": 180,
+            "code": 255,
+            "comments": 255,
             "tabWidth": 2
           }
         ],
@@ -420,7 +420,7 @@
         "import/no-useless-path-segments": "warn",
         "import/newline-after-import": "warn",
         "import/no-deprecated": "warn",
-        "import/group-exports": "warn",
+        "import/group-exports": "off",
         "import/exports-last": "warn",
         "import/first": "warn",
         "import/order": [
@@ -596,12 +596,6 @@
         "rxjs/no-create": "error",
         "rxjs/no-compat": "error",
         "rxjs/no-index": "error"
-      }
-    },
-    {
-      "files": ["index.ts", "*.actions.ts", "*.functions.ts"],
-      "rules": {
-        "import/group-exports": "off"
       }
     },
     {
