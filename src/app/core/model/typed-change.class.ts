@@ -20,13 +20,3 @@ export class TypedChange<T> extends SimpleChange {
     super(previousValue, currentValue, firstChange);
   }
 }
-
-/**
- * Typed {@link SimpleChanges}.
- *
- * @typedef {TypedChanges}
- * @template T
- */
-export type TypedChanges<T> = {
-  [K in keyof T]?: TypedChange<T[K]>
-};

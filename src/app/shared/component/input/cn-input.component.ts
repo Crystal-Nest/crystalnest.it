@@ -36,7 +36,7 @@ export class CnInputComponent extends CnControlValueAccessor<string> implements 
    * @type {{}}
    */
   @Input()
-  public regex = /.*/;
+  public regex: string | RegExp = /.*/;
 
   /**
    * `HTMLInputElement` child element.

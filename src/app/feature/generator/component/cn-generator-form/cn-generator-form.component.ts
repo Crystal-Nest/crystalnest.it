@@ -28,14 +28,6 @@ import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../mode
 })
 export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> implements OnInit {
   /**
-   * @constructor
-   * @public
-   */
-  public constructor() {
-    super();
-  }
-
-  /**
    * @inheritdoc
    */
   public ngOnInit(): void {
@@ -49,7 +41,7 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
         this.form.controls.modIdKebab.enable();
       }
     });
-    this.valueChanges('modTitle', value => this.updateModId(value), value => !!(value && this.form.controls.autogenModId.value));
+    this.valueChanges('modTitle', value => this.updateModId(value), value => !!value && this.form.controls.autogenModId.value);
     this.valueChanges('crystalNestMod', value => {
       if (value) {
         this.form.controls.group.disable();
@@ -87,7 +79,10 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
   protected override initForm(): FormType<SkeletonFormData> {
     // TODO: Add tooltip next to fields
     return {
-      minecraftVersion: new FormControl<SkeletonFormData['minecraftVersion']>('1.20.4', {nonNullable: true}),
+      minecraftVersion: new FormControl('1.20.4', {
+        nonNullable: true,
+        validators: Validators.required
+      }),
       group: new FormControl(TEMPLATE_GROUP, {
         nonNullable: true,
         validators: Validators.required

@@ -63,25 +63,25 @@ export class GeneratorComponent {
         template.forEach((path, entry) => {
           switch (true) {
             case entry.dir:
-              zip.folder(entry.name.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
+              zip.folder(path.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
               break;
             case path.endsWith('gradle.properties'):
               zip.file(
-                entry.name.replaceAll(TEMPLATE_MOD_ID, modId),
+                path.replaceAll(TEMPLATE_MOD_ID, modId),
                 entry.async('string').then(content => content
                   .replace(TEMPLATE_GROUP, group)
                   .replace(TEMPLATE_AUTHORS.join(', '), authors)
                   .replace(TEMPLATE_MOD_TITLE, modTitle)
                   .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
                   .replace(TEMPLATE_MOD_ID, modId)
-                  .replace(/^description = .*$/m, `description = ${description}`)
+                  .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`)
                   // TODO: Replace credits (credits maybe with Patreon API?).
                   // TODO: Replace Minecraft version and loaders versions.
                   .replace(TEMPLATE_GITHUB_USER, githubOwner))
               );
               break;
             case path.endsWith('README.md'):
-              zip.file(entry.name.replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
+              zip.file(path.replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
                 .replace('bannerlink', crystalNestMod ? `https://raw.githubusercontent.com/${group}/mod-fancy-assets/main/${modId}/banner.png` : 'Insert your banner link here...')
                 .replaceAll(`github.com/${TEMPLATE_GROUP}`, `github.com/${group}`)
                 .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
@@ -90,7 +90,7 @@ export class GeneratorComponent {
               break;
             case crystalNestMod || !path.startsWith('.github'):
               zip.file(
-                entry.name.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
+                path.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
                 entry.async('string').then(content => content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId))
               );
               break;

@@ -32,10 +32,10 @@ export class CharFilterDirective {
    * The {@link RegExp Regular Expression} used to check whether a given string is allowed.
    *
    * @public
-   * @type {RegExp}
+   * @type {(string | RegExp)}
    */
   @Input()
-  public regex!: RegExp;
+  public regex!: string | RegExp;
 
   /**
    * @constructor
@@ -53,7 +53,8 @@ export class CharFilterDirective {
   @HostListener('keydown', ['$event'])
   public onKeyDown(event: KeyboardEvent) {
     const {value, selectionStart, selectionEnd} = this.input.nativeElement, nextValue = `${value.slice(0, selectionStart!)}${event.key}${value.slice(selectionEnd!)}`;
-    if (!(specialKeys.includes(event.key) || this.regex.test(nextValue))) {
+    console.log(event.key, new RegExp(this.regex).test(nextValue), !(specialKeys.includes(event.key) || new RegExp(this.regex).test(nextValue)));
+    if (!(specialKeys.includes(event.key) || new RegExp(this.regex).test(nextValue))) {
       event.preventDefault();
     }
   }

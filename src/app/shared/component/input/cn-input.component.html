@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" floatLabel="auto">
   <mat-label *ngIf="label">{{ label }}</mat-label>
   <input #inputElement autocomplete="off" charFilter matInput [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [regex]="regex" [required]="isRequired" [(ngModel)]="value" (blur)="blur($event)" (input)="input($event)" />
-  <button *ngIf="value" mat-icon-button matSuffix tabindex="-1" type="button" [disabled]="isDisabled" (click)="empty($event)">
+  <button *ngIf="value && !isDisabled" mat-icon-button matSuffix tabindex="-1" type="button" (click)="empty($event)">
     <mat-icon tabindex="-1">close</mat-icon>
   </button>
   <mat-error *ngIf="invalid">{{ errorMessage }}</mat-error>

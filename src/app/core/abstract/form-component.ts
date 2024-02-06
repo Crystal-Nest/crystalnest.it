@@ -4,7 +4,7 @@ import {Observable, distinctUntilChanged, filter, startWith} from 'rxjs';
 
 import {SubscriberComponent} from './subscriber.component';
 import {FormType} from '../model/form-type.type';
-import {TypedChanges} from '../model/typed-changes';
+import {TypedChanges} from '../model/typed-changes.type';
 
 /**
  * Value being used to call `patchValue` of a {@link FormGroup}.  
