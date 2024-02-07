@@ -6,7 +6,7 @@ import {FormType} from '../../../../core/model/form-type.type';
 import {CnCheckboxComponent} from '../../../../shared/component/checkbox/cn-checkbox.component';
 import {CnInputComponent} from '../../../../shared/component/input/cn-input.component';
 import {GeneratorValidators} from '../../class/GeneratorValidators.class';
-import {ModIdSpecialChars} from '../../model/mod-id-special-chars.type';
+import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {SkeletonFormData} from '../../model/skeleton-form-data.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
 
@@ -46,27 +46,27 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
       if (value) {
         this.form.controls.group.disable();
         this.form.controls.authors.disable();
-        this.form.controls.githubOwner.disable();
+        this.form.controls.githubUser.disable();
         this.form.controls.group.setValue(TEMPLATE_GROUP);
         this.form.controls.authors.setValue(TEMPLATE_AUTHORS.join(', '));
-        this.form.controls.githubOwner.setValue(TEMPLATE_GITHUB_USER);
+        this.form.controls.githubUser.setValue(TEMPLATE_GITHUB_USER);
         this.form.controls.group.setValidators([Validators.required]);
         this.form.controls.authors.setValidators([Validators.required]);
-        this.form.controls.githubOwner.setValidators([Validators.required]);
+        this.form.controls.githubUser.setValidators([Validators.required]);
       } else {
         this.form.controls.group.enable();
         this.form.controls.authors.enable();
-        this.form.controls.githubOwner.enable();
+        this.form.controls.githubUser.enable();
         this.form.controls.group.setValue('');
         this.form.controls.authors.setValue('');
-        this.form.controls.githubOwner.setValue('');
+        this.form.controls.githubUser.setValue('');
         this.form.controls.group.setValidators([Validators.required, GeneratorValidators.notInclude(TEMPLATE_GROUP)]);
         this.form.controls.authors.setValidators([Validators.required, GeneratorValidators.notInclude(...TEMPLATE_AUTHORS)]);
-        this.form.controls.githubOwner.setValidators([Validators.required, GeneratorValidators.notMatch(TEMPLATE_GITHUB_USER)]);
+        this.form.controls.githubUser.setValidators([Validators.required, GeneratorValidators.notMatch(TEMPLATE_GITHUB_USER)]);
       }
       this.form.controls.group.updateValueAndValidity();
       this.form.controls.authors.updateValueAndValidity();
-      this.form.controls.githubOwner.updateValueAndValidity();
+      this.form.controls.githubUser.updateValueAndValidity();
     });
   }
 
@@ -103,11 +103,10 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
         nonNullable: true,
         validators: GeneratorValidators.modId('-')
       }),
-      githubOwner: new FormControl(TEMPLATE_GITHUB_USER, {
+      githubUser: new FormControl(TEMPLATE_GITHUB_USER, {
         nonNullable: true,
         validators: Validators.required
       }),
-      // TODO: Make textarea properly support multiline
       description: new FormControl('MultiLoader Mod Skeleton!', {
         nonNullable: true,
         validators: Validators.required
@@ -139,10 +138,10 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
    *
    * @private
    * @param {string} value
-   * @param {ModIdSpecialChars} char
+   * @param {ModIdSpecialChar} char
    * @returns {string}
    */
-  private parseModTitle(value: string, char: ModIdSpecialChars) {
+  private parseModTitle(value: string, char: ModIdSpecialChar) {
     return value.toLowerCase().replaceAll(/[^0-9a-z]/g, ' ').trim().replaceAll(' ', char);
   }
 }

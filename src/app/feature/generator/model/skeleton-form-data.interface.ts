@@ -1,3 +1,5 @@
+import {MinecraftVersion} from './minecraft-version.type';
+
 /**
  * Skeleton Generator form data.
  *
@@ -9,9 +11,9 @@ export interface SkeletonFormData {
   /**
    * Available Minecraft versions.
    *
-   * @type {'1.20.2' | '1.20.4'}
+   * @type {MinecraftVersion}
    */
-  minecraftVersion: '1.20.2' | '1.20.4';
+  minecraftVersion: MinecraftVersion;
   /**
    * Java group.
    *
@@ -47,7 +49,7 @@ export interface SkeletonFormData {
    *
    * @type {string}
    */
-  githubOwner: string;
+  githubUser: string;
   /**
    * Mod description.
    *

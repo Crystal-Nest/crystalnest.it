@@ -1,6 +1,6 @@
 import {ValidatorFn, Validators} from '@angular/forms';
 
-import {ModIdSpecialChars} from '../model/mod-id-special-chars.type';
+import {ModIdSpecialChar} from '../model/mod-id-special-char.type';
 
 /**
  * Generator form validators.
@@ -81,10 +81,10 @@ export class GeneratorValidators {
    *
    * @public
    * @static
-   * @param {ModIdSpecialChars} char
+   * @param {ModIdSpecialChar} char
    * @returns {ValidatorFn[]}
    */
-  public static modId(char: ModIdSpecialChars): ValidatorFn[] {
+  public static modId(char: ModIdSpecialChar): ValidatorFn[] {
     return [...GeneratorValidators.modTitle, Validators.pattern(`[a-z0-9${char}]+`)];
   }
 }

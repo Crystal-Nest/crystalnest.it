@@ -25,21 +25,11 @@ import {TemplateService} from './service/template.service';
 })
 export class GeneratorComponent {
   /**
-   * Mod template zip file.
-   *
-   * @private
-   * @type {?ArrayBuffer}
-   */
-  private template?: ArrayBuffer;
-
-  /**
    * @constructor
    * @public
    * @param {TemplateService} templateService
    */
-  public constructor(private readonly templateService: TemplateService) {
-    this.templateService.getTemplate().subscribe(template => (this.template = template));
-  }
+  public constructor(private readonly templateService: TemplateService) {}
 
   /**
    * Builds the mod skeleton with the specified properties.
@@ -56,18 +46,19 @@ export class GeneratorComponent {
    * @param {SkeletonFormData} event.description
    * @param {SkeletonFormData} event.crystalNestMod
    */
-  public buildSkeleton({minecraftVersion, group, authors, modTitle, modId, modIdKebab, githubOwner, description, crystalNestMod}: SkeletonFormData) {
-    if (this.template) {
+  public buildSkeleton({minecraftVersion, group, authors, modTitle, modId, modIdKebab, githubUser, description, crystalNestMod}: SkeletonFormData) {
+    this.templateService.getTemplate(minecraftVersion).subscribe(templateZip => {
+      console.log(templateZip);
       const zip = new JSZip();
-      new JSZip().loadAsync(this.template).then(template => {
+      new JSZip().loadAsync(templateZip).then(template => {
         template.forEach((path, entry) => {
           switch (true) {
             case entry.dir:
-              zip.folder(path.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
+              zip.folder(path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
               break;
             case path.endsWith('gradle.properties'):
               zip.file(
-                path.replaceAll(TEMPLATE_MOD_ID, modId),
+                path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_MOD_ID, modId),
                 entry.async('string').then(content => content
                   .replace(TEMPLATE_GROUP, group)
                   .replace(TEMPLATE_AUTHORS.join(', '), authors)
@@ -76,21 +67,20 @@ export class GeneratorComponent {
                   .replace(TEMPLATE_MOD_ID, modId)
                   .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`)
                   // TODO: Replace credits (credits maybe with Patreon API?).
-                  // TODO: Replace Minecraft version and loaders versions.
-                  .replace(TEMPLATE_GITHUB_USER, githubOwner))
+                  .replace(TEMPLATE_GITHUB_USER, githubUser))
               );
               break;
             case path.endsWith('README.md'):
-              zip.file(path.replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
+              zip.file(path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
                 .replace('bannerlink', crystalNestMod ? `https://raw.githubusercontent.com/${group}/mod-fancy-assets/main/${modId}/banner.png` : 'Insert your banner link here...')
                 .replaceAll(`github.com/${TEMPLATE_GROUP}`, `github.com/${group}`)
                 .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
                 .replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
                 .replaceAll(TEMPLATE_MOD_ID, modId)));
               break;
-            case crystalNestMod || !path.startsWith('.github'):
+            case crystalNestMod || !path.includes('.github'):
               zip.file(
-                path.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
+                path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
                 entry.async('string').then(content => content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId))
               );
               break;
@@ -98,7 +88,7 @@ export class GeneratorComponent {
         });
         zip.generateAsync({type: 'blob'}).then(this.download);
       });
-    }
+    });
   }
 
   /**
