@@ -63,13 +63,13 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
   public isRequired = false;
 
   /**
-   * Optional label.
+   * Label.
    *
    * @public
-   * @type {?string}
+   * @type {string}
    */
   @Input()
-  public label?: string;
+  public label!: string;
 
   /**
    * Custom error matcher.

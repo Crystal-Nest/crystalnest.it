@@ -41,7 +41,7 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
         this.form.controls.modIdKebab.enable();
       }
     });
-    this.valueChanges('modTitle', value => this.updateModId(value), value => !!value && this.form.controls.autogenModId.value);
+    this.valueChanges('modTitle', value => this.updateModId(value), value => (value ?? 0) === value && this.form.controls.autogenModId.value);
     this.valueChanges('crystalNestMod', value => {
       if (value) {
         this.form.controls.group.disable();

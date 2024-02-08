@@ -53,7 +53,6 @@ export class CharFilterDirective {
   @HostListener('keydown', ['$event'])
   public onKeyDown(event: KeyboardEvent) {
     const {value, selectionStart, selectionEnd} = this.input.nativeElement, nextValue = `${value.slice(0, selectionStart!)}${event.key}${value.slice(selectionEnd!)}`;
-    console.log(event.key, new RegExp(this.regex).test(nextValue), !(specialKeys.includes(event.key) || new RegExp(this.regex).test(nextValue)));
     if (!(specialKeys.includes(event.key) || new RegExp(this.regex).test(nextValue))) {
       event.preventDefault();
     }

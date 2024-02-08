@@ -18,7 +18,7 @@ import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
   standalone: true,
   imports: [CommonModule, FormsModule, MatCheckboxModule],
   templateUrl: 'cn-checkbox.component.html',
-  styleUrls: ['cn-checkbox.component.scss']
+  styleUrl: 'cn-checkbox.component.scss'
 })
 export class CnCheckboxComponent extends CnControlValueAccessor<boolean> {
   /**

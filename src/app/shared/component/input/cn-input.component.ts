@@ -26,14 +26,14 @@ import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
     CharFilterDirective
   ],
   templateUrl: 'cn-input.component.html',
-  styleUrls: ['cn-input.component.scss']
+  styleUrl: 'cn-input.component.scss'
 })
 export class CnInputComponent extends CnControlValueAccessor<string> implements AfterViewInit {
   /**
    * Regex to filter the user input.
    *
    * @public
-   * @type {{}}
+   * @type {(string | RegExp)}
    */
   @Input()
   public regex: string | RegExp = /.*/;
@@ -51,9 +51,8 @@ export class CnInputComponent extends CnControlValueAccessor<string> implements 
    * Handles the `blur` event.
    *
    * @public
-   * @param {FocusEvent} _event
    */
-  public blur(_event: FocusEvent): void {
+  public blur(): void {
     this.onTouched();
   }
 
@@ -61,9 +60,8 @@ export class CnInputComponent extends CnControlValueAccessor<string> implements 
    * Handles the `input` event.
    *
    * @public
-   * @param {Event} _event
    */
-  public input(_event: Event): void {
+  public input(): void {
     this.writeValue(this.value);
   }
 
