@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import JSZip from '@progress/jszip-esm';
@@ -18,7 +18,12 @@ import {TemplateService} from './service/template.service';
 @Component({
   selector: 'cn-generator',
   standalone: true,
-  imports: [RouterModule, HttpClientModule, CnGeneratorFormComponent],
+  imports: [
+    RouterModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    CnGeneratorFormComponent
+  ],
   providers: [TemplateService],
   templateUrl: './generator.component.html',
   styleUrl: './generator.component.scss'
@@ -50,7 +55,7 @@ export class GeneratorComponent {
     this.templateService.getTemplate(minecraftVersion).subscribe(templateZip => {
       console.log(templateZip);
       const zip = new JSZip();
-      new JSZip().loadAsync(templateZip).then(template => {
+      new JSZip().loadAsync(templateZip as any).then(template => {
         template.forEach((path, entry) => {
           switch (true) {
             case entry.dir:
