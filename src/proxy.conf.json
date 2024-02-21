@@ -1,0 +1,10 @@
+{
+  "/repo/**": {
+    "target": "https://codeload.github.com/",
+    "secure": true,
+    "pathRewrite": {
+      "^/repo": ""
+    },
+    "changeOrigin": true
+  }
+}

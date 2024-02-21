@@ -5,9 +5,9 @@ import {MinecraftVersion} from './minecraft-version.type';
  *
  * @export
  * @interface SkeletonFormData
- * @typedef {SkeletonFormData}
+ * @typedef {SkeletonForm}
  */
-export interface SkeletonFormData {
+export interface SkeletonForm {
   /**
    * Available Minecraft versions.
    *

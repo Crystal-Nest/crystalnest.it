@@ -5,9 +5,9 @@ import {FormComponent} from '../../../../core/abstract/form-component';
 import {FormType} from '../../../../core/model/form-type.type';
 import {CnCheckboxComponent} from '../../../../shared/component/checkbox/cn-checkbox.component';
 import {CnInputComponent} from '../../../../shared/component/input/cn-input.component';
-import {GeneratorValidators} from '../../class/GeneratorValidators.class';
+import {GeneratorValidators} from '../../class/generator-validators.class';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
-import {SkeletonFormData} from '../../model/skeleton-form-data.interface';
+import {SkeletonForm} from '../../model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
 
 /**
@@ -16,7 +16,7 @@ import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../mode
  * @export
  * @class CnGeneratorFormComponent
  * @typedef {CnGeneratorFormComponent}
- * @extends {FormComponent<SkeletonFormData>}
+ * @extends {FormComponent<SkeletonForm>}
  * @implements {OnInit}
  */
 @Component({
@@ -26,7 +26,7 @@ import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../mode
   templateUrl: './cn-generator-form.component.html',
   styleUrl: './cn-generator-form.component.scss'
 })
-export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> implements OnInit {
+export class CnGeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
   /**
    * @inheritdoc
    */
@@ -74,9 +74,9 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonFormData> im
    * @inheritdoc
    *
    * @protected
-   * @returns {FormType<SkeletonFormData>}
+   * @returns {FormType<SkeletonForm>}
    */
-  protected override initForm(): FormType<SkeletonFormData> {
+  protected override initForm(): FormType<SkeletonForm> {
     // TODO: Add tooltip next to fields
     return {
       minecraftVersion: new FormControl('1.20.4', {

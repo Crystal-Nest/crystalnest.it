@@ -4,8 +4,8 @@ import {RouterModule} from '@angular/router';
 import JSZip from '@progress/jszip-esm';
 
 import {CnGeneratorFormComponent} from './component/cn-generator-form/cn-generator-form.component';
-import {SkeletonFormData} from './model/skeleton-form-data.interface';
-import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE} from './model/template.constants';
+import {SkeletonForm} from './model/skeleton-form.interface';
+import {CRYSTAL_NEST_SUPPORT_SECTION, TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_SUPPORT_SECTION} from './model/template.constants';
 import {TemplateService} from './service/template.service';
 
 /**
@@ -40,30 +40,32 @@ export class GeneratorComponent {
    * Builds the mod skeleton with the specified properties.
    *
    * @public
-   * @param {SkeletonFormData} event
-   * @param {SkeletonFormData} event.minecraftVersion
-   * @param {SkeletonFormData} event.group
-   * @param {SkeletonFormData} event.authors
-   * @param {SkeletonFormData} event.modTitle
-   * @param {SkeletonFormData} event.modId
-   * @param {SkeletonFormData} event.modIdKebab
-   * @param {SkeletonFormData} event.githubUser
-   * @param {SkeletonFormData} event.description
-   * @param {SkeletonFormData} event.crystalNestMod
+   * @param {SkeletonForm} event
+   * @param {SkeletonForm} event.minecraftVersion
+   * @param {SkeletonForm} event.group
+   * @param {SkeletonForm} event.authors
+   * @param {SkeletonForm} event.modTitle
+   * @param {SkeletonForm} event.modId
+   * @param {SkeletonForm} event.modIdKebab
+   * @param {SkeletonForm} event.githubUser
+   * @param {SkeletonForm} event.description
+   * @param {SkeletonForm} event.crystalNestMod
    */
-  public buildSkeleton({minecraftVersion, group, authors, modTitle, modId, modIdKebab, githubUser, description, crystalNestMod}: SkeletonFormData) {
+  public buildSkeleton({minecraftVersion, group, authors, modTitle, modId, modIdKebab, githubUser, description, crystalNestMod}: SkeletonForm) {
     this.templateService.getTemplate(minecraftVersion).subscribe(templateZip => {
-      console.log(templateZip);
       const zip = new JSZip();
-      new JSZip().loadAsync(templateZip as any).then(template => {
+      new JSZip().loadAsync(templateZip).then(template => {
+        const root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
         template.forEach((path, entry) => {
           switch (true) {
             case entry.dir:
-              zip.folder(path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
+              // Directory: replace the name of the root dir, group, and modid.
+              zip.folder(path.replace(root, modIdKebab).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId));
               break;
             case path.endsWith('gradle.properties'):
+              // File gradle.properties: replace all Gradle properties.
               zip.file(
-                path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_MOD_ID, modId),
+                path.replace(root, modIdKebab),
                 entry.async('string').then(content => content
                   .replace(TEMPLATE_GROUP, group)
                   .replace(TEMPLATE_AUTHORS.join(', '), authors)
@@ -76,17 +78,23 @@ export class GeneratorComponent {
               );
               break;
             case path.endsWith('README.md'):
-              zip.file(path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_MOD_ID, modId), entry.async('string').then(content => content
-                .replace('bannerlink', crystalNestMod ? `https://raw.githubusercontent.com/${group}/mod-fancy-assets/main/${modId}/banner.png` : 'Insert your banner link here...')
-                .replaceAll(`github.com/${TEMPLATE_GROUP}`, `github.com/${group}`)
-                .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
-                .replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
-                .replaceAll(TEMPLATE_MOD_ID, modId)));
+              // File README.md: replace link references.
+              zip.file(
+                path.replace(root, modIdKebab),
+                entry.async('string').then(content => content
+                  .replace(TEMPLATE_BANNER_LINK, crystalNestMod ? `https://raw.githubusercontent.com/${group}/mod-fancy-assets/main/${modId}/banner.png` : 'Banner link here...')
+                  .replaceAll(`github.com/${TEMPLATE_GROUP}`, `github.com/${group}`)
+                  .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
+                  .replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
+                  .replaceAll(TEMPLATE_MOD_ID, modId)
+                  .replace(TEMPLATE_SUPPORT_SECTION, crystalNestMod ? CRYSTAL_NEST_SUPPORT_SECTION : TEMPLATE_SUPPORT_SECTION))
+              );
               break;
             case crystalNestMod || !path.includes('.github'):
+              // Handle all files and, if needed, do not include Crystal Nest specific .github directory content.
               zip.file(
-                path.replace(`${TEMPLATE_MOD_ID}-${minecraftVersion}`, modId).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
-                entry.async('string').then(content => content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId))
+                path.replace(root, modIdKebab).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
+                entry.async('string').then(content => content.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId))
               );
               break;
           }
