@@ -28,6 +28,6 @@ export class TemplateService {
    * @returns {Observable<ArrayBuffer>}
    */
   public getTemplate(minecraftVersion: MinecraftVersion) {
-    return this.http.get(`https://corsproxy.io/?https://codeload.github.com/${TEMPLATE_GITHUB_USER}/${TEMPLATE_MOD_ID_KEBAB}/zip/refs/heads/${minecraftVersion}`, {responseType: 'arraybuffer'});
+    return this.http.get(`https://corsproxy.io/?${encodeURIComponent(`https://codeload.github.com/${TEMPLATE_GITHUB_USER}/${TEMPLATE_MOD_ID_KEBAB}/zip/refs/heads/${minecraftVersion}`)}`, {responseType: 'arraybuffer'});
   }
 }

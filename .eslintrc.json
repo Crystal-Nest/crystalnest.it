@@ -399,7 +399,7 @@
         "sonarjs/no-use-of-empty-return-value": "error",
         "sonarjs/prefer-single-boolean-return": "error",
         "sonarjs/no-collection-size-mischeck": "error",
-        "sonarjs/no-nested-template-literals": "error",
+        "sonarjs/no-nested-template-literals": "off",
         "sonarjs/no-all-duplicated-branches": "error",
         "sonarjs/no-gratuitous-expressions": "error",
         "sonarjs/no-inverted-boolean-check": "error",
