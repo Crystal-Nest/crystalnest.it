@@ -5,7 +5,7 @@ import JSZip from '@progress/jszip-esm';
 
 import {CnGeneratorFormComponent} from './component/cn-generator-form/cn-generator-form.component';
 import {SkeletonForm} from './model/skeleton-form.interface';
-import {CRYSTAL_NEST_SUPPORT_SECTION, TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_SUPPORT_SECTION} from './model/template.constants';
+import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_SUPPORT_SECTION} from './model/template.constants';
 import {TemplateService} from './service/template.service';
 
 /**
@@ -73,7 +73,6 @@ export class GeneratorComponent {
                   .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
                   .replace(TEMPLATE_MOD_ID, modId)
                   .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`)
-                  // TODO: Replace credits (credits maybe with Patreon API?).
                   .replace(TEMPLATE_GITHUB_USER, githubUser))
               );
               break;
@@ -87,7 +86,7 @@ export class GeneratorComponent {
                   .replaceAll(TEMPLATE_MOD_TITLE, modTitle)
                   .replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
                   .replaceAll(TEMPLATE_MOD_ID, modId)
-                  .replace(TEMPLATE_SUPPORT_SECTION, crystalNestMod ? CRYSTAL_NEST_SUPPORT_SECTION : TEMPLATE_SUPPORT_SECTION))
+                  .replace(TEMPLATE_SUPPORT_SECTION, `**Support us**\n\n${crystalNestMod ? content.split('**Support us**\n\n')[1] : 'Social links here...\n'}`))
               );
               break;
             case crystalNestMod || !path.includes('.github'):
@@ -99,7 +98,7 @@ export class GeneratorComponent {
               break;
           }
         });
-        zip.generateAsync({type: 'blob'}).then(this.download);
+        zip.generateAsync({type: 'blob'}).then(file => this.download(file, modIdKebab));
       });
     });
   }
@@ -109,12 +108,13 @@ export class GeneratorComponent {
    *
    * @private
    * @param {Blob} file
+   * @param {string} modId
    */
-  private download(file: Blob) {
+  private download(file: Blob, modId: string) {
     const anchor = document.createElement('a');
     anchor.style.display = 'none';
     anchor.href = URL.createObjectURL(file);
-    anchor.download = 'cobweb-mod-skeleton';
+    anchor.download = `cobweb-mod-skeleton (${modId})`;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
