@@ -1,0 +1,7 @@
+{
+  "/workers/**": {
+    "target": "https://crystalnest.it",
+    "secure": true,
+    "changeOrigin": true
+  }
+}
