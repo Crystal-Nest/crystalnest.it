@@ -29,7 +29,7 @@ export class TemplateService {
    */
   public getTemplate(minecraftVersion: MinecraftVersion) {
     return this.http.post(
-      '/workers/github-repo-archive',
+      '/api/workers/github-repo-archive',
       {
         user: TEMPLATE_GITHUB_USER,
         repo: TEMPLATE_MOD_ID_KEBAB,
