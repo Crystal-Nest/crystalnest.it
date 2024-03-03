@@ -387,7 +387,6 @@
         "@angular-eslint/use-component-selector": "error",
         "@angular-eslint/contextual-lifecycle": "error",
         "@angular-eslint/no-output-native": "error",
-        "sonarjs/cognitive-complexity": "warn",
         "sonarjs/no-unused-collection": "warn",
         "sonarjs/no-element-overwrite": "warn",
         "sonarjs/no-empty-collection": "warn",

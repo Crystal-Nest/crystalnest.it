@@ -89,8 +89,15 @@ export class GeneratorComponent {
                   .replace(TEMPLATE_SUPPORT_SECTION, `**Support us**\n\n${crystalNestMod ? content.split('**Support us**\n\n')[1] : 'Social links here...\n'}`))
               );
               break;
-            case crystalNestMod || !path.includes('.github'):
-              // Handle all files and, if needed, do not include Crystal Nest specific .github directory content.
+            case !crystalNestMod && path.endsWith('build.gradle'):
+              // Handle build.gradle when it's not a Crystal Nest mod.
+              zip.file(
+                path.replace(root, modIdKebab),
+                entry.async('string').then(content => content.replace(/sonar(.|\n)*subprojects/, 'subprojects').replace(/plugins(.*\n){2}/, 'plugins {\n'))
+              );
+              break;
+            case crystalNestMod || !path.endsWith('.gitmodules'):
+              // Handle all files and, do not include Crystal Nest specific stuff.
               zip.file(
                 path.replace(root, modIdKebab).replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID, modId),
                 entry.async('string').then(content => content.replaceAll(TEMPLATE_GROUP, group).replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId))
