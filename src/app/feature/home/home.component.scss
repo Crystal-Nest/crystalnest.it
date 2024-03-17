@@ -1,42 +1,18 @@
-:host {
+main {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: fit-content;
-  min-width: 320px;
-  min-height: 100%;
-  padding: 1em;
-  background-color: #8f59b7;
-  background-image: none, radial-gradient(circle, rgba(255, 255, 255, 0.3021941198354342) 0%, rgba(130, 130, 130, 0.5963117668942577) 50%, rgba(0, 0, 0, 0.9016338957457983) 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  background-clip: border-box;
-  text-align: center;
-  color: #fefefe;
-}
-
-header {
-  display: flex;
-  align-items: center;
   justify-content: center;
-
+  align-items: center;
+  height: 100%;
+  background: url(https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8613539/c90849fe192f4229bb0e3e0ba8cec699/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/7.jpg?token-time=1712188800&token-hash=ducoaEKcBbNoZeFd7XwJ76yCmd7AwIxSMx0vYt6la1k%3D);
+  background-repeat: no-repeat;
+  box-shadow: 0 0 8px 8px #150923 inset;
   h1 {
     font-size: 3em;
     font-weight: 300;
     font-family: "Silkscreen";
     font-style: normal;
   }
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2em;
-  margin-bottom: auto;
-
   button {
     background-color: transparent;
     border: 2px solid #fefefe;
@@ -61,42 +37,10 @@ main {
 }
 
 footer {
-  margin-top: 2em;
-
-  h2 {
-    font-size: 1.6em;
-    font-weight: 300;
-    margin: 0.5em 0;
-    font-family: "Silkscreen";
-    font-style: normal;
-  }
-
-  h3 {
-    font-size: 1.3em;
-    font-weight: 300;
-    margin: 0.5em 0;
-    font-family: "Silkscreen";
-    font-style: normal;
-  }
-
-  .social {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-    margin-top: 1em;
-
-    .support {
-      width: 80px;
-    }
-  }
-
-  .banner {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 1em;
-    border-radius: 8px;
-  }
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-radius: 8px;
 }
 
 .support {

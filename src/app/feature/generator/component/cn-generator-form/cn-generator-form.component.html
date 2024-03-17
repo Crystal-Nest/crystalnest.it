@@ -1,13 +1,73 @@
-<form class="cn-grid" [formGroup]="form">
-  <cn-input class="cn-cell-3" formControlName="minecraftVersion" label="Minecraft version" />
-  <cn-input class="cn-cell-3" formControlName="group" label="Java group" />
-  <cn-input class="cn-cell-3" formControlName="authors" label="Mod authors" />
-  <cn-input class="cn-cell-3" formControlName="modTitle" label="Mod title" />
-  <cn-input class="cn-cell-3" formControlName="modId" label="Mod ID" regex="^[a-z0-9_]+$" />
-  <cn-input class="cn-cell-3" formControlName="modIdKebab" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" />
-  <cn-input class="cn-cell-3" formControlName="githubUser" label="GitHub owner" />
-  <textarea class="cn-cell-3" formControlName="description"></textarea>
-  <cn-checkbox class="cn-cell-3" formControlName="crystalNestMod" label="Crystal Nest mod"></cn-checkbox>
-  <cn-checkbox class="cn-cell-3" formControlName="autogenModId" label="Autogenerate mod id"></cn-checkbox>
+<form [formGroup]="form">
+  <cn-checkbox class="cn-cell-3" formControlName="crystalNestMod" label="Are you Crystal Nest's member?"></cn-checkbox>
 </form>
+<mat-stepper #stepper orientation="horizontal" [linear]="false">
+  <mat-step [stepControl]="form">
+    <ng-template matStepLabel>Choose Minecraft version</ng-template>
+    <form [formGroup]="form">
+      <cn-input formControlName="minecraftVersion" label="Minecraft version" />
+      <button mat-button matStepperNext>
+        next
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="form">
+    <ng-template matStepLabel>Enter project name</ng-template>
+    <form [formGroup]="form">
+      <cn-input class="cn-cell-3" formControlName="modTitle" label="Mod title" />
+      <cdk-accordion class="example-accordion">
+        <cdk-accordion-item #accordionItem="cdkAccordionItem" role="button" tabindex="0">
+          <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+            <mat-icon>settings</mat-icon>
+            Show advanced options
+          </div>
+          <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
+            <cn-checkbox class="cn-cell-3" formControlName="autogenModId" label="Autogenerate IDs"></cn-checkbox>
+            <cn-input class="cn-cell-3" formControlName="modId" label="Mod ID" regex="^[a-z0-9_]+$" />
+            <cn-input class="cn-cell-3" formControlName="modIdKebab" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" />
+          </div>
+        </cdk-accordion-item>
+      </cdk-accordion>
+      <button mat-button matStepperPrevious>
+        back
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button mat-button matStepperNext>
+        next
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="form">
+    <ng-template matStepLabel>Enter project description</ng-template>
+    <form [formGroup]="form">
+      <textarea class="cn-cell-3" formControlName="description"></textarea>
+      <button mat-button matStepperPrevious>
+        back
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      @if (!form.controls.crystalNestMod.value) {
+      <button mat-button matStepperNext>
+        next
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      }
+    </form>
+  </mat-step>
+  @if (!form.controls.crystalNestMod.value) {
+  <mat-step [stepControl]="form">
+    <ng-template matStepLabel>Authors</ng-template>
+    <form [formGroup]="form">
+      <cn-input class="cn-cell-3" formControlName="group" label="Java group" />
+      <cn-input class="cn-cell-3" formControlName="authors" label="Mod authors" />
+      <cn-input class="cn-cell-3" formControlName="githubUser" label="GitHub owner" />
+      <button mat-button matStepperPrevious>
+        back
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+    </form>
+  </mat-step>
+  }
+</mat-stepper>
 <button [disabled]="!validity" (click)="emitSubmit()">Download</button>
