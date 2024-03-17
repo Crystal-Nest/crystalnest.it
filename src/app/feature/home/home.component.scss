@@ -1,12 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 0 8px 8px #150923 inset;
+}
+
 main {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   background: url(https://c10.patreonusercontent.com/4/patreon-media/p/campaign/8613539/c90849fe192f4229bb0e3e0ba8cec699/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/7.jpg?token-time=1712188800&token-hash=ducoaEKcBbNoZeFd7XwJ76yCmd7AwIxSMx0vYt6la1k%3D);
   background-repeat: no-repeat;
-  box-shadow: 0 0 8px 8px #150923 inset;
   h1 {
     font-size: 3em;
     font-weight: 300;
