@@ -3,7 +3,7 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox, MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 
-import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
+import {CnControlValueAccessor} from '../cva/control-value-accessor';
 
 /**
  * Crystal Nest checkbox component.
@@ -17,8 +17,8 @@ import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
   selector: 'cn-checkbox',
   standalone: true,
   imports: [CommonModule, FormsModule, MatCheckboxModule],
-  templateUrl: 'cn-checkbox.component.html',
-  styleUrl: 'cn-checkbox.component.scss'
+  templateUrl: 'checkbox.component.html',
+  styleUrl: 'checkbox.component.scss'
 })
 export class CnCheckboxComponent extends CnControlValueAccessor<boolean> {
   /**

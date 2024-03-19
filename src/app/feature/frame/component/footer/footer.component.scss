@@ -1,0 +1,74 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  height: 256px;
+  padding: 32px clamp(4%, 16%, 256px);
+  background-color: black;
+
+  > div {
+    max-width: 30%;
+  }
+
+  .description,
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    color: white;
+  }
+
+  .description .description-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 32px;
+    white-space: nowrap;
+
+    > img {
+      height: 48px;
+    }
+  }
+
+  .projects {
+    justify-content: start;
+
+    .projects-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 32px;
+      white-space: nowrap;
+      height: 48px;
+    }
+
+    .projects-list {
+      // display: flex;
+      // flex-wrap: wrap;
+      // gap: 8px;
+
+      cn-contact-button {
+        height: 24px;
+      }
+    }
+  }
+
+  .contacts {
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      cn-contact-button {
+        height: 24px;
+      }
+    }
+
+    cn-contact-button {
+      width: 100%;
+    }
+  }
+}

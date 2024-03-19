@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "esModuleInterop": true,
@@ -26,7 +27,12 @@
     "moduleResolution": "node",
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "dom"]
+    "lib": ["ES2022", "dom"],
+    "paths": {
+      "~cn/core/*": ["app/core/*"],
+      "~cn/feature/*": ["app/feature/*"],
+      "~cn/shared/*": ["app/shared/*"]
+    }
   },
   "angularCompilerOptions": {
     "strictTemplates": true,

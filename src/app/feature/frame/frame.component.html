@@ -1,0 +1,7 @@
+<cn-header (toggleSidebar)="toggleSidebar()" />
+<cn-sidebar [(expanded)]="expandedSidebar">
+  <div class="cn-main-content">
+    <ng-content></ng-content>
+  </div>
+  <cn-footer />
+</cn-sidebar>

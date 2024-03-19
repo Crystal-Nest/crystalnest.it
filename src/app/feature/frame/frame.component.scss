@@ -1,0 +1,19 @@
+:host {
+  cn-header {
+    position: fixed;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    z-index: 100;
+  }
+
+  cn-sidebar {
+    margin-top: 64px;
+    display: block;
+    height: 100%;
+
+    .cn-main-content {
+      height: 100%;
+    }
+  }
+}

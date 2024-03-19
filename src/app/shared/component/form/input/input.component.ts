@@ -4,8 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 
-import {CharFilterDirective} from '../../directive/char-filter.directive';
-import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
+import {CharFilterDirective} from '../../../directive/char-filter.directive';
+import {CnControlValueAccessor} from '../cva/control-value-accessor';
 
 /**
  * Crystal Nest input component.
@@ -25,8 +25,8 @@ import {CnControlValueAccessor} from '../abstract/cn-control-value-accessor';
     MatIconModule,
     CharFilterDirective
   ],
-  templateUrl: 'cn-input.component.html',
-  styleUrl: 'cn-input.component.scss'
+  templateUrl: 'input.component.html',
+  styleUrl: 'input.component.scss'
 })
 export class CnInputComponent extends CnControlValueAccessor<string> implements AfterViewInit {
   /**

@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  transition-duration: 200ms;
+
+  &:hover {
+    box-shadow: #8f59b760 4px 4px 8px -2px;
+    transform: translateY(-0.2em);
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    gap: 4px;
+
+    > img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

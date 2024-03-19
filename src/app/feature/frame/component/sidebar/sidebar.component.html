@@ -1,0 +1,15 @@
+<mat-sidenav-container autosize class="cn-content" [hasBackdrop]="expanded" (backdropClick)="close()">
+  <mat-sidenav disableClose role="navigation" [class.open]="expanded" [opened]="true" (keydown.escape)="close()">
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/generator']">
+        <mat-icon mat-list-icon>snippet_folder</mat-icon>
+        @if (expanded) {
+        <h4 mat-line>Skeleton Generator</h4>
+        }
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

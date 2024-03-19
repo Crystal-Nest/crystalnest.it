@@ -1,17 +1,19 @@
-import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatStepperModule } from '@angular/material/stepper';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import {MatStepperModule} from '@angular/material/stepper';
 
-import { FormComponent } from '../../../../core/abstract/form-component';
-import { FormType } from '../../../../core/model/form-type.type';
-import { CnCheckboxComponent } from '../../../../shared/component/checkbox/cn-checkbox.component';
-import { CnInputComponent } from '../../../../shared/component/input/cn-input.component';
-import { GeneratorValidators } from '../../class/generator-validators.class';
-import { ModIdSpecialChar } from '../../model/mod-id-special-char.type';
-import { SkeletonForm } from '../../model/skeleton-form.interface';
-import { TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP } from '../../model/template.constants';
+import {GeneratorValidators} from '../../class/generator-validators.class';
+import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
+import {SkeletonForm} from '../../model/skeleton-form.interface';
+import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
+
+import {FormComponent} from '~cn/core/abstract/form-component';
+import {FormType} from '~cn/core/model/form-type.type';
+import {CnCheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
+import {CnInputComponent} from '~cn/shared/component/form/input/input.component';
+
 /**
  * Generator form.
  *
@@ -24,16 +26,24 @@ import { TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP } from '../../mo
 @Component({
   selector: 'cn-generator-form',
   standalone: true,
-  imports: [CnCheckboxComponent, MatIconModule, CdkAccordionModule, MatStepperModule, ReactiveFormsModule, CnInputComponent, CnCheckboxComponent],
-  templateUrl: './cn-generator-form.component.html',
-  styleUrl: './cn-generator-form.component.scss',
+  imports: [
+    CnCheckboxComponent,
+    MatIconModule,
+    CdkAccordionModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    CnInputComponent,
+    CnCheckboxComponent
+  ],
+  templateUrl: './generator-form.component.html',
+  styleUrl: './generator-form.component.scss'
 })
 export class CnGeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
   /**
    * @inheritdoc
    */
   public ngOnInit(): void {
-    this.valueChanges('autogenModId', (value) => {
+    this.valueChanges('autogenModId', value => {
       if (value) {
         this.form.controls.modId.disable();
         this.form.controls.modIdKebab.disable();
@@ -45,10 +55,10 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonForm> implem
     });
     this.valueChanges(
       'modTitle',
-      (value) => this.updateModId(value),
-      (value) => (value ?? 0) === value && this.form.controls.autogenModId.value
+      value => this.updateModId(value),
+      value => (value ?? 0) === value && this.form.controls.autogenModId.value
     );
-    this.valueChanges('crystalNestMod', (value) => {
+    this.valueChanges('crystalNestMod', value => {
       if (value) {
         this.form.controls.group.disable();
         this.form.controls.authors.disable();
@@ -87,44 +97,44 @@ export class CnGeneratorFormComponent extends FormComponent<SkeletonForm> implem
     return {
       minecraftVersion: new FormControl('1.20.4', {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       group: new FormControl(TEMPLATE_GROUP, {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       authors: new FormControl(TEMPLATE_AUTHORS.join(', '), {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       modTitle: new FormControl('Cobweb Mod Skeleton', {
         nonNullable: true,
-        validators: GeneratorValidators.modTitle,
+        validators: GeneratorValidators.modTitle
       }),
       modId: new FormControl('cobweb_mod_skeleton', {
         nonNullable: true,
-        validators: GeneratorValidators.modId('_'),
+        validators: GeneratorValidators.modId('_')
       }),
       modIdKebab: new FormControl('cobweb-mod-template', {
         nonNullable: true,
-        validators: GeneratorValidators.modId('-'),
+        validators: GeneratorValidators.modId('-')
       }),
       githubUser: new FormControl(TEMPLATE_GITHUB_USER, {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       description: new FormControl('MultiLoader Mod Skeleton!', {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       crystalNestMod: new FormControl(true, {
         nonNullable: true,
-        validators: Validators.required,
+        validators: Validators.required
       }),
       autogenModId: new FormControl(true, {
         nonNullable: true,
-        validators: Validators.required,
-      }),
+        validators: Validators.required
+      })
     };
   }
 
