@@ -1,25 +1,77 @@
-:host {
-  mat-sidenav {
-    width: 64px;
-    transition: width 0.2s;
+@import "../../../../../styles/variables.scss";
 
-    &.open {
-      width: 256px;
+:host {
+  display: block;
+  height: 100%;
+
+  .sidebar-toggle {
+    display: flex;
+    width: calc($nav-icon-size * 2);
+    height: calc($nav-icon-size * 2);
+    background: white;
+
+    > .sidebar-toggle-button {
+      width: calc($nav-icon-size * 2);
+      height: 100%;
+      padding: calc($nav-icon-size / 2);
+
+      > mat-icon {
+        width: $nav-icon-size;
+        height: $nav-icon-size;
+        font-size: $nav-icon-size;
+        cursor: pointer;
+      }
+    }
+
+    > .sidebar-toggle-title {
+      display: flex;
+      height: 100%;
+      padding: calc($nav-icon-size / 2);
+      align-items: center;
+      color: white;
+      font-size: $nav-icon-size;
+      white-space: nowrap;
+      font-family: "Silkscreen";
+      color: black;
+      cursor: pointer;
     }
   }
 
-  .cn-content {
+  .cn-container {
     height: 100%;
 
-    > mat-sidenav-content {
-      width: calc(100% - 64px);
-      height: 100%;
-      min-width: 320px;
-      min-height: 100%;
-      margin-left: 64px;
+    > mat-sidenav mat-list-item {
+      height: calc($nav-icon-size * 2);
 
-      background-color: #8f59b7;
-      background-image: none, radial-gradient(circle, rgba(255, 255, 255, 0.3021941198354342) 0%, rgba(130, 130, 130, 0.5963117668942577) 50%, rgba(0, 0, 0, 0.9016338957457983) 100%);
+      .cn-nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding: calc($nav-icon-size / 2);
+        gap: $nav-icon-size;
+
+        > mat-icon {
+          min-width: $nav-icon-size;
+          width: $nav-icon-size;
+          height: $nav-icon-size;
+          font-size: $nav-icon-size;
+        }
+
+        > span {
+          font-size: calc($nav-icon-size / 2);
+        }
+      }
+    }
+
+    > mat-sidenav-content {
+      width: calc(100% - $nav-icon-size * 2);
+      height: calc(100% - $nav-icon-size * 2);
+      min-height: calc(100% - $nav-icon-size * 2);
+      margin-left: calc($nav-icon-size * 2);
+      margin-top: calc($nav-icon-size * 2);
+
+      background-color: $background-color;
+      background-image: none, radial-gradient(circle, #ffffff4d 0%, #82828298 50%, #000000e6 100%);
       background-repeat: no-repeat;
       background-size: cover;
       background-blend-mode: multiply;

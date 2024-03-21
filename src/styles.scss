@@ -1,6 +1,6 @@
 @use "@angular/material" as material;
 @import "styles/variables", "styles/grids", "styles/mixins";
-@import "styles/override/input";
+@import "styles/override/sidenav", "styles/override/input";
 @import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Silkscreen:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");
@@ -12,7 +12,7 @@
 html,
 body {
   width: 100%;
-  height: calc(100% - 32px);
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;

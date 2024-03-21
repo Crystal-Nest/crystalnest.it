@@ -18,10 +18,4 @@ import {SidebarComponent} from './component/sidebar/sidebar.component';
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })
-export class FrameComponent {
-  public expandedSidebar = false;
-
-  public toggleSidebar() {
-    this.expandedSidebar = !this.expandedSidebar;
-  }
-}
+export class FrameComponent {}

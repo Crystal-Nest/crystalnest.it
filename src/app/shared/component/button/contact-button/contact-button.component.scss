@@ -1,10 +1,13 @@
+@import "../../../../../styles/variables.scss";
+
 :host {
   display: flex;
-  transition-duration: 200ms;
+  transition-duration: $contact-button-transition-duration;
+  border-radius: $contact-button-border-radius;
 
   &:hover {
-    box-shadow: #8f59b760 4px 4px 8px -2px;
-    transform: translateY(-0.2em);
+    box-shadow: $contact-button-shadow-color 4px 4px 8px -2px;
+    transform: translateY($contact-button-translate-y);
   }
 
   a {
@@ -12,9 +15,10 @@
     align-items: center;
     color: white;
     text-decoration: none;
-    gap: 4px;
+    gap: $contact-button-gap;
 
     > img {
+      border-radius: $contact-button-border-radius;
       max-height: 100%;
       max-width: 100%;
     }

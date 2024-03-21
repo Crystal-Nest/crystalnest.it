@@ -1,0 +1,15 @@
+@import "../../../../styles/variables.scss";
+
+.separator {
+  height: 100%;
+  width: 0;
+  border: $separator-border-size solid #ffffff;
+  border-radius: $separator-border-radius;
+  margin: 0 $separator-margin;
+
+  &.horizontal {
+    height: 0;
+    width: 100%;
+    margin: $separator-margin 0;
+  }
+}

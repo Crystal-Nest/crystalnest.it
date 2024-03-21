@@ -1,40 +1,15 @@
-<div class="left">
-  <button (click)="emitToggleSidebar()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <button class="home" [routerLink]="['']">
-    <img src="/assets/images/home.png" />
-    Crystal Nest
-  </button>
-  <a class="github" href="https://github.com/crystal-nest" target="_blank">
-    <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github256.png" />
-  </a>
-
-  <a class="github" href="https://modrinth.com/user/CrystalSpider" target="_blank">
-    <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth256.png" />
-  </a>
-
-  <a class="github" href="https://www.curseforge.com/members/crystal_spider_/projects" target="_blank">
-    <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge256.png" />
-  </a>
-  <div class="separator"></div>
-
-  <div class="support">
-    <span>Social</span>
-    <a class="github" href="https://www.twitch.tv/crystal_spider_" target="_blank">
-      <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/twitch/twitch256.png" />
-    </a>
+<div class="header-title" [routerLink]="['']">
+  <span>Crystal Nest</span>
+</div>
+<div class="header-content">
+  <div class="header-section">
+    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github256.png" link="https://github.com/crystal-nest" />
+    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth256.png" link="https://modrinth.com/user/CrystalSpider" />
+    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge256.png" link="https://www.curseforge.com/members/crystal_spider_/projects" />
   </div>
-  <div class="separator"></div>
-
-  <div class="support">
-    <span>Support us!</span>
-    <a class="github" href="https://www.patreon.com/crystalspider" target="_blank">
-      <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/patreon/patreon256.png" />
-    </a>
-    <a class="github" href="https://ko-fi.com/crystalspider" target="_blank">
-      <img src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/kofi/kofi256.png" />
-    </a>
+  <cn-separator />
+  <div class="header-section">
+    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/patreon/patreon256.png" link="https://www.patreon.com/crystalspider" />
+    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/kofi/kofi256.png" link="https://ko-fi.com/crystalspider" />
   </div>
 </div>
-<div class="right"></div>

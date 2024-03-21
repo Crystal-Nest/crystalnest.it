@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
+import {Component} from '@angular/core';
 import {RouterLink} from '@angular/router';
+
+import {ContactButtonComponent} from '~cn/shared/component/button/contact-button/contact-button.component';
+import {SeparatorComponent} from '~cn/shared/component/separator/separator.component';
 
 /**
  * Header component.
@@ -12,15 +14,8 @@ import {RouterLink} from '@angular/router';
 @Component({
   selector: 'cn-header',
   standalone: true,
-  imports: [RouterLink, MatIcon],
+  imports: [RouterLink, ContactButtonComponent, SeparatorComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  @Output()
-  public readonly toggleSidebar = new EventEmitter<void>();
-
-  public emitToggleSidebar() {
-    this.toggleSidebar.emit();
-  }
-}
+export class HeaderComponent {}

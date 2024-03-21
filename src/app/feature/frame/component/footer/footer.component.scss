@@ -1,10 +1,12 @@
+@import "../../../../../styles/variables.scss";
+
 :host {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
-  height: 256px;
-  padding: 32px clamp(4%, 16%, 256px);
+  gap: $footer-section-separation;
+  height: $footer-height;
+  padding: $footer-section-separation clamp(4%, 16%, 256px);
   background-color: black;
 
   > div {
@@ -15,7 +17,7 @@
   .projects {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: $footer-item-separation;
     height: 100%;
     color: white;
   }
@@ -23,12 +25,12 @@
   .description .description-title {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 32px;
+    gap: $footer-item-separation;
+    font-size: $footer-title-size;
     white-space: nowrap;
 
     > img {
-      height: 48px;
+      height: calc($footer-icon-size * 2);
     }
   }
 
@@ -40,19 +42,9 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 32px;
+      font-size: $footer-title-size;
       white-space: nowrap;
-      height: 48px;
-    }
-
-    .projects-list {
-      // display: flex;
-      // flex-wrap: wrap;
-      // gap: 8px;
-
-      cn-contact-button {
-        height: 24px;
-      }
+      height: calc($footer-icon-size * 2);
     }
   }
 
@@ -60,15 +52,16 @@
     > div {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-
-      cn-contact-button {
-        height: 24px;
-      }
+      gap: $footer-item-separation;
     }
 
-    cn-contact-button {
+    cn-contact-button.cn-cell-12 {
       width: 100%;
+      height: auto;
     }
+  }
+
+  cn-contact-button {
+    height: $footer-icon-size;
   }
 }

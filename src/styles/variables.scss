@@ -1,0 +1,32 @@
+@use "@angular/material" as material;
+
+// Grid.
+$grid-row-gap-s: 4px;
+$grid-row-gap-m: 8px;
+$grid-row-gap-l: 16px;
+$grid-col-gap: 16px;
+
+// Separator
+$separator-margin: 16px;
+$separator-border-radius: 8px;
+$separator-border-size: 1px;
+
+// Buttons
+$contact-button-border-radius: 4px;
+$contact-button-translate-y: -0.2em;
+$contact-button-gap: 4px;
+$contact-button-shadow-color: #8f59b760;
+$contact-button-transition-duration: 0.2s;
+
+// Icons
+$nav-icon-size: 32px;
+
+// Miscellaneous
+$background-color: #8f59b7;
+
+// Footer
+$footer-icon-size: 24px;
+$footer-height: 256px;
+$footer-title-size: 32px;
+$footer-section-separation: 32px;
+$footer-item-separation: 8px;
