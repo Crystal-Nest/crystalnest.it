@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import JSZip from '@progress/jszip-esm';
 
-import {CnGeneratorFormComponent} from './component/generator-form/generator-form.component';
+import {GeneratorFormComponent} from './component/generator-form/generator-form.component';
 import {SkeletonForm} from './model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_SUPPORT_SECTION} from './model/template.constants';
 import {TemplateService} from './service/template.service';
@@ -22,7 +22,7 @@ import {TemplateService} from './service/template.service';
     RouterModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    CnGeneratorFormComponent
+    GeneratorFormComponent
   ],
   providers: [TemplateService],
   templateUrl: './generator.component.html',

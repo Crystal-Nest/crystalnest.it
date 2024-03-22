@@ -11,15 +11,18 @@ import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../mode
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
-import {CnCheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
-import {CnInputComponent} from '~cn/shared/component/form/input/input.component';
+import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
+import {InputComponent} from '~cn/shared/component/form/input/input.component';
+import {StepDirective} from '~cn/shared/component/form/stepper/directive/step.directive';
+import {Step} from '~cn/shared/component/form/stepper/model/step.interface';
+import {StepperComponent} from '~cn/shared/component/form/stepper/stepper.component';
 
 /**
  * Generator form.
  *
  * @export
  * @class CnGeneratorFormComponent
- * @typedef {CnGeneratorFormComponent}
+ * @typedef {GeneratorFormComponent}
  * @extends {FormComponent<SkeletonForm>}
  * @implements {OnInit}
  */
@@ -27,18 +30,37 @@ import {CnInputComponent} from '~cn/shared/component/form/input/input.component'
   selector: 'cn-generator-form',
   standalone: true,
   imports: [
-    CnCheckboxComponent,
+    StepDirective,
+    CheckboxComponent,
     MatIconModule,
     CdkAccordionModule,
     MatStepperModule,
     ReactiveFormsModule,
-    CnInputComponent,
-    CnCheckboxComponent
+    InputComponent,
+    CheckboxComponent,
+    StepperComponent
   ],
   templateUrl: './generator-form.component.html',
   styleUrl: './generator-form.component.scss'
 })
-export class CnGeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
+export class GeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
+  public steps: Step[] = [
+    {
+      label: 'Minecraft and loaders'
+    },
+    {
+      label: 'Project details'
+    },
+    {
+      label: 'Project description',
+      hasNext: () => !this.form.controls.crystalNestMod.value
+    },
+    {
+      label: 'Ownership',
+      isVisible: () => !this.form.controls.crystalNestMod.value
+    }
+  ];
+
   /**
    * @inheritdoc
    */

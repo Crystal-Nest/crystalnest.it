@@ -16,6 +16,7 @@
       padding: calc($nav-icon-size / 2);
 
       > mat-icon {
+        min-width: $nav-icon-size;
         width: $nav-icon-size;
         height: $nav-icon-size;
         font-size: $nav-icon-size;
@@ -40,25 +41,35 @@
   .cn-container {
     height: 100%;
 
-    > mat-sidenav mat-list-item {
-      height: calc($nav-icon-size * 2);
+    > mat-sidenav {
+      width: calc($nav-icon-size * 2);
+      transition: width 0.2s;
 
-      .cn-nav-icon {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        padding: calc($nav-icon-size / 2);
-        gap: $nav-icon-size;
+      &.expanded {
+        // $nav-icon-size * 2 (icon space) + $nav-icon-size / 2 * 2 (writing padding) + 275px (writing size)
+        width: calc($nav-icon-size * 3 + 275px);
+      }
 
-        > mat-icon {
-          min-width: $nav-icon-size;
-          width: $nav-icon-size;
-          height: $nav-icon-size;
-          font-size: $nav-icon-size;
-        }
+      mat-list-item {
+        height: calc($nav-icon-size * 2);
 
-        > span {
-          font-size: calc($nav-icon-size / 2);
+        .cn-nav-icon {
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          padding: calc($nav-icon-size / 2);
+          gap: $nav-icon-size;
+
+          > mat-icon {
+            min-width: $nav-icon-size;
+            width: $nav-icon-size;
+            height: $nav-icon-size;
+            font-size: $nav-icon-size;
+          }
+
+          > span {
+            font-size: calc($nav-icon-size / 2);
+          }
         }
       }
     }

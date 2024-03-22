@@ -70,6 +70,7 @@
     "eslint-plugin-rxjs": "^5.0.3",
     "eslint-plugin-sonarjs": "^0.23.0",
     "eslint-plugin-unused-imports": "^3.0.0",
+    "prettier": "^3.2.5",
     "typescript": "~5.3.2"
   }
 }

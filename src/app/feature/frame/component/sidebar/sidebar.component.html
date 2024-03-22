@@ -1,22 +1,18 @@
 <mat-sidenav-container autosize class="cn-container" [hasBackdrop]="expanded" (backdropClick)="close()">
-  <mat-sidenav disableClose role="navigation" [@toggle]="expanded ? 'expanded' : 'collapsed'" [opened]="true" (@toggle.done)="onToggleDone($event)" (keydown.escape)="close()">
+  <mat-sidenav disableClose role="navigation" [class.expanded]="expanded" [opened]="true" (keydown.escape)="close()">
     <div class="sidebar-toggle">
       <div class="sidebar-toggle-button">
         <mat-icon (click)="toggleSidebar()">menu</mat-icon>
       </div>
-      @if (showWritings) {
-      <div class="sidebar-toggle-title" [routerLink]="['']">
+      <div class="sidebar-toggle-title" [routerLink]="['']" [tabIndex]="-1">
         <span>Crystal Nest</span>
       </div>
-      }
     </div>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/generator']">
         <div class="cn-nav-icon">
           <mat-icon mat-list-icon>snippet_folder</mat-icon>
-          @if (showWritings) {
           <span mat-line>Skeleton Generator</span>
-          }
         </div>
       </mat-list-item>
     </mat-nav-list>

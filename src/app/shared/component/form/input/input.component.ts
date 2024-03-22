@@ -12,7 +12,7 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
  *
  * @export
  * @class CnInputComponent
- * @typedef {CnInputComponent}
+ * @typedef {InputComponent}
  * @extends {CnControlValueAccessor<string>}
  */
 @Component({
@@ -28,7 +28,7 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
   templateUrl: 'input.component.html',
   styleUrl: 'input.component.scss'
 })
-export class CnInputComponent extends CnControlValueAccessor<string> implements AfterViewInit {
+export class InputComponent extends CnControlValueAccessor<string> implements AfterViewInit {
   /**
    * Regex to filter the user input.
    *

@@ -10,7 +10,7 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
  *
  * @export
  * @class CnCheckboxComponent
- * @typedef {CnCheckboxComponent}
+ * @typedef {CheckboxComponent}
  * @extends {CnControlValueAccessor<boolean>}
  */
 @Component({
@@ -20,7 +20,7 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
   templateUrl: 'checkbox.component.html',
   styleUrl: 'checkbox.component.scss'
 })
-export class CnCheckboxComponent extends CnControlValueAccessor<boolean> {
+export class CheckboxComponent extends CnControlValueAccessor<boolean> {
   /**
    * Whether the checkbox is in the indeterminate state.
    *
