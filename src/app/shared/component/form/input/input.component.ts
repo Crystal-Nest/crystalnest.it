@@ -1,4 +1,3 @@
-import {CommonModule} from '@angular/common';
 import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -11,7 +10,7 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
  * Crystal Nest input component.
  *
  * @export
- * @class CnInputComponent
+ * @class InputComponent
  * @typedef {InputComponent}
  * @extends {CnControlValueAccessor<string>}
  */
@@ -19,7 +18,6 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
   selector: 'cn-input',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     MatInputModule,
     MatIconModule,

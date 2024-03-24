@@ -1,3 +1,4 @@
+import {Loader} from './loader.type';
 import {MinecraftVersion} from './minecraft-version.type';
 
 /**
@@ -44,6 +45,12 @@ export interface SkeletonForm {
    * @type {string}
    */
   modIdKebab: string;
+  /**
+   * Which loaders to setup.
+   *
+   * @type {Lowercase<Loader>[]}
+   */
+  loaders: Lowercase<Loader>[];
   /**
    * GitHub user owning the repository.
    *

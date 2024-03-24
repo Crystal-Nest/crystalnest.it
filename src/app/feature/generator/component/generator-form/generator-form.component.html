@@ -1,8 +1,9 @@
 <form [formGroup]="form">
-  <cn-checkbox class="cn-cell-3" formControlName="crystalNestMod" label="Are you Crystal Nest's member?"></cn-checkbox>
+  <cn-toggle class="cn-cell-3" formControlName="crystalNestMod" label="Are you Crystal Nest's member?"></cn-toggle>
   <cn-stepper [steps]="steps">
     <ng-template step>
       <cn-input formControlName="minecraftVersion" label="Minecraft version" />
+      <cn-multiselect formControlName="loaders" label="Loaders" [values]="loaders" />
     </ng-template>
     <ng-template step>
       <cn-input class="cn-cell-3" formControlName="modTitle" label="Mod title" />

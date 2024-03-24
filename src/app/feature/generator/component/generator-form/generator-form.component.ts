@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatStepperModule} from '@angular/material/stepper';
 
 import {GeneratorValidators} from '../../class/generator-validators.class';
+import {Loader} from '../../model/loader.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
@@ -13,9 +14,11 @@ import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
+import {MultiSelectComponent} from '~cn/shared/component/form/multiselect/multiselect.component';
 import {StepDirective} from '~cn/shared/component/form/stepper/directive/step.directive';
 import {Step} from '~cn/shared/component/form/stepper/model/step.interface';
 import {StepperComponent} from '~cn/shared/component/form/stepper/stepper.component';
+import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component';
 
 /**
  * Generator form.
@@ -38,13 +41,15 @@ import {StepperComponent} from '~cn/shared/component/form/stepper/stepper.compon
     ReactiveFormsModule,
     InputComponent,
     CheckboxComponent,
-    StepperComponent
+    StepperComponent,
+    ToggleComponent,
+    MultiSelectComponent
   ],
   templateUrl: './generator-form.component.html',
   styleUrl: './generator-form.component.scss'
 })
 export class GeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
-  public steps: Step[] = [
+  public readonly steps: Step[] = [
     {
       label: 'Minecraft and loaders'
     },
@@ -60,6 +65,12 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
       isVisible: () => !this.form.controls.crystalNestMod.value
     }
   ];
+
+  public readonly loaders: Record<Lowercase<Loader>, Loader> = {
+    fabric: 'Fabric',
+    forge: 'Forge',
+    neoforge: 'NeoForge'
+  };
 
   /**
    * @inheritdoc
@@ -98,7 +109,28 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         this.form.controls.group.setValue('');
         this.form.controls.authors.setValue('');
         this.form.controls.githubUser.setValue('');
-        this.form.controls.group.setValidators([Validators.required, GeneratorValidators.notInclude(TEMPLATE_GROUP)]);
+        this.form.controls.group.setValidators([
+          Validators.required,
+          GeneratorValidators.notInclude(
+            TEMPLATE_GROUP,
+            '.idea',
+            'common',
+            'fabric',
+            'forge',
+            'neoforge',
+            'gradle',
+            'wrapper',
+            'src',
+            'main',
+            'java',
+            'resources',
+            'mixin',
+            'platform',
+            'model',
+            'services',
+            'META-INF'
+          )
+        ]);
         this.form.controls.authors.setValidators([Validators.required, GeneratorValidators.notInclude(...TEMPLATE_AUTHORS)]);
         this.form.controls.githubUser.setValidators([Validators.required, GeneratorValidators.notMatch(TEMPLATE_GITHUB_USER)]);
       }
@@ -140,6 +172,10 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
       modIdKebab: new FormControl('cobweb-mod-template', {
         nonNullable: true,
         validators: GeneratorValidators.modId('-')
+      }),
+      loaders: new FormControl(['fabric', 'forge', 'neoforge'], {
+        nonNullable: true,
+        validators: Validators.required
       }),
       githubUser: new FormControl(TEMPLATE_GITHUB_USER, {
         nonNullable: true,
