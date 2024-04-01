@@ -4,7 +4,7 @@
   display: flex;
   background: #180f2e;
   width: calc(100% - $nav-icon-size * 2);
-  height: calc($nav-icon-size * 2);
+  height: $nav-icon-size * 2;
   position: fixed;
   top: 0;
 

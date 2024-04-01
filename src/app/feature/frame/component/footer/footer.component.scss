@@ -30,7 +30,7 @@
     white-space: nowrap;
 
     > img {
-      height: calc($footer-icon-size * 2);
+      height: $footer-icon-size * 2;
     }
   }
 
@@ -44,7 +44,7 @@
       text-align: center;
       font-size: $footer-title-size;
       white-space: nowrap;
-      height: calc($footer-icon-size * 2);
+      height: $footer-icon-size * 2;
     }
   }
 

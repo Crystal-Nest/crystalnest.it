@@ -6,12 +6,12 @@
 
   .sidebar-toggle {
     display: flex;
-    width: calc($nav-icon-size * 2);
-    height: calc($nav-icon-size * 2);
+    width: $nav-icon-size * 2;
+    height: $nav-icon-size * 2;
     background: white;
 
     > .sidebar-toggle-button {
-      width: calc($nav-icon-size * 2);
+      width: $nav-icon-size * 2;
       height: 100%;
       padding: calc($nav-icon-size / 2);
 
@@ -42,16 +42,16 @@
     height: 100%;
 
     > mat-sidenav {
-      width: calc($nav-icon-size * 2);
+      width: $nav-icon-size * 2;
       transition: width 0.2s;
 
       &.expanded {
         // $nav-icon-size * 2 (icon space) + $nav-icon-size / 2 * 2 (writing padding) + 275px (writing size)
-        width: calc($nav-icon-size * 3 + 275px);
+        width: $nav-icon-size * 3 + 275px;
       }
 
       mat-list-item {
-        height: calc($nav-icon-size * 2);
+        height: $nav-icon-size * 2;
 
         .cn-nav-icon {
           display: flex;
@@ -78,8 +78,8 @@
       width: calc(100% - $nav-icon-size * 2);
       height: calc(100% - $nav-icon-size * 2);
       min-height: calc(100% - $nav-icon-size * 2);
-      margin-left: calc($nav-icon-size * 2);
-      margin-top: calc($nav-icon-size * 2);
+      margin-left: $nav-icon-size * 2;
+      margin-top: $nav-icon-size * 2;
 
       background-color: $background-color;
       background-image: none, radial-gradient(circle, #ffffff4d 0%, #82828298 50%, #000000e6 100%);

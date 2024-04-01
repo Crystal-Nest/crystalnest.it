@@ -1,6 +1,6 @@
 @use "@angular/material" as material;
 @import "styles/variables", "styles/grids", "styles/mixins";
-@import "styles/override/sidenav", "styles/override/input";
+@import "styles/override/sidenav", "styles/override/input", "styles/override/stepper.scss";
 @import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Silkscreen:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");

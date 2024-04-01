@@ -4,18 +4,20 @@
       <mat-step>
         <ng-template matStepLabel>{{ step.label }}</ng-template>
         <ng-container [ngTemplateOutlet]="contents.get($index)!"></ng-container>
-        @if ((!step.hasBack || step.hasBack()) && $index > 0) {
-          <button mat-button matStepperPrevious type="button">
-            back
-            <mat-icon>keyboard_arrow_left</mat-icon>
-          </button>
-        }
-        @if ((!step.hasNext || step.hasNext()) && $index < steps.length - 1) {
-          <button mat-button matStepperNext type="button">
-            next
-            <mat-icon>keyboard_arrow_right</mat-icon>
-          </button>
-        }
+        <div class="cn-stepper-footer">
+          @if ((!step.hasBack || step.hasBack()) && $index > 0) {
+            <button mat-button matStepperPrevious type="button">
+              back
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          }
+          @if ((!step.hasNext || step.hasNext()) && $index < steps.length - 1) {
+            <button mat-button matStepperNext type="button">
+              next
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          }
+        </div>
       </mat-step>
     }
   }

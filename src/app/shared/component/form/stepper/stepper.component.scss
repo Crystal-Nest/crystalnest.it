@@ -1,0 +1,15 @@
+:host {
+  .cn-stepper-footer {
+    display: grid;
+    grid-auto-flow: column;
+    margin-top: 24px;
+
+    > .mat-stepper-next {
+      justify-self: flex-end;
+    }
+
+    > .mat-stepper-previous {
+      justify-self: flex-start;
+    }
+  }
+}

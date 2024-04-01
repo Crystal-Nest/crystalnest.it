@@ -1,33 +1,32 @@
 <form [formGroup]="form">
-  <cn-toggle class="cn-cell-3" formControlName="crystalNestMod" label="Are you Crystal Nest's member?"></cn-toggle>
+  <cn-toggle class="cn-cell-3" formControlName="crystalNestMod" label="Are you a Crystal Nest's member?"></cn-toggle>
   <cn-stepper [steps]="steps">
     <ng-template step>
-      <cn-input formControlName="minecraftVersion" label="Minecraft version" />
-      <cn-multiselect formControlName="loaders" label="Loaders" [values]="loaders" />
+      <div class="cn-grid">
+        <cn-input class="cn-cell-6" formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" />
+        <cn-select class="cn-cell-6" formControlName="loaders" hint="Which mod loaders to support" label="Loaders" [multiple]="true" [options]="loaders" />
+        {{ this.form.controls.loaders.value }}
+      </div>
     </ng-template>
     <ng-template step>
-      <cn-input class="cn-cell-3" formControlName="modTitle" label="Mod title" />
-      <cdk-accordion class="example-accordion">
-        <cdk-accordion-item #accordionItem="cdkAccordionItem" role="button" tabindex="0">
-          <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-            <mat-icon>settings</mat-icon>
-            Show advanced options
-          </div>
-          <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
-            <cn-checkbox class="cn-cell-3" formControlName="autogenModId" label="Autogenerate IDs"></cn-checkbox>
-            <cn-input class="cn-cell-3" formControlName="modId" label="Mod ID" regex="^[a-z0-9_]+$" />
-            <cn-input class="cn-cell-3" formControlName="modIdKebab" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" />
-          </div>
-        </cdk-accordion-item>
-      </cdk-accordion>
+      <div class="cn-grid">
+        <cn-input class="cn-cell-6" formControlName="modTitle" label="Mod title" />
+        <cn-checkbox class="cn-cell-6" formControlName="autogenModId" label="Autogenerate IDs"></cn-checkbox>
+        <cn-input class="cn-cell-6" formControlName="modId" hint="Mod unique identifier" label="Mod ID" regex="^[a-z0-9_]+$" />
+        <cn-input class="cn-cell-6" formControlName="modIdKebab" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" />
+      </div>
     </ng-template>
     <ng-template step>
-      <textarea class="cn-cell-3" formControlName="description"></textarea>
+      <div class="cn-grid">
+        <textarea class="cn-cell-6" formControlName="description"></textarea>
+      </div>
     </ng-template>
     <ng-template step>
-      <cn-input class="cn-cell-3" formControlName="group" label="Java group" />
-      <cn-input class="cn-cell-3" formControlName="authors" label="Mod authors" />
-      <cn-input class="cn-cell-3" formControlName="githubUser" label="GitHub owner" />
+      <div class="cn-grid">
+        <cn-input class="cn-cell-4" formControlName="group" hint="Java group, es. `it.crystalnest`" label="Java group" />
+        <cn-input class="cn-cell-4" formControlName="authors" hint="List of authors separated by a comma" label="Mod authors" />
+        <cn-input class="cn-cell-4" formControlName="githubUser" hint="Name of the GitHub account/organization where the source code is hosted" label="GitHub owner" />
+      </div>
     </ng-template>
   </cn-stepper>
 </form>

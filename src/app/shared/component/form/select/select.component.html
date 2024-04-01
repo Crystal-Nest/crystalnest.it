@@ -1,0 +1,25 @@
+<!-- If clauses currently need to have no whitespaces inside them to correctly project mat elements into their proper slot. -->
+<mat-form-field appearance="outline" floatLabel="auto">
+  <mat-label>{{ label }}</mat-label>
+  @if (multiple) {
+    <mat-select multiple [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (selectionChange)="selectionChange($event)">
+      @if (allowDeselect) {
+        <mat-option></mat-option>
+      }
+      @for (choice of choices; track choice[0]) {
+        <mat-option [value]="choice[0]">{{ choice[1] }}</mat-option>
+      }
+    </mat-select>
+  } @else {
+    <mat-select [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (selectionChange)="selectionChange($event)">
+      @if (allowDeselect) {
+        <mat-option></mat-option>
+      }
+      @for (choice of choices; track choice[0]) {
+        <mat-option [value]="choice[0]">{{ choice[1] }}</mat-option>
+      }
+    </mat-select>
+  }
+  @if (hint) {<mat-hint>{{ hint }}</mat-hint>}
+  @if (invalid) {<mat-error>{{ errorMessage }}</mat-error>}
+</mat-form-field>

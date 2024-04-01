@@ -45,6 +45,15 @@ class CnErrorStateMatcher<T> implements ErrorStateMatcher {
 @Directive()
 export abstract class CnControlValueAccessor<T> implements ControlValueAccessor, OnInit, AfterViewInit {
   /**
+   * Label.
+   *
+   * @public
+   * @type {string}
+   */
+  @Input({required: true})
+  public label!: string;
+
+  /**
    * Whether it's disabled.
    *
    * @public
@@ -63,13 +72,13 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
   public isRequired = false;
 
   /**
-   * Label.
+   * Hint.
    *
    * @public
    * @type {string}
    */
   @Input()
-  public label!: string;
+  public hint = '';
 
   /**
    * Custom error matcher.

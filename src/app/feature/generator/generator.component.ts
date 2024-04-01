@@ -81,11 +81,14 @@ export class GeneratorComponent {
             // File gradle.properties: replace Gradle properties.
             zip.file(
               path.replace(root, modIdKebab),
-              entry.async('string').then(content => content
-                .replace(TEMPLATE_MOD_TITLE, modTitle)
-                .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
-                .replace(TEMPLATE_MOD_ID, modId)
-                .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`))
+              entry.async('string').then(content => this.excludeLoaders(
+                content
+                  .replace(TEMPLATE_MOD_TITLE, modTitle)
+                  .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
+                  .replace(TEMPLATE_MOD_ID, modId)
+                  .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`),
+                excludedLoaders
+              ))
             );
             break;
           case path.endsWith('README.md'):
@@ -152,14 +155,17 @@ export class GeneratorComponent {
             // File gradle.properties: replace Gradle properties.
             zip.file(
               path.replace(root, modIdKebab),
-              entry.async('string').then(content => content
-                .replace(TEMPLATE_GROUP, group)
-                .replace(TEMPLATE_AUTHORS.join(', '), authors)
-                .replace(TEMPLATE_MOD_TITLE, modTitle)
-                .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
-                .replace(TEMPLATE_MOD_ID, modId)
-                .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`)
-                .replace(TEMPLATE_GITHUB_USER, githubUser))
+              entry.async('string').then(content => this.excludeLoaders(
+                content
+                  .replace(TEMPLATE_GROUP, group)
+                  .replace(TEMPLATE_AUTHORS.join(', '), authors)
+                  .replace(TEMPLATE_MOD_TITLE, modTitle)
+                  .replace(TEMPLATE_MOD_ID_KEBAB, modIdKebab)
+                  .replace(TEMPLATE_MOD_ID, modId)
+                  .replace(/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`)
+                  .replace(TEMPLATE_GITHUB_USER, githubUser),
+                excludedLoaders
+              ))
             );
             break;
           case path.endsWith('README.md'):
@@ -203,7 +209,14 @@ export class GeneratorComponent {
    * @returns {string} file content without the specified loaders.
    */
   private excludeLoaders(content: string, loaders: Lowercase<Loader>[]): string {
-    return loaders.reduce((prev, curr) => prev.replace(new RegExp(`maven.+\\n.+'${curr}'\\n.+\\n.+\\s+`, 'i'), '').replace(new RegExp(`include\\('${curr}'\\)\\n`, 'i'), '').replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), ''), content);
+    return loaders.reduce(
+      (prev, curr) => prev
+        .replace(new RegExp(`maven.+\\n.+'${curr}'\\n.+\\n.+\\s+`, 'i'), '')
+        .replace(new RegExp(`include\\('${curr}'\\)\\n`, 'i'), '')
+        .replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), '')
+        .replace(new RegExp(`# ${curr}\\n.*\\n.*\\n\\n`, 'i'), ''),
+      content
+    );
   }
 
   /**

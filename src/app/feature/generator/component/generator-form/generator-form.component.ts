@@ -1,8 +1,6 @@
-import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import {MatStepperModule} from '@angular/material/stepper';
 
 import {GeneratorValidators} from '../../class/generator-validators.class';
 import {Loader} from '../../model/loader.type';
@@ -14,7 +12,7 @@ import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
-import {MultiSelectComponent} from '~cn/shared/component/form/multiselect/multiselect.component';
+import {SelectComponent} from '~cn/shared/component/form/select/select.component';
 import {StepDirective} from '~cn/shared/component/form/stepper/directive/step.directive';
 import {Step} from '~cn/shared/component/form/stepper/model/step.interface';
 import {StepperComponent} from '~cn/shared/component/form/stepper/stepper.component';
@@ -36,14 +34,12 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
     StepDirective,
     CheckboxComponent,
     MatIconModule,
-    CdkAccordionModule,
-    MatStepperModule,
     ReactiveFormsModule,
     InputComponent,
     CheckboxComponent,
     StepperComponent,
     ToggleComponent,
-    MultiSelectComponent
+    SelectComponent
   ],
   templateUrl: './generator-form.component.html',
   styleUrl: './generator-form.component.scss'
@@ -147,7 +143,6 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @returns {FormType<SkeletonForm>}
    */
   protected override initForm(): FormType<SkeletonForm> {
-    // TODO: Add tooltip next to fields
     return {
       minecraftVersion: new FormControl('1.20.4', {
         nonNullable: true,
