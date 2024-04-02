@@ -1,8 +1,7 @@
 <!-- If clauses currently need to have no whitespaces inside them to correctly project mat elements into their proper slot. -->
 <mat-form-field appearance="outline" floatLabel="auto">
   <mat-label>{{ label }}</mat-label>
-  <input #inputElement autocomplete="off" charFilter matInput [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [regex]="regex" [required]="isRequired" [(ngModel)]="value" (blur)="blur()" (input)="input()" />
-  @if (value && !isDisabled) {<mat-icon matSuffix tabindex="-1" (click)="empty($event)">close</mat-icon>}
+  <textarea autocomplete="off" cdkAutosizeMinRows="1" cdkTextareaAutosize charFilter matInput [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [regex]="regex" [required]="isRequired" [(ngModel)]="value" (blur)="blur()" (input)="input()"></textarea>
   @if (hint) {<mat-hint>{{ hint }}</mat-hint>}
   @if (invalid) {<mat-error>{{ errorMessage }}</mat-error>}
 </mat-form-field>

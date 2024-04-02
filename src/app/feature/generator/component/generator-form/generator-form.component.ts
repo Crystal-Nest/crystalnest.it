@@ -4,18 +4,21 @@ import {MatIconModule} from '@angular/material/icon';
 
 import {GeneratorValidators} from '../../class/generator-validators.class';
 import {Loader} from '../../model/loader.type';
+import {MinecraftVersion} from '../../model/minecraft-version.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
+import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
 import {SelectComponent} from '~cn/shared/component/form/select/select.component';
 import {StepDirective} from '~cn/shared/component/form/stepper/directive/step.directive';
 import {Step} from '~cn/shared/component/form/stepper/model/step.interface';
 import {StepperComponent} from '~cn/shared/component/form/stepper/stepper.component';
+import {TextareaComponent} from '~cn/shared/component/form/textarea/textarea.component';
 import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component';
 
 /**
@@ -39,7 +42,9 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
     CheckboxComponent,
     StepperComponent,
     ToggleComponent,
-    SelectComponent
+    SelectComponent,
+    ButtonComponent,
+    TextareaComponent
   ],
   templateUrl: './generator-form.component.html',
   styleUrl: './generator-form.component.scss'
@@ -66,6 +71,19 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
     fabric: 'Fabric',
     forge: 'Forge',
     neoforge: 'NeoForge'
+  };
+
+  public readonly versions: Record<MinecraftVersion, MinecraftVersion> = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '1.20.4': '1.20.4',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '1.20.2': '1.20.2',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '1.19.4': '1.19.4',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '1.19.2': '1.19.2',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '1.18.2': '1.18.2'
   };
 
   /**

@@ -1,5 +1,3 @@
 <mat-checkbox [disabled]="isDisabled" [indeterminate]="indeterminate" [required]="isRequired" [(ngModel)]="value" (change)="change($event)">
-  @if (label) {
-    {{ label }}
-  }
+  {{ label }}
 </mat-checkbox>

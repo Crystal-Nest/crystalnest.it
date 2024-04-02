@@ -1,0 +1,20 @@
+@switch (stepperKind) {
+  @case ("next") {
+    <button mat-raised-button matStepperNext type="button" [color]="color" [disabled]="isDisabled">
+      <mat-icon>{{ icon }}</mat-icon>
+      {{ label }}
+    </button>
+  }
+  @case ("previous") {
+    <button mat-raised-button matStepperPrevious type="button" [color]="color" [disabled]="isDisabled">
+      <mat-icon>{{ icon }}</mat-icon>
+      {{ label }}
+    </button>
+  }
+  @default {
+    <button mat-raised-button type="button" [color]="color" [disabled]="isDisabled">
+      <mat-icon>{{ icon }}</mat-icon>
+      {{ label }}
+    </button>
+  }
+}

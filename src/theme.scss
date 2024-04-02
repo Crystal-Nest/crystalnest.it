@@ -1,0 +1,31 @@
+@use "@angular/material" as material;
+
+@include material.core();
+
+$primary-palette: material.define-palette(material.$deep-purple-palette);
+$accent-palette: material.define-palette(material.$deep-purple-palette);
+$warn-palette: material.define-palette(material.$red-palette);
+
+// https://material.angular.io/guide/theming#multiple-themes-in-one-file
+$cn-light-theme: material.define-light-theme(
+  (
+    color: (
+      primary: $primary-palette,
+      accent: $accent-palette,
+      warn: $warn-palette,
+    ),
+    typography: material.define-typography-config(),
+    density: 0,
+  )
+);
+
+@include material.core-theme($cn-light-theme);
+@include material.sidenav-theme($cn-light-theme);
+@include material.icon-theme($cn-light-theme);
+@include material.button-theme($cn-light-theme);
+@include material.form-field-theme($cn-light-theme);
+@include material.stepper-theme($cn-light-theme);
+@include material.checkbox-theme($cn-light-theme);
+@include material.slide-toggle-theme($cn-light-theme);
+@include material.input-theme($cn-light-theme);
+@include material.select-theme($cn-light-theme);

@@ -6,16 +6,10 @@
         <ng-container [ngTemplateOutlet]="contents.get($index)!"></ng-container>
         <div class="cn-stepper-footer">
           @if ((!step.hasBack || step.hasBack()) && $index > 0) {
-            <button mat-button matStepperPrevious type="button">
-              back
-              <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
+            <cn-button icon="keyboard_arrow_left" label="Previous" stepperKind="previous"></cn-button>
           }
           @if ((!step.hasNext || step.hasNext()) && $index < steps.length - 1) {
-            <button mat-button matStepperNext type="button">
-              next
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
+            <cn-button icon="keyboard_arrow_right" label="Next" stepperKind="next"></cn-button>
           }
         </div>
       </mat-step>

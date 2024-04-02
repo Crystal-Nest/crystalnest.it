@@ -8,7 +8,6 @@
     display: flex;
     width: $nav-icon-size * 2;
     height: $nav-icon-size * 2;
-    background: white;
 
     > .sidebar-toggle-button {
       width: $nav-icon-size * 2;
@@ -81,6 +80,7 @@
       margin-left: $nav-icon-size * 2;
       margin-top: $nav-icon-size * 2;
 
+      // TODO: theme
       background-color: $background-color;
       background-image: none, radial-gradient(circle, #ffffff4d 0%, #82828298 50%, #000000e6 100%);
       background-repeat: no-repeat;

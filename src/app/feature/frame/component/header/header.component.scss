@@ -2,7 +2,7 @@
 
 :host {
   display: flex;
-  background: #180f2e;
+  background: #180f2e; // TODO: theme
   width: calc(100% - $nav-icon-size * 2);
   height: $nav-icon-size * 2;
   position: fixed;
@@ -13,7 +13,7 @@
     padding: calc($nav-icon-size / 2);
     display: flex;
     align-items: center;
-    color: white;
+    color: white; // TODO: theme
     font-size: $nav-icon-size;
     white-space: nowrap;
     font-family: "Silkscreen";

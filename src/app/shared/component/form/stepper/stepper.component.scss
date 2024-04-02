@@ -4,12 +4,12 @@
     grid-auto-flow: column;
     margin-top: 24px;
 
-    > .mat-stepper-next {
-      justify-self: flex-end;
+    > cn-button[stepperkind="previous"] {
+      justify-self: flex-start;
     }
 
-    > .mat-stepper-previous {
-      justify-self: flex-start;
+    > cn-button[stepperkind="next"] {
+      justify-self: flex-end;
     }
   }
 }
