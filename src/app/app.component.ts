@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import {NgScrollbarModule} from 'ngx-scrollbar';
 
 import {FrameComponent} from '~cn/feature/frame/frame.component';
 
@@ -13,7 +14,7 @@ import {FrameComponent} from '~cn/feature/frame/frame.component';
 @Component({
   selector: 'cn-root',
   standalone: true,
-  imports: [RouterOutlet, FrameComponent],
+  imports: [NgScrollbarModule, RouterOutlet, FrameComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
