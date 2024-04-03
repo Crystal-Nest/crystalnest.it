@@ -218,8 +218,8 @@ export class GeneratorComponent {
   private excludeLoaders(content: string, loaders: Lowercase<Loader>[]): string {
     return loaders.reduce(
       (prev, curr) => prev
-        .replace(new RegExp(`maven.+\\n.+'${curr}'\\n.+\\n.+\\s+`, 'i'), '')
-        .replace(new RegExp(`include\\('${curr}'\\)\\n`, 'i'), '')
+        .replace(new RegExp(`maven.+\\n.+"${curr}"\\n.+\\n.+\\s+`, 'i'), '')
+        .replace(new RegExp(`include\\("${curr}"\\)\\n`, 'i'), '')
         .replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), '')
         .replace(new RegExp(`# ${curr}\\n.*\\n.*\\n\\n`, 'i'), '')
         .replace(new RegExp(`\\s+"${curr}.*\\n.*`, 'i'), ''),
