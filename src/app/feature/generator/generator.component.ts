@@ -77,6 +77,13 @@ export class GeneratorComponent {
             // Directory: replace the name of the root dir and modid.
             zip.folder(path.replace(root, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId));
             break;
+          case path === `${root}/build.gradle`:
+            // Handle build.gradle when it's a Crystal Nest mod.
+            zip.file(
+              path.replace(root, modIdKebab),
+              entry.async('string').then(content => this.excludeLoaders(content, excludedLoaders))
+            );
+            break;
           case path.endsWith('gradle.properties'):
             // File gradle.properties: replace Gradle properties.
             zip.file(
@@ -99,7 +106,7 @@ export class GeneratorComponent {
             );
             break;
           case path.endsWith('settings.gradle'):
-            zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content, excludedLoaders)));
+            zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
             break;
           default:
             // Handle all files.
@@ -148,7 +155,7 @@ export class GeneratorComponent {
             // Handle build.gradle when it's not a Crystal Nest mod.
             zip.file(
               path.replace(root, modIdKebab),
-              entry.async('string').then(content => content.replace(/sonar {[^]+subprojects/, 'subprojects').replace(/plugins(.*\r?\n){2}/, 'plugins {\n'))
+              entry.async('string').then(content => this.excludeLoaders(content.replace(/sonar {[^]+subprojects/, 'subprojects').replace(/plugins(.*\r?\n){2}/, 'plugins {\n'), excludedLoaders))
             );
             break;
           case path.endsWith('gradle.properties'):
@@ -185,7 +192,7 @@ export class GeneratorComponent {
             );
             break;
           case path.endsWith('settings.gradle'):
-            zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content, excludedLoaders)));
+            zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
             break;
           case !entry.dir:
             // Handle all files without including Crystal Nest specific stuff.
@@ -214,7 +221,8 @@ export class GeneratorComponent {
         .replace(new RegExp(`maven.+\\n.+'${curr}'\\n.+\\n.+\\s+`, 'i'), '')
         .replace(new RegExp(`include\\('${curr}'\\)\\n`, 'i'), '')
         .replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), '')
-        .replace(new RegExp(`# ${curr}\\n.*\\n.*\\n\\n`, 'i'), ''),
+        .replace(new RegExp(`# ${curr}\\n.*\\n.*\\n\\n`, 'i'), '')
+        .replace(new RegExp(`\\s+"${curr}.*\\n.*`, 'i'), ''),
       content
     );
   }
