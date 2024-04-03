@@ -15,7 +15,9 @@ export const appConfig: ApplicationConfig = {
     {
       provide: NG_SCROLLBAR_OPTIONS,
       useValue: {
-        track: 'vertical'
+        track: 'vertical',
+        trackClass: 'cn-scrollbar-track',
+        thumbClass: 'cn-scrollbar-thumb'
       }
     }
   ]

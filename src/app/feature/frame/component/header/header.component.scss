@@ -1,8 +1,9 @@
 @import "../../../../../styles/variables.scss";
+@import "../../../../../theme.scss";
 
 :host {
   display: flex;
-  background: #180f2e; // TODO: theme
+  background: $purple-900;
   width: calc(100% - $nav-icon-size * 2);
   height: $nav-icon-size * 2;
   position: fixed;
@@ -13,7 +14,7 @@
     padding: calc($nav-icon-size / 2);
     display: flex;
     align-items: center;
-    color: white; // TODO: theme
+    color: $purple-a500;
     font-size: $nav-icon-size;
     white-space: nowrap;
     font-family: "Silkscreen";

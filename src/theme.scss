@@ -2,11 +2,70 @@
 
 @include material.core();
 
-$primary-palette: material.define-palette(material.$deep-purple-palette);
-$accent-palette: material.define-palette(material.$deep-purple-palette);
+$purple-50: #b599df;
+$purple-100: #9c80d3;
+$purple-200: #825cc9;
+$purple-300: #6b3fb8;
+$purple-400: #4a248d;
+$purple-500: #411986;
+$purple-600: #381879;
+$purple-700: #2d1468;
+$purple-800: #27115a;
+$purple-900: #220d49;
+
+$purple-a50: #ffffff;
+$purple-a100: #ffffff;
+$purple-a200: #ffffff;
+$purple-a300: #ffffff;
+$purple-a400: #ffffff;
+$purple-a500: #f5efff;
+$purple-a600: #d9c7f7;
+$purple-a700: #c0a7e7;
+$purple-a800: #a783e2;
+$purple-a900: #9669df;
+
+$purple-palette: (
+  50: $purple-50,
+  100: $purple-100,
+  200: $purple-200,
+  300: $purple-300,
+  400: $purple-400,
+  500: $purple-500,
+  600: $purple-600,
+  700: $purple-700,
+  800: $purple-800,
+  900: $purple-900,
+  contrast: (
+    50: $purple-a50,
+    100: $purple-a100,
+    200: $purple-a200,
+    300: $purple-a300,
+    400: $purple-a400,
+    500: $purple-a500,
+    600: $purple-a600,
+    700: $purple-a700,
+    800: $purple-a800,
+    900: $purple-a900,
+  ),
+);
+
+$primary-palette: material.define-palette($purple-palette);
+$accent-palette: material.define-palette($purple-palette);
 $warn-palette: material.define-palette(material.$red-palette);
 
 // https://material.angular.io/guide/theming#multiple-themes-in-one-file
+$cn-dark-theme: material.define-dark-theme(
+  (
+    color: (
+      primary: $primary-palette,
+      accent: $accent-palette,
+      warn: $warn-palette,
+    ),
+    typography: material.define-typography-config(),
+    density: 0,
+  )
+);
+
 $cn-light-theme: material.define-light-theme(
   (
     color: (
