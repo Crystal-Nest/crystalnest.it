@@ -1,16 +1,15 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../theme.scss";
+@import "variables.scss";
+@import "theme.scss";
 
-.separator {
+:host {
   height: 100%;
-  width: 0;
-  border: $separator-border-size solid $purple-a500;
-  border-radius: $separator-border-radius;
-  margin: 0 $separator-margin;
 
-  &.horizontal {
-    height: 0;
-    width: 100%;
-    margin: $separator-margin 0;
+  &::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 0;
+    border: $separator-border-size solid $purple-a500;
+    border-radius: $separator-border-radius;
   }
 }

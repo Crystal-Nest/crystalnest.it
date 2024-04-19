@@ -1,15 +1,24 @@
-<div class="header-title" [routerLink]="['']">
-  <span>Crystal Nest</span>
-</div>
-<div class="header-content">
-  <div class="header-section">
-    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github256.png" link="https://github.com/crystal-nest" />
-    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth256.png" link="https://modrinth.com/user/CrystalSpider" />
-    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge256.png" link="https://www.curseforge.com/members/crystal_spider_/projects" />
-  </div>
-  <cn-separator />
-  <div class="header-section">
-    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/patreon/patreon256.png" link="https://www.patreon.com/crystalspider" />
-    <cn-contact-button img="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/kofi/kofi256.png" link="https://ko-fi.com/crystalspider" />
-  </div>
-</div>
+<header>
+  <mat-icon fontIcon="menu" />
+  <cn-navigation-bar>
+    <cn-navigation-link text="Crystal Nest" to="/">
+      <img src="../../../../../assets/images/home.png" />
+    </cn-navigation-link>
+    <cn-navigation-link to="https://github.com/crystal-nest" [remote]="true">
+      <img [src]="urlPrefix + 'github/github256.png'" />
+    </cn-navigation-link>
+    <cn-navigation-link to="https://modrinth.com/user/CrystalSpider" [remote]="true">
+      <img [src]="urlPrefix + 'modrinth/modrinth256.png'" />
+    </cn-navigation-link>
+    <cn-navigation-link to="https://www.curseforge.com/members/crystal_spider_/projects" [remote]="true">
+      <img [src]="urlPrefix + 'curseforge/curseforge256.png'" />
+    </cn-navigation-link>
+    <cn-separator />
+    <cn-navigation-link to="https://www.patreon.com/crystalspider" [remote]="true">
+      <img [src]="urlPrefix + 'patreon/patreon256.png'" />
+    </cn-navigation-link>
+    <cn-navigation-link to="https://ko-fi.com/crystalspider" [remote]="true">
+      <img [src]="urlPrefix + 'kofi/kofi256.png'" />
+    </cn-navigation-link>
+  </cn-navigation-bar>
+</header>

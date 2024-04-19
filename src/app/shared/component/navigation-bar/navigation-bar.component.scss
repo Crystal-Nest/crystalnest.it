@@ -1,0 +1,16 @@
+@import "theme.scss";
+
+:host,
+nav,
+ul {
+  display: flex;
+  flex: 1;
+}
+
+ul {
+  align-items: center;
+  list-style: none;
+  padding: 0 16px;
+  margin: 0;
+  gap: 16px;
+}
