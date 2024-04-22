@@ -108,6 +108,12 @@ export class GeneratorComponent {
           case path.endsWith('settings.gradle'):
             zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
             break;
+          case path.endsWith('.jar'):
+            zip.file(
+              path.replace(root, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId),
+              entry.async('arraybuffer')
+            );
+            break;
           default:
             // Handle all files.
             zip.file(
@@ -144,8 +150,9 @@ export class GeneratorComponent {
     const root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
     const groupPath = group.replaceAll('.', '/');
     const excludedLoaders = TEMPLATE_LOADERS.filter(loader => !loaders.includes(loader));
+    // eslint-disable-next-line complexity
     template.forEach((path, entry) => {
-      if (!path.includes('.github') && !excludedLoaders.some(loader => path.startsWith(`${root}/${loader}`))) {
+      if (!(path.includes('.github') || excludedLoaders.some(loader => path.startsWith(`${root}/${loader}`)))) {
         switch (true) {
           case entry.dir && groupPath.startsWith(entry.name):
             // Directory: replace the name of the root dir, group, and modid.
@@ -193,6 +200,12 @@ export class GeneratorComponent {
             break;
           case path.endsWith('settings.gradle'):
             zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
+            break;
+          case path.endsWith('.jar'):
+            zip.file(
+              path.replace(root, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId),
+              entry.async('arraybuffer')
+            );
             break;
           case !entry.dir:
             // Handle all files without including Crystal Nest specific stuff.
