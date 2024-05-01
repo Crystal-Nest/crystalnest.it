@@ -1,0 +1,9 @@
+<nav [class.vertical]="vertical">
+  <ul>
+    @for (link of links; track link) {
+      <li>
+        <cn-link [icon]="link.icon" [remote]="link.to.startsWith('http')" [text]="link.text" [to]="link.to" />
+      </li>
+    }
+  </ul>
+</nav>

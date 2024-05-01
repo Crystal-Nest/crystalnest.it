@@ -23,28 +23,10 @@
       cursor: pointer;
     }
 
-    cn-navigation-link img {
-      height: 32px;
-      width: 32px;
-    }
-
-    cn-navigation-link:not(:first-child) {
-      transition-duration: $contact-button-transition-duration;
-      border-radius: $contact-button-border-radius;
-
-      &:hover {
-        box-shadow: $contact-button-shadow-color 4px 4px 8px -2px;
-        transform: translateY($contact-button-translate-y);
-      }
-    }
-
-    cn-navigation-link:first-child {
-      flex: 1;
-
-      a {
-        color: white;
-        font-family: "Silkscreen";
-      }
+    .divier {
+      height: 100%;
+      padding: 4px 0;
+      border: 1px;
     }
   }
 }

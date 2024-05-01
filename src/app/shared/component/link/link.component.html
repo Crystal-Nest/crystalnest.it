@@ -1,0 +1,15 @@
+@if (remote) {
+  <a target="_blank" [href]="to">
+    @if (icon) {
+      <cn-icon [icon]="icon.name" [size]="icon.size ?? 32" />
+    }
+    {{ text }}
+  </a>
+} @else {
+  <a [routerLink]="to">
+    @if (icon) {
+      <cn-icon [icon]="icon.name" [size]="icon.size ?? 32" />
+    }
+    {{ text }}
+  </a>
+}

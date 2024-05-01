@@ -1,0 +1,25 @@
+@import "variables.scss";
+@import "theme.scss";
+
+:host {
+  width: fit-content;
+  height: fit-content;
+  > a {
+    cursor: pointer;
+    display: flex;
+    text-decoration: none;
+    gap: 16px;
+    height: 100%;
+    align-items: center;
+    color: white;
+    font-family: "Silkscreen";
+
+    transition-duration: $contact-button-transition-duration;
+    border-radius: $contact-button-border-radius;
+
+    &:hover {
+      box-shadow: $contact-button-shadow-color 4px 4px 8px -2px;
+      transform: translateY($contact-button-translate-y);
+    }
+  }
+}

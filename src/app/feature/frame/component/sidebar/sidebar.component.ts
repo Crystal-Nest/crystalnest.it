@@ -6,6 +6,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {RouterModule} from '@angular/router';
 
+import {CrystalNestIcon} from '~cn/core/model/icon-repository.const';
+import {NavbarComponent, NavbarLink} from '~cn/shared/component/navbar/navbar.component';
+
 /**
  * Sidebar component.
  *
@@ -20,12 +23,21 @@ import {RouterModule} from '@angular/router';
     RouterModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    NavbarComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+  public links: NavbarLink[] = [
+    {
+      to: '/generator',
+      icon: {name: CrystalNestIcon.modIcon['cobweb-mod-template']},
+      text: 'Generator'
+    }
+  ];
+
   public expanded = false;
 
   public toggleSidebar() {

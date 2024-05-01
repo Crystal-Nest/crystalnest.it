@@ -44,14 +44,12 @@
 
     > mat-sidenav-content {
       height: 100%;
-      padding: 16px;
-
-      // background-color: $purple-400;
-      // background-image: none, radial-gradient(circle, #ffffff4d 0%, #82828298 50%, #000000e6 100%);
-      // background-repeat: no-repeat;
-      // background-size: cover;
-      // background-blend-mode: multiply;
-      // background-clip: border-box;
+      background-color: $purple-400;
+      background-image: none, radial-gradient(circle, #ffffff4d 0%, #82828298 50%, #000000e6 100%);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-blend-mode: multiply;
+      background-clip: border-box;
     }
   }
 }
