@@ -88,3 +88,4 @@ $cn-light-theme: material.define-light-theme(
 @include material.slide-toggle-theme($cn-light-theme);
 @include material.input-theme($cn-light-theme);
 @include material.select-theme($cn-light-theme);
+@include material.progress-bar-theme($cn-light-theme);
