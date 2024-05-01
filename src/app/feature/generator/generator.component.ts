@@ -44,8 +44,21 @@ export class GeneratorComponent {
    */
   public readonly versions$ = this.templateService.getMinecraftVersions();
 
+  /**
+   * Progress mode.  
+   * Used to differentiate between retrieving the template and processing it.
+   *
+   * @public
+   * @type {ProgressBarMode}
+   */
   public progressMode: ProgressBarMode = 'query';
 
+  /**
+   * Template processing progress.
+   *
+   * @public
+   * @type {number}
+   */
   public progress = -1;
 
   /**
