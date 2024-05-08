@@ -4,7 +4,7 @@
     <ng-template step>
       <div class="cn-grid">
         <cn-select class="cn-cell-6" formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [options]="versions || {}" />
-        <div class="cn-cell-6"></div>
+        <cn-checkbox class="cn-cell-6" formControlName="includeConfig" label="Include configuration" />
         <cn-select class="cn-cell-6" formControlName="loaders" hint="Which mod loaders to support" label="Loaders" [multiple]="true" [options]="loaders" />
         <cn-select class="cn-cell-6" formControlName="platforms" hint="Which platforms to publish on" label="Platforms" [multiple]="true" [options]="platforms" />
       </div>

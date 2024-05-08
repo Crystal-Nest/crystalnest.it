@@ -46,9 +46,9 @@ export const TEMPLATE_GITHUB_USER = 'crystal-nest';
 /**
  * Template readme banner link.
  *
- * @type {`https://raw.githubusercontent.com/${typeof TEMPLATE_GROUP}/mod-fancy-assets/main/${typeof TEMPLATE_MOD_ID}/banner.png`}
+ * @type {`https://raw.githubusercontent.com/${typeof TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${typeof TEMPLATE_MOD_ID}/banner.png`}
  */
-export const TEMPLATE_BANNER_LINK = `https://raw.githubusercontent.com/${TEMPLATE_GROUP}/mod-fancy-assets/main/${TEMPLATE_MOD_ID}/banner.png`;
+export const TEMPLATE_BANNER_LINK = `https://raw.githubusercontent.com/${TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${TEMPLATE_MOD_ID}/banner.png`;
 /**
  * Template readme support section.
  *

@@ -242,6 +242,10 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
       autogenModId: new FormControl(true, {
         nonNullable: true,
         validators: Validators.required
+      }),
+      includeConfig: new FormControl(true, {
+        nonNullable: true,
+        validators: Validators.required
       })
     };
   }
@@ -266,10 +270,6 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @returns {string}
    */
   private parseModTitle(value: string, char: ModIdSpecialChar) {
-    return value
-      .toLowerCase()
-      .replaceAll(/[^0-9a-z]/g, ' ')
-      .trim()
-      .replaceAll(' ', char);
+    return value.toLowerCase().replaceAll(/[^0-9a-z]/g, ' ').trim().replaceAll(' ', char);
   }
 }

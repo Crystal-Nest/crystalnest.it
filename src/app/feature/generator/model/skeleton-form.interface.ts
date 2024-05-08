@@ -82,4 +82,10 @@ export interface SkeletonForm {
    * @type {boolean}
    */
   autogenModId: boolean;
+  /**
+   * Whether to include configuration specific stuff.
+   *
+   * @type {boolean}
+   */
+  includeConfig: boolean;
 }
