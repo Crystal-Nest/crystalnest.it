@@ -259,7 +259,7 @@
             "accessibility": "explicit"
           }
         ],
-        "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
+        "@typescript-eslint/consistent-type-definitions": "warn",
         "@typescript-eslint/no-inferrable-types": [
           "warn",
           {
