@@ -20,6 +20,13 @@ import {CnControlValueAccessor} from '../cva/control-value-accessor';
   styleUrl: 'toggle.component.scss'
 })
 export class ToggleComponent extends CnControlValueAccessor<boolean> {
+  /**
+   * Emits an event when the toggle changes state.
+   *
+   * @public
+   * @readonly
+   * @type {EventEmitter<boolean>}
+   */
   @Output()
   public readonly checked: EventEmitter<boolean> = new EventEmitter();
 

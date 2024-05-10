@@ -1,6 +1,13 @@
 import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
+/**
+ * Homepage.
+ *
+ * @export
+ * @class HomeComponent
+ * @typedef {HomeComponent}
+ */
 @Component({
   selector: 'cn-home',
   standalone: true,

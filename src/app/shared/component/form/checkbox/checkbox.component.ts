@@ -29,6 +29,13 @@ export class CheckboxComponent extends CnControlValueAccessor<boolean> {
   @Input()
   public indeterminate = false;
 
+  /**
+   * Emits an event when the checkbox changes state.
+   *
+   * @public
+   * @readonly
+   * @type {EventEmitter<boolean>}
+   */
   @Output()
   public readonly checked: EventEmitter<boolean> = new EventEmitter();
 
