@@ -80,4 +80,11 @@ const ICONS = {
   }
 } as const;
 
-export {ICONS, IconSize};
+/**
+ * Valid icon names.
+ *
+ * @typedef {IconName}
+ */
+type IconName = keyof (typeof ICONS['modIcon'] & typeof ICONS['platformIcon']);
+
+export {ICONS, IconSize, IconName};

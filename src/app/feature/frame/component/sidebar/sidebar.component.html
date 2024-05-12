@@ -4,9 +4,7 @@
       <div class="sidebar-toggle-button">
         <mat-icon (click)="toggleSidebar()">menu</mat-icon>
       </div>
-      <div class="sidebar-toggle-title" [routerLink]="['']" [tabIndex]="expanded ? 0 : -1">
-        <span>Crystal Nest</span>
-      </div>
+      <a class="sidebar-toggle-title" [routerLink]="['']" [tabIndex]="expanded ? 0 : -1">Crystal Nest</a>
     </div>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/generator']" [tabIndex]="expanded ? 0 : -1">
