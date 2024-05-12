@@ -1,12 +1,15 @@
+import {CommonModule} from '@angular/common';
 import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
+import {MatProgressBarModule, ProgressBarMode} from '@angular/material/progress-bar';
 import {RouterModule} from '@angular/router';
 import JSZip from '@progress/jszip-esm';
 
 import {GeneratorFormComponent} from './component/generator-form/generator-form.component';
 import {Loader} from './model/loader.type';
+import {Platform} from './model/platform.type';
 import {SkeletonForm} from './model/skeleton-form.interface';
-import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_SUPPORT_SECTION} from './model/template.constants';
+import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from './model/template.const';
 import {TemplateService} from './service/template.service';
 
 /**
@@ -20,16 +23,44 @@ import {TemplateService} from './service/template.service';
   selector: 'cn-generator',
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    GeneratorFormComponent
+    GeneratorFormComponent,
+    MatProgressBarModule
   ],
   providers: [TemplateService],
   templateUrl: './generator.component.html',
   styleUrl: './generator.component.scss'
 })
 export class GeneratorComponent {
+  /**
+   * Available Minecraft versions.
+   *
+   * @public
+   * @readonly
+   * @type {Record<MinecraftVersion, MinecraftVersion>}
+   */
+  public readonly versions$ = this.templateService.getMinecraftVersions();
+
+  /**
+   * Progress mode.  
+   * Used to differentiate between retrieving the template and processing it.
+   *
+   * @public
+   * @type {ProgressBarMode}
+   */
+  public progressMode: ProgressBarMode = 'query';
+
+  /**
+   * Template processing progress.
+   *
+   * @public
+   * @type {number}
+   */
+  public progress = -1;
+
   /**
    * @constructor
    * @public
@@ -41,13 +72,31 @@ export class GeneratorComponent {
    * Builds the mod skeleton with the specified properties.
    *
    * @public
-   * @param {SkeletonForm} skeletonForm
+   * @param {SkeletonForm} form
    */
-  public buildSkeleton(skeletonForm: SkeletonForm) {
-    this.templateService.getTemplate(skeletonForm.minecraftVersion).subscribe(
-      templateZip => new JSZip().loadAsync(templateZip).then(
-        template => this[`processTemplate${skeletonForm.crystalNestMod ? 'Nest' : 'Others'}`](template, skeletonForm).generateAsync({type: 'blob'}).then(file => this.download(file, skeletonForm.modIdKebab))
-      )
+  public buildSkeleton(form: SkeletonForm) {
+    this.progress = 0;
+    this.templateService.getTemplate(form.minecraftVersion).subscribe(zip => new JSZip().loadAsync(zip).then(template => this.processTemplate(template, form).generateAsync({type: 'blob'}).then(file => this.download(file, form.modIdKebab))));
+  }
+
+  /**
+   * Processes the given zip template according to the provided properties.  
+   *
+   * @private
+   * @param {JSZip} template
+   * @param {SkeletonForm} form
+   * @returns {JSZip}
+   */
+  private processTemplate(template: JSZip, form: SkeletonForm): JSZip {
+    this.progressMode = 'determinate';
+    console.log(this.progressMode);
+    return this[`processTemplate${form.crystalNestMod ? 'Nest' : 'Others'}`](
+      template,
+      form,
+      `${TEMPLATE_MOD_ID_KEBAB}-${form.minecraftVersion}`,
+      TEMPLATE_LOADERS.filter(loader => !form.loaders.includes(loader)),
+      TEMPLATE_PLATFORMS.filter(platform => !form.platforms.includes(platform)),
+      100 / Object.keys(template.files).length
     );
   }
 
@@ -57,19 +106,19 @@ export class GeneratorComponent {
    *
    * @private
    * @param {JSZip} template
-   * @param {SkeletonForm} skeletonForm
-   * @param {SkeletonForm} skeletonForm.minecraftVersion
-   * @param {SkeletonForm} skeletonForm.modId
-   * @param {SkeletonForm} skeletonForm.modIdKebab
-   * @param {SkeletonForm} skeletonForm.modTitle
-   * @param {SkeletonForm} skeletonForm.loaders
-   * @param {SkeletonForm} skeletonForm.description
+   * @param {SkeletonForm} param0
+   * @param {SkeletonForm} param0.modId
+   * @param {SkeletonForm} param0.modIdKebab
+   * @param {SkeletonForm} param0.modTitle
+   * @param {SkeletonForm} param0.description
+   * @param {string} root
+   * @param {Lowercase<Loader>[]} excludedLoaders
+   * @param {Lowercase<Platform>[]} excludedPlatforms
+   * @param {number} step
    * @returns {JSZip}
    */
-  private processTemplateNest(template: JSZip, {minecraftVersion, modId, modIdKebab, modTitle, loaders, description}: SkeletonForm) {
+  private processTemplateNest(template: JSZip, {modId, modIdKebab, modTitle, description}: SkeletonForm, root: string, excludedLoaders: Lowercase<Loader>[], excludedPlatforms: Lowercase<Platform>[], step: number): JSZip {
     const zip = new JSZip();
-    const root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
-    const excludedLoaders = TEMPLATE_LOADERS.filter(loader => !loaders.includes(loader));
     template.forEach((path, entry) => {
       if (!excludedLoaders.some(loader => path.startsWith(`${root}/${loader}`))) {
         switch (true) {
@@ -81,7 +130,7 @@ export class GeneratorComponent {
             // Handle build.gradle when it's a Crystal Nest mod.
             zip.file(
               path.replace(root, modIdKebab),
-              entry.async('string').then(content => this.excludeLoaders(content, excludedLoaders))
+              entry.async('string').then(content => this.processBuildGradle(content, excludedLoaders, excludedPlatforms))
             );
             break;
           case path.endsWith('gradle.properties'):
@@ -108,7 +157,7 @@ export class GeneratorComponent {
           case path.endsWith('settings.gradle'):
             zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
             break;
-          case path.endsWith('.jar'):
+          case path.endsWith('.jar') || path.endsWith('.png'):
             zip.file(
               path.replace(root, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId),
               entry.async('arraybuffer')
@@ -123,7 +172,9 @@ export class GeneratorComponent {
             break;
         }
       }
+      this.progress += step;
     });
+    this.progress = 100;
     return zip;
   }
 
@@ -133,23 +184,23 @@ export class GeneratorComponent {
    *
    * @private
    * @param {JSZip} template
-   * @param {SkeletonForm} skeletonForm
-   * @param {SkeletonForm} skeletonForm.minecraftVersion
-   * @param {SkeletonForm} skeletonForm.group
-   * @param {SkeletonForm} skeletonForm.modId
-   * @param {SkeletonForm} skeletonForm.modIdKebab
-   * @param {SkeletonForm} skeletonForm.modTitle
-   * @param {SkeletonForm} skeletonForm.loaders
-   * @param {SkeletonForm} skeletonForm.authors
-   * @param {SkeletonForm} skeletonForm.description
-   * @param {SkeletonForm} skeletonForm.githubUser
+   * @param {SkeletonForm} param0
+   * @param {SkeletonForm} param0.group
+   * @param {SkeletonForm} param0.modId
+   * @param {SkeletonForm} param0.modIdKebab
+   * @param {SkeletonForm} param0.modTitle
+   * @param {SkeletonForm} param0.authors
+   * @param {SkeletonForm} param0.description
+   * @param {SkeletonForm} param0.githubUser
+   * @param {string} root
+   * @param {Lowercase<Loader>[]} excludedLoaders
+   * @param {Lowercase<Platform>[]} excludedPlatforms
+   * @param {number} step
    * @returns {JSZip}
    */
-  private processTemplateOthers(template: JSZip, {minecraftVersion, group, modId, modIdKebab, modTitle, loaders, authors, description, githubUser}: SkeletonForm) {
+  private processTemplateOthers(template: JSZip, {group, modId, modIdKebab, modTitle, authors, description, githubUser}: SkeletonForm, root: string, excludedLoaders: Lowercase<Loader>[], excludedPlatforms: Lowercase<Platform>[], step: number): JSZip {
     const zip = new JSZip();
-    const root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
     const groupPath = group.replaceAll('.', '/');
-    const excludedLoaders = TEMPLATE_LOADERS.filter(loader => !loaders.includes(loader));
     // eslint-disable-next-line complexity
     template.forEach((path, entry) => {
       if (!(path.includes('.github') || excludedLoaders.some(loader => path.startsWith(`${root}/${loader}`)))) {
@@ -162,7 +213,7 @@ export class GeneratorComponent {
             // Handle build.gradle when it's not a Crystal Nest mod.
             zip.file(
               path.replace(root, modIdKebab),
-              entry.async('string').then(content => this.excludeLoaders(content.replace(/sonar {[^]+subprojects/, 'subprojects').replace(/plugins(.*\r?\n){2}/, 'plugins {\n'), excludedLoaders))
+              entry.async('string').then(content => this.processBuildGradle(content.replace(/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, ''), excludedLoaders, excludedPlatforms))
             );
             break;
           case path.endsWith('gradle.properties'):
@@ -201,7 +252,7 @@ export class GeneratorComponent {
           case path.endsWith('settings.gradle'):
             zip.file(path.replace(root, modIdKebab), entry.async('string').then(content => this.excludeLoaders(content.replaceAll(TEMPLATE_MOD_ID_KEBAB, modIdKebab), excludedLoaders)));
             break;
-          case path.endsWith('.jar'):
+          case path.endsWith('.jar') || path.endsWith('.png'):
             zip.file(
               path.replace(root, modIdKebab).replaceAll(TEMPLATE_MOD_ID, modId),
               entry.async('arraybuffer')
@@ -216,7 +267,9 @@ export class GeneratorComponent {
             break;
         }
       }
+      this.progress += step;
     });
+    this.progress = 100;
     return zip;
   }
 
@@ -231,13 +284,55 @@ export class GeneratorComponent {
   private excludeLoaders(content: string, loaders: Lowercase<Loader>[]): string {
     return loaders.reduce(
       (prev, curr) => prev
+        // For settings.gradle
         .replace(new RegExp(`maven.+\\n.+"${curr}"\\n.+\\n.+\\s+`, 'i'), '')
         .replace(new RegExp(`include\\("${curr}"\\)\\n`, 'i'), '')
-        .replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), '')
+        // For gradle.properties
         .replace(new RegExp(`# ${curr}\\n.*\\n.*\\n\\n`, 'i'), '')
-        .replace(new RegExp(`\\s+"${curr}.*\\n.*`, 'i'), ''),
+        // For readme
+        .replace(new RegExp(`\\[!\\[${curr}.+l=${curr}\\)(!.{95})?`, 'i'), ''),
       content
     );
+  }
+
+  /**
+   * Processes the content of the root build.gradle file excluding the given loaders and platforms.
+   *
+   * @private
+   * @param {string} content
+   * @param {Lowercase<Loader>[]} loaders loaders to exclude.
+   * @param {Lowercase<Platform>[]} platforms platforms to exclude.
+   * @returns {string}
+   */
+  private processBuildGradle(content: string, loaders: Lowercase<Loader>[], platforms: Lowercase<Platform>[]): string {
+    let value = content;
+    if (loaders.length) {
+      if (loaders.includes('fabric')) {
+        value = value
+          .replace(/'isFabric \\? remapJar : jar/gi, 'jar')
+          .replace(/', "fabric\\.mod\\.json"/gi, '')
+          .replace(/'if.+fabric.+\\n.+\\n\\s+}\n/gi, '')
+          .replace(/'isFabric/gi, 'false');
+      }
+      value = value.replace(new RegExp(`(.*\\b(${loaders.join('|')})(\\b|_).+)+(\\s*break)?\\n?`, 'gi'), '');
+    }
+    platforms.forEach(platform => {
+      switch (platform) {
+        case 'maven':
+          value = value.replace(/\n  publishing(.*\n)+(\s+}){4,}\n/gi, '').replace(/.*\bpublish\b.*\n/g, '');
+          break;
+        case 'github':
+          value = value.replace(/\n  githubRelease(.*\n){1,32}.+noPublish\n  }\n/gi, '').replace(/.*github-?release.*\n/gi, '');
+          break;
+        case 'modrinth':
+          value = value.replace(/\n  modrinth(.*\n){1,32}.+noPublish\n  }\n/gi, '').replace(/.*modrinth.*\n/gi, '');
+          break;
+        case 'curseforge':
+          value = value.replace(/\n  curseforge(.*\n){1,32}.+noPublish\n    }\n  }\n/gi, '').replace(/.*curse.*\n/gi, '');
+          break;
+      }
+    });
+    return value;
   }
 
   /**
@@ -255,5 +350,7 @@ export class GeneratorComponent {
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
+    this.progress = -1;
+    this.progressMode = 'indeterminate';
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -6,8 +6,9 @@ import {GeneratorValidators} from '../../class/generator-validators.class';
 import {Loader} from '../../model/loader.type';
 import {MinecraftVersion} from '../../model/minecraft-version.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
+import {Platform} from '../../model/platform.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
-import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.constants';
+import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.const';
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
@@ -50,6 +51,22 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
   styleUrl: './generator-form.component.scss'
 })
 export class GeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
+  /**
+   * Available Minecraft versions.
+   *
+   * @public
+   * @type {!(Record<MinecraftVersion, MinecraftVersion> | null)}
+   */
+  @Input({required: true})
+  public versions!: Record<MinecraftVersion, MinecraftVersion> | null;
+
+  /**
+   * List of form steps.
+   *
+   * @public
+   * @readonly
+   * @type {Step[]}
+   */
   public readonly steps: Step[] = [
     {
       label: 'Minecraft and loaders'
@@ -67,23 +84,31 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
     }
   ];
 
+  /**
+   * Available mod loaders.
+   *
+   * @public
+   * @readonly
+   * @type {Record<Lowercase<Loader>, Loader>}
+   */
   public readonly loaders: Record<Lowercase<Loader>, Loader> = {
     fabric: 'Fabric',
     forge: 'Forge',
     neoforge: 'NeoForge'
   };
 
-  public readonly versions: Record<MinecraftVersion, MinecraftVersion> = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1.20.4': '1.20.4',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1.20.2': '1.20.2',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1.19.4': '1.19.4',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1.19.2': '1.19.2',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '1.18.2': '1.18.2'
+  /**
+   * Available publishing platforms.
+   *
+   * @public
+   * @readonly
+   * @type {Record<Lowercase<Platform>, Platform>}
+   */
+  public readonly platforms: Record<Lowercase<Platform>, Platform> = {
+    maven: 'Maven',
+    github: 'GitHub',
+    modrinth: 'Modrinth',
+    curseforge: 'CurseForge'
   };
 
   /**
@@ -190,6 +215,18 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         nonNullable: true,
         validators: Validators.required
       }),
+      platforms: new FormControl(
+        [
+          'maven',
+          'github',
+          'modrinth',
+          'curseforge'
+        ],
+        {
+          nonNullable: true,
+          validators: Validators.required
+        }
+      ),
       githubUser: new FormControl(TEMPLATE_GITHUB_USER, {
         nonNullable: true,
         validators: Validators.required

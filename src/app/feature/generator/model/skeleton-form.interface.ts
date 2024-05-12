@@ -1,5 +1,6 @@
 import {Loader} from './loader.type';
 import {MinecraftVersion} from './minecraft-version.type';
+import {Platform} from './platform.type';
 
 /**
  * Skeleton Generator form data.
@@ -51,6 +52,12 @@ export interface SkeletonForm {
    * @type {Lowercase<Loader>[]}
    */
   loaders: Lowercase<Loader>[];
+  /**
+   * Which platforms to setup.
+   *
+   * @type {Lowercase<Platform>[]}
+   */
+  platforms: Lowercase<Platform>[];
   /**
    * GitHub user owning the repository.
    *

@@ -88,7 +88,7 @@
             },
             "ObjectPattern": {
               "consistent": false,
-              "minProperties": 10
+              "minProperties": 15
             },
             "ImportDeclaration": "never",
             "ExportDeclaration": "never"
@@ -269,7 +269,7 @@
         "@typescript-eslint/no-magic-numbers": [
           "warn",
           {
-            "ignore": [-1, 0, 1],
+            "ignore": [-1, 0, 1, 100],
             "ignoreEnums": true,
             "ignoreNumericLiteralTypes": true,
             "ignoreReadonlyClassProperties": true,
