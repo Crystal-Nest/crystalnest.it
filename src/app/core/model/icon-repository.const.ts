@@ -33,10 +33,10 @@ function createIconRegistry(repository: string) {
    * @returns {<T extends string>(name: T) => Record<T, `${string}/${T}/${T}128.png` | `${string}/${T}/${T}128.gif`>}
    */
   function registerIcon(format: IconFormat) {
-    return function<T extends string>(name: T) {
+    return function<T extends string>(name: T, size?: IconSize) {
       return {
-        [name]: `${repository}/${name}/${name}${IconSize.L}.${format}`
-      } as Record<T, `${string}/${T}/${T}128.${IconFormat}`>;
+        [name]: `${repository}/${name}/${name}${size || ''}.${format}`
+      } as Record<T, `${string}/${T}/${T}${IconSize | ''}.${IconFormat}`>;
     };
   }
 
@@ -50,12 +50,12 @@ const crystalNestIconRegistry = createIconRegistry('https://raw.githubuserconten
 
 const CrystalNestIcon = {
   platformIcon: {
-    ...crystalNestIconRegistry.registerStaticIcon('github'),
-    ...crystalNestIconRegistry.registerStaticIcon('modrinth'),
-    ...crystalNestIconRegistry.registerStaticIcon('curseforge'),
-    ...crystalNestIconRegistry.registerStaticIcon('patreon'),
-    ...crystalNestIconRegistry.registerStaticIcon('kofi'),
-    ...crystalNestIconRegistry.registerStaticIcon('discord')
+    ...crystalNestIconRegistry.registerStaticIcon('github', IconSize.L),
+    ...crystalNestIconRegistry.registerStaticIcon('modrinth', IconSize.L),
+    ...crystalNestIconRegistry.registerStaticIcon('curseforge', IconSize.L),
+    ...crystalNestIconRegistry.registerStaticIcon('patreon', IconSize.L),
+    ...crystalNestIconRegistry.registerStaticIcon('kofi', IconSize.L),
+    ...crystalNestIconRegistry.registerStaticIcon('discord', IconSize.L)
   },
   modIcon: {
     ...crystalNestIconRegistry.registerStaticIcon('cobweb-mod-template'),
