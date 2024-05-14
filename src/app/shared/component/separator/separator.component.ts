@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 
 /**
  * Separator component.
@@ -16,5 +16,6 @@ import {Component, Input} from '@angular/core';
 })
 export class SeparatorComponent {
   @Input()
+  @HostBinding('class.horizontal')
   public horizontal = false;
 }

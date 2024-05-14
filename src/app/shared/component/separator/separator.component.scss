@@ -1,7 +1,7 @@
 @import "variables.scss";
 @import "theme.scss";
 
-.separator {
+:host {
   height: 100%;
   width: 0;
   border: $separator-border-size solid $purple-a500;

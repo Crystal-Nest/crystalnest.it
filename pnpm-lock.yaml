@@ -103,9 +103,6 @@ devDependencies:
   eslint-plugin-unused-imports:
     specifier: ^3.0.0
     version: 3.0.0(@typescript-eslint/eslint-plugin@6.20.0)(eslint@8.56.0)
-  ngx-scrollbar:
-    specifier: ^14.0.0
-    version: 14.0.0(@angular/cdk@17.1.2)(@angular/common@17.1.2)(@angular/core@17.1.2)
   prettier:
     specifier: ^3.2.5
     version: 3.2.5
@@ -438,6 +435,7 @@ packages:
       tslib: 2.6.2
     optionalDependencies:
       parse5: 7.1.2
+    dev: false
 
   /@angular/cli@17.1.2:
     resolution: {integrity: sha512-U1W6XZNrfeRkXW2fO3AU25rRttqZahVkhzcK3lAtJ8+lSrStCOF7x1gz6tmFZFte1fNHQrXqD0yIDkd8H2/cvw==}
@@ -478,6 +476,7 @@ packages:
       '@angular/core': 17.1.2(rxjs@7.8.1)(zone.js@0.14.3)
       rxjs: 7.8.1
       tslib: 2.6.2
+    dev: false
 
   /@angular/compiler-cli@17.1.2(@angular/compiler@17.1.2)(typescript@5.3.3):
     resolution: {integrity: sha512-4P4ttCe4IF9yq7bxCDxbVW7purN7qV0nqofP5Tth1xCsgIJeGmOMMQJN5RJCZNrAPMkvMv39eV878sgcDjbpOA==}
@@ -7133,19 +7132,6 @@ packages:
 
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
-    dev: true
-
-  /ngx-scrollbar@14.0.0(@angular/cdk@17.1.2)(@angular/common@17.1.2)(@angular/core@17.1.2):
-    resolution: {integrity: sha512-2JqiRAJpu+oEJpC3p0hVuJoPjav08Uw8afBhzSC8Om+8L/0GAkvsN14fXY+5CPgGOKt3nwHbxGI+Lr1X30rR9Q==}
-    peerDependencies:
-      '@angular/cdk': '>=17.0.0'
-      '@angular/common': '>=17.0.0'
-      '@angular/core': '>=17.0.0'
-    dependencies:
-      '@angular/cdk': 17.1.2(@angular/common@17.1.2)(@angular/core@17.1.2)(rxjs@7.8.1)
-      '@angular/common': 17.1.2(@angular/core@17.1.2)(rxjs@7.8.1)
-      '@angular/core': 17.1.2(rxjs@7.8.1)(zone.js@0.14.3)
-      tslib: 2.6.2
     dev: true
 
   /nice-napi@1.0.2:

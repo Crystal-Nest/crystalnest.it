@@ -1,67 +1,29 @@
 @import "variables.scss";
 
 :host {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $footer-section-separation;
-  height: $footer-height;
-  padding: $footer-section-separation clamp(4%, 16%, 256px);
-  background-color: black;
+  footer {
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    // gap: $footer-section-separation;
+    height: $footer-height;
+    padding: 1rem;
+    background-color: #0c0c0c;
 
-  > div {
-    max-width: 30%;
-  }
+    ul {
+      height: 100%;
+      list-style: none;
 
-  .description,
-  .projects {
-    display: flex;
-    flex-direction: column;
-    gap: $footer-item-separation;
-    height: 100%;
-    color: white;
-  }
+      &.infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-  .description .description-title {
-    display: flex;
-    align-items: center;
-    gap: $footer-item-separation;
-    font-size: $footer-title-size;
-    white-space: nowrap;
-
-    > img {
-      height: $footer-icon-size * 2;
+        > li:first-child {
+          height: 2.75rem;
+          font-size: 1.75rem;
+        }
+      }
     }
-  }
-
-  .projects {
-    justify-content: start;
-
-    .projects-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: $footer-title-size;
-      white-space: nowrap;
-      height: $footer-icon-size * 2;
-    }
-  }
-
-  .contacts {
-    > div {
-      display: flex;
-      flex-direction: column;
-      gap: $footer-item-separation;
-    }
-
-    cn-contact-button.cn-cell-12 {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  cn-contact-button {
-    height: $footer-icon-size;
   }
 }

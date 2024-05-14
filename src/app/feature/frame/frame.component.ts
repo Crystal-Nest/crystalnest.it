@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 
 import {FooterComponent} from './component/footer/footer.component';
 import {HeaderComponent} from './component/header/header.component';
-import {SidebarComponent} from './component/sidebar/sidebar.component';
 
 /**
  * Frame component.
@@ -14,7 +13,7 @@ import {SidebarComponent} from './component/sidebar/sidebar.component';
 @Component({
   selector: 'cn-frame',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, SidebarComponent],
+  imports: [HeaderComponent, FooterComponent],
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })

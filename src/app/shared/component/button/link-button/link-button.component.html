@@ -1,0 +1,19 @@
+@if (link.startsWith("http")) {
+  <a target="_blank" [href]="link">
+    @if (icon) {
+      <img [src]="icon" />
+    }
+    @if (text) {
+      <span>{{ text }}</span>
+    }
+  </a>
+} @else {
+  <a [routerLink]="link">
+    @if (icon) {
+      <img [src]="icon" />
+    }
+    @if (text) {
+      <span>{{ text }}</span>
+    }
+  </a>
+}

@@ -1,95 +1,51 @@
 @import "variables", "mixins";
 @import "@material/layout-grid/mdc-layout-grid";
 
+// Property grid-gap is overridden forcibly to workaround this known bug: https://github.com/material-components/material-components-web/issues/1879
+
 .cn-grid {
-  @include mdc-layout-grid-inner(desktop, 0, $grid-col-gap);
+  @include mdc-layout-grid-inner(desktop, 0, $grid-gap);
+  grid-gap: $grid-gap !important;
 
-  &.cn-top-spacing-l {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-top: $grid-row-gap-l;
-    }
-  }
-
-  &.cn-top-spacing-m {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-top: $grid-row-gap-m;
-    }
-  }
-
-  &.cn-top-spacing-s {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-top: $grid-row-gap-s;
-    }
-  }
-
-  &.cn-top-padding-l {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      padding-top: $grid-row-gap-l;
-    }
-  }
-
-  &.cn-top-padding-m {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      padding-top: $grid-row-gap-m;
-    }
-  }
-
-  &.cn-top-padding-s {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      padding-top: $grid-row-gap-s;
-    }
-  }
-
-  &.cn-bottom-spacing-l {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-bottom: $grid-row-gap-l;
-    }
-  }
-
-  &.cn-bottom-spacing-m {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-bottom: $grid-row-gap-m;
-    }
-  }
-
-  &.cn-bottom-spacing-s {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-bottom: $grid-row-gap-s;
-    }
-  }
-
-  &.cn-bottom-spacing-l {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-bottom: $grid-row-gap-l;
-    }
-  }
-
-  &.cn-bottom-spacing-m {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      margin-bottom: $grid-row-gap-m;
-    }
-  }
-
-  &.cn-bottom-padding-s {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      padding-bottom: $grid-row-gap-s;
-    }
-  }
-
-  .cn-cell {
+  > .cn-cell {
     @for $i from 1 to 13 {
       &-#{$i} {
-        @include mdc-layout-grid-cell(desktop, $i, $grid-col-gap);
+        @include mdc-layout-grid-cell(desktop, $i, $grid-gap);
 
-        &.align-self-to-top {
+        &.align-self-start {
           align-self: flex-start;
         }
 
-        &.align-self-to-center {
+        &.align-self-center {
           align-self: center;
         }
 
-        &.align-self-to-bottom {
+        &.align-self-end {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}
+
+.cn-grid-small {
+  @include mdc-layout-grid-inner(desktop, 0, $grid-gap-small);
+  grid-gap: $grid-gap-small !important;
+
+  > .cn-cell {
+    @for $i from 1 to 13 {
+      &-#{$i} {
+        @include mdc-layout-grid-cell(desktop, $i, $grid-gap-small);
+
+        &.align-self-start {
+          align-self: flex-start;
+        }
+
+        &.align-self-center {
+          align-self: center;
+        }
+
+        &.align-self-end {
           align-self: flex-end;
         }
       }

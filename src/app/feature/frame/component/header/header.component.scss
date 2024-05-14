@@ -2,36 +2,53 @@
 @import "theme.scss";
 
 :host {
-  display: flex;
-  background: $purple-900;
-  width: calc(100% - $nav-icon-size * 2);
-  height: $nav-icon-size * 2;
-  position: fixed;
+  position: sticky;
   top: 0;
+  z-index: 1;
 
-  > .header-title {
-    height: 100%;
-    padding: calc($nav-icon-size / 2);
+  header {
     display: flex;
-    align-items: center;
+    background-color: $purple-500;
     color: $purple-a500;
-    font-size: $nav-icon-size;
-    white-space: nowrap;
-    font-family: "Silkscreen";
-    cursor: pointer;
-  }
+    height: 5rem;
+    padding: 1rem;
 
-  > .header-content {
-    display: flex;
-    justify-content: end;
-    flex: 1;
-    height: 100%;
-    padding: calc($nav-icon-size / 2);
-    box-sizing: border-box;
+    nav {
+      align-items: center;
+      width: 100%;
 
-    .header-section {
-      display: flex;
-      gap: calc($nav-icon-size / 2);
+      ul {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: 2rem;
+        list-style: none;
+
+        &.cn-navigation {
+          gap: min(1.5rem, 4%);
+
+          > li:first-child {
+            color: #cb9aec;
+            height: 3rem;
+            font-size: 2rem;
+            margin-right: 2rem;
+          }
+        }
+
+        &.cn-pages {
+          gap: min(2rem, 4%);
+          justify-content: center;
+        }
+
+        &.cn-support {
+          justify-content: end;
+        }
+
+        > li {
+          height: 2rem;
+          font-size: 1.25rem;
+        }
+      }
     }
   }
 }
