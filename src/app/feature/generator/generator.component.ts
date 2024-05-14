@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {MatProgressBarModule, ProgressBarMode} from '@angular/material/progress-bar';
 import {RouterModule} from '@angular/router';
@@ -31,7 +31,6 @@ type Change = [(string | RegExp), string] | [(string | RegExp), string, boolean]
     CommonModule,
     RouterModule,
     HttpClientModule,
-    HttpClientJsonpModule,
     GeneratorFormComponent,
     MatProgressBarModule
   ],
@@ -188,7 +187,7 @@ export class GeneratorComponent {
             break;
           case path.endsWith('.jar') || path.endsWith('.png'):
             // Data files: parse them as arraybuffer rather than string.
-            zip.file(this.process(path, [rootChange, modIdChange]), entry.async('arraybuffer'));
+            zip.file(this.process(path, [rootChange, modIdChange, modIdKebabChange]), entry.async('arraybuffer'));
             break;
           case path.endsWith('CommonModLoader.java'):
             // File CommonModLoader.java: replace mod properties and optionally remove configuration references.
