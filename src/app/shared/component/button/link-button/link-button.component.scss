@@ -5,20 +5,20 @@
   a:visited,
   a:hover,
   a:active {
+    height: 100%;
+    width: fit-content;
     text-decoration: none;
     font-size: inherit;
     color: inherit;
     display: flex;
     align-items: center;
     gap: 1rem;
-    height: 100%;
-    width: 100%;
     transition-duration: 0.2s;
     border-radius: 4px;
   }
 
   a:hover {
-    filter: brightness(80%);
+    filter: brightness(0.8);
   }
 
   span {

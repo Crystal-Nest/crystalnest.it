@@ -16,12 +16,41 @@ import {RouterModule} from '@angular/router';
   styleUrl: './link-button.component.scss'
 })
 export class LinkButtonComponent {
+  /**
+   * Link.
+   *
+   * @public
+   * @type {string}
+   */
   @Input({required: true})
   public link = '';
 
+  /**
+   * Optional image.  
+   * At least one of {@link icon} and {@link text} must be set.
+   *
+   * @public
+   * @type {string}
+   */
   @Input()
   public icon = '';
 
+  /**
+   * Optional text.  
+   * At least one of {@link icon} and {@link text} must be set.
+   *
+   * @public
+   * @type {string}
+   */
   @Input()
   public text = '';
+
+  /**
+   * Whether to handle hover.
+   *
+   * @public
+   * @type {boolean}
+   */
+  @Input()
+  public hover = true;
 }

@@ -2,9 +2,9 @@
   <nav class="cn-grid">
     <ul class="cn-cell-9 cn-navigation">
       <li><cn-link-button icon="/assets/images/home-round.png" link="" text="Crystal Nest" /></li>
-      <li><cn-link-button link="/generator" text="Mod generator" /></li>
-      <li><cn-link-button link="/versioning" text="Mod versioning" /></li>
-      <li><cn-link-button link="/mods" text="Browse mods" /></li>
+      <li [class.active]="activeRoute === 'generator'"><cn-link-button link="/generator" text="Mod generator" /></li>
+      <li [class.active]="activeRoute === 'versioning'"><cn-link-button link="/versioning" text="Mod versioning" /></li>
+      <li [class.active]="activeRoute === 'mods'"><cn-link-button link="/mods" text="Browse mods" /></li>
     </ul>
     <ul class="cn-cell-3 cn-support">
       <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github128.png" link="https://github.com/Crystal-Nest" /></li>

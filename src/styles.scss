@@ -1,6 +1,6 @@
 @use "@angular/material" as material;
 @import "styles/variables", "styles/grids", "styles/mixins";
-@import "styles/override/sidenav", "styles/override/input", "styles/override/stepper.scss", "styles/override/select.scss";
+@import "styles/override/card.scss", "styles/override/input", "styles/override/stepper.scss", "styles/override/select.scss";
 
 * {
   box-sizing: border-box;

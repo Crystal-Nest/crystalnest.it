@@ -18,8 +18,8 @@ $purple-a100: #ffffff;
 $purple-a200: #ffffff;
 $purple-a300: #ffffff;
 $purple-a400: #ffffff;
-$purple-a500: #b073d9;
-$purple-a600: #ffffff;
+$purple-a500: #ffffff;
+$purple-a600: #b073d9;
 $purple-a700: #ffffff;
 $purple-a800: #ffffff;
 $purple-a900: #ffffff;
@@ -87,6 +87,7 @@ $cn-dark-theme: material.define-dark-theme(
 @include material.input-theme($cn-light-theme);
 @include material.select-theme($cn-light-theme);
 @include material.progress-bar-theme($cn-light-theme);
+@include material.card-theme($cn-light-theme);
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -103,4 +104,5 @@ $cn-dark-theme: material.define-dark-theme(
   @include material.input-color($cn-dark-theme);
   @include material.select-color($cn-dark-theme);
   @include material.progress-bar-color($cn-dark-theme);
+  @include material.card-color($cn-dark-theme);
 }

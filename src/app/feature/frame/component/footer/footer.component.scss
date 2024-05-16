@@ -2,27 +2,53 @@
 
 :host {
   footer {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
-    // gap: $footer-section-separation;
+    display: flex;
+    justify-content: center;
     height: $footer-height;
     padding: 1rem;
     background-color: #0c0c0c;
+    color: #c0cad4;
 
     ul {
-      height: 100%;
       list-style: none;
 
       &.infos {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-width: fit-content;
 
-        > li:first-child {
-          height: 2.75rem;
-          font-size: 1.75rem;
+        > li {
+          &:first-child {
+            height: 2.75rem;
+            font-size: 1.75rem;
+            white-space: nowrap;
+            color: white;
+          }
+
+          a {
+            color: #68b0f3;
+
+            &:hover {
+              color: #86bfff;
+            }
+            &:active {
+              color: #95c5ff;
+            }
+          }
         }
+      }
+
+      &.links > li {
+        height: calc(($footer-height - 2rem - $grid-gap-small) / 2);
+        width: fit-content;
+      }
+
+      &.banner > li {
+        height: calc($footer-height - 2rem);
+        width: fit-content;
+        align-self: center;
+        margin: 0 1.5rem 0 1.25rem;
       }
     }
   }

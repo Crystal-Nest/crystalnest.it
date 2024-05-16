@@ -1,0 +1,6 @@
+<cn-mods-form (onSubmit)="search($event)"></cn-mods-form>
+<section>
+  @for (mod of mods$ | async; track mod.name) {
+    <cn-card [description]="mod.description" [hasWiki]="mod.has_wiki" [isApi]="mod.topics.includes('mod-api')" [isTemplate]="mod.is_template" [loaders]="[]" [minecraftVersions]="[]" [subtitle]="mod.subtitle" [title]="mod.name" />
+  }
+</section>

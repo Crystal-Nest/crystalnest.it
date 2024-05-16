@@ -26,7 +26,7 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
  * Generator form.
  *
  * @export
- * @class CnGeneratorFormComponent
+ * @class GeneratorFormComponent
  * @typedef {GeneratorFormComponent}
  * @extends {FormComponent<SkeletonForm>}
  * @implements {OnInit}
@@ -36,7 +36,6 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
   standalone: true,
   imports: [
     StepDirective,
-    CheckboxComponent,
     MatIconModule,
     ReactiveFormsModule,
     InputComponent,

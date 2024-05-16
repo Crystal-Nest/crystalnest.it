@@ -13,15 +13,15 @@
         @include mdc-layout-grid-cell(desktop, $i, $grid-gap);
 
         &.align-self-start {
-          align-self: flex-start;
+          justify-self: flex-start;
         }
 
         &.align-self-center {
-          align-self: center;
+          justify-self: center;
         }
 
         &.align-self-end {
-          align-self: flex-end;
+          justify-self: flex-end;
         }
       }
     }
@@ -38,15 +38,15 @@
         @include mdc-layout-grid-cell(desktop, $i, $grid-gap-small);
 
         &.align-self-start {
-          align-self: flex-start;
+          justify-self: flex-start;
         }
 
         &.align-self-center {
-          align-self: center;
+          justify-self: center;
         }
 
         &.align-self-end {
-          align-self: flex-end;
+          justify-self: flex-end;
         }
       }
     }

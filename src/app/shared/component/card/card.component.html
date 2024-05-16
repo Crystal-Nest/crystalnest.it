@@ -1,0 +1,19 @@
+<mat-card role="listitem">
+  <mat-card-header>
+    <img mat-card-avatar [src]="picture" />
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="preview" />
+  <mat-card-content>
+    {{ description }}
+  </mat-card-content>
+  <mat-card-actions>
+    @if (hasWiki) {
+      <cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github128.png" [link]="wiki" />
+    }
+    <cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github128.png" [link]="github" />
+    <cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth128.png" [link]="modrinth" />
+    <cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge128.png" [link]="curseforge" />
+  </mat-card-actions>
+</mat-card>

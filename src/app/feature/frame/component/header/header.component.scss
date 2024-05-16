@@ -4,12 +4,12 @@
 :host {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
 
   header {
     display: flex;
     background-color: $purple-500;
-    color: $purple-a500;
+    color: white;
     height: 5rem;
     padding: 1rem;
 
@@ -27,11 +27,23 @@
         &.cn-navigation {
           gap: min(1.5rem, 4%);
 
-          > li:first-child {
-            color: #cb9aec;
-            height: 3rem;
-            font-size: 2rem;
-            margin-right: 2rem;
+          > li {
+            transition: 0.2s;
+            border-bottom: 0 solid $purple-a600;
+            border-radius: 0.25rem;
+
+            &:first-child {
+              color: white;
+              height: 3rem;
+              font-size: 2rem;
+              margin-right: 2rem;
+            }
+
+            &.active {
+              height: 2.5rem;
+              transform: translateY(-0.25rem);
+              border-bottom-width: 0.25rem;
+            }
           }
         }
 

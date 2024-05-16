@@ -2,7 +2,6 @@ import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {MatProgressBarModule, ProgressBarMode} from '@angular/material/progress-bar';
-import {RouterModule} from '@angular/router';
 import JSZip, {JSZipObject} from '@progress/jszip-esm';
 
 import {GeneratorFormComponent} from './component/generator-form/generator-form.component';
@@ -29,7 +28,6 @@ type Change = [(string | RegExp), string] | [(string | RegExp), string, boolean]
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     HttpClientModule,
     GeneratorFormComponent,
     MatProgressBarModule
