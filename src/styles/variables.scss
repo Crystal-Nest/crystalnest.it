@@ -1,6 +1,7 @@
 // Grid.
 $grid-gap: 1rem;
 $grid-gap-small: 0.75rem;
+$grid-gap-tiny: 0.5rem;
 
 // Separator
 $separator-margin: 0.5rem;
@@ -16,3 +17,10 @@ $footer-height: 10rem;
 $footer-title-size: 2rem;
 $footer-section-separation: 2rem;
 $footer-item-separation: 0.5rem;
+
+// Media queries
+$desktop: 980px;
+$desktop-small: 860px;
+$desktop-tiny: 740px;
+$mobile: 500px;
+$mobile-small: 360px;

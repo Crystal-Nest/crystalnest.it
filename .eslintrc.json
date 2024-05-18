@@ -179,7 +179,7 @@
             "paths": ["rxjs/Rx"]
           }
         ],
-        "max-nested-callbacks": ["error", 4],
+        "max-nested-callbacks": "off",
         "no-labels": [
           "error",
           {

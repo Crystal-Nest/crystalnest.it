@@ -1,4 +1,4 @@
-import {MinecraftVersion} from './minecraft-version.type';
+import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
 
 /**
  * Commit data.

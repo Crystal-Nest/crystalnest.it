@@ -1,5 +1,33 @@
 :host {
   mat-card {
     height: 100%;
+
+    mat-card-content {
+      > .details {
+        margin-top: auto;
+        padding-top: 2rem;
+
+        > .releases {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    mat-card-actions {
+      ul {
+        list-style: none;
+        display: flex;
+        gap: 0.5rem;
+
+        > li {
+          height: 2rem;
+
+          > img {
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 }

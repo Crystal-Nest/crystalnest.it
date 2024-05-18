@@ -1,3 +1,6 @@
+import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
+import {ModLoader} from '~cn/core/model/mod-loader.type';
+
 /**
  * Mods filter form data.
  *
@@ -12,6 +15,18 @@ export interface ModsForm {
    * @type {string}
    */
   query: string;
+  /**
+   * Supported Minecraft versions.
+   *
+   * @type {MinecraftVersion[]}
+   */
+  versions: MinecraftVersion[];
+  /**
+   * Supported mod loaders.
+   *
+   * @type {Lowercase<ModLoader>[]}
+   */
+  loaders: Lowercase<ModLoader>[];
   /**
    * Whether it's required client-side.
    *

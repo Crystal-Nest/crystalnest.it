@@ -1,15 +1,15 @@
-import {CommonModule} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {MatProgressBarModule, ProgressBarMode} from '@angular/material/progress-bar';
 import JSZip, {JSZipObject} from '@progress/jszip-esm';
 
 import {GeneratorFormComponent} from './component/generator-form/generator-form.component';
-import {Loader} from './model/loader.type';
 import {Platform} from './model/platform.type';
 import {SkeletonForm} from './model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from './model/template.const';
 import {TemplateService} from './service/template.service';
+import {ModLoader} from '../../core/model/mod-loader.type';
 
 /**
  * Change to apply to a file, replacing the first value with the second one, only if the third one is true or absent.
@@ -27,7 +27,7 @@ type Change = [(string | RegExp), string] | [(string | RegExp), string, boolean]
   selector: 'cn-generator',
   standalone: true,
   imports: [
-    CommonModule,
+    AsyncPipe,
     HttpClientModule,
     GeneratorFormComponent,
     MatProgressBarModule
@@ -88,7 +88,7 @@ export class GeneratorComponent {
    * @param {JSZip} template
    * @param {SkeletonForm} form
    * @param {MinecraftVersion} form.minecraftVersion
-   * @param {Lowercase<Loader>[]} form.loaders
+   * @param {Lowercase<ModLoader>[]} form.loaders
    * @param {Lowercase<Platform>[]} form.platforms
    * @param {string} form.group
    * @param {string} form.modId
@@ -234,11 +234,11 @@ export class GeneratorComponent {
    *
    * @private
    * @param {string} content
-   * @param {Lowercase<Loader>[]} loaders loaders to exclude.
+   * @param {Lowercase<ModLoader>[]} loaders loaders to exclude.
    * @param {Lowercase<Platform>[]} platforms platforms to exclude.
    * @returns {string}
    */
-  private processBuildGradle(content: string, loaders: Lowercase<Loader>[], platforms: Lowercase<Platform>[]): string {
+  private processBuildGradle(content: string, loaders: Lowercase<ModLoader>[], platforms: Lowercase<Platform>[]): string {
     let value = content;
     if (loaders.length) {
       if (loaders.includes('fabric')) {
@@ -273,10 +273,10 @@ export class GeneratorComponent {
    * Returns the {@link Change changes} needed to exclude the given loaders from files.
    *
    * @private
-   * @param {Lowercase<Loader>[]} loaders
+   * @param {Lowercase<ModLoader>[]} loaders
    * @returns {Change[]}
    */
-  private loadersChanges(loaders: Lowercase<Loader>[]): Change[] {
+  private loadersChanges(loaders: Lowercase<ModLoader>[]): Change[] {
     return loaders.flatMap(loader => [
       // For settings.gradle
       [new RegExp(`maven.+\\n.+"${loader}"\\n.+\\n.+\\s+`, 'i'), ''],

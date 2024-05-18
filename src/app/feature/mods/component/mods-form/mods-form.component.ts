@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
 import {ModsForm} from '../../model/mods-form.interface';
@@ -32,7 +32,14 @@ import {InputComponent} from '~cn/shared/component/form/input/input.component';
   templateUrl: './mods-form.component.html',
   styleUrl: './mods-form.component.scss'
 })
-export class ModsFormComponent extends FormComponent<ModsForm> {
+export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit {
+  /**
+   * @inheritdoc
+   */
+  public ngOnInit(): void {
+    this.valueChanges('query', () => this.emitSubmit(), (_, index) => index > 0 && this.validity);
+  }
+
   /**
    * @inheritdoc
    *
@@ -42,6 +49,8 @@ export class ModsFormComponent extends FormComponent<ModsForm> {
   protected override initForm(): FormType<ModsForm> {
     return {
       query: new FormControl('', {nonNullable: true}),
+      versions: new FormControl([], {nonNullable: true}),
+      loaders: new FormControl([], {nonNullable: true}),
       client: new FormControl(false),
       server: new FormControl(false)
     };

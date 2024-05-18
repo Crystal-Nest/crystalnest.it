@@ -2,11 +2,9 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs';
 
+import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
 import {Branch} from '../model/branch.interface';
-import {MinecraftVersion} from '../model/minecraft-version.type';
 import {TEMPLATE_GITHUB_USER, TEMPLATE_MOD_ID_KEBAB} from '../model/template.const';
-
-import {GITHUB_HEADERS} from '~cn/core/model/github.const';
 
 /**
  * Handles HTTP calls regarding the mod template.
@@ -34,7 +32,10 @@ export class TemplateService {
     return this.http.get<Branch[]>(
       'https://api.github.com/repos/crystal-nest/cobweb-mod-template/branches',
       {
-        headers: GITHUB_HEADERS,
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'X-GitHub-Api-Version': '2022-11-28'
+        },
         responseType: 'json'
       }
     ).pipe(

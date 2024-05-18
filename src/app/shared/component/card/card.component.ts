@@ -1,10 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
+import {MarkdownComponent} from 'ngx-markdown';
 
 import {LinkButtonComponent} from '../button/link-button/link-button.component';
+import {LabelComponent} from '../label/label.component';
 
-import {Loader} from '~cn/feature/generator/model/loader.type';
-import {MinecraftVersion} from '~cn/feature/generator/model/minecraft-version.type';
+import {ModLoader, formatLoader} from '~cn/core/model/mod-loader.type';
+import {TypedChanges} from '~cn/core/model/typed-changes.type';
+import {Mod} from '~cn/feature/mods/model/mod.interface';
 
 /**
  * Card component.
@@ -16,56 +19,63 @@ import {MinecraftVersion} from '~cn/feature/generator/model/minecraft-version.ty
 @Component({
   selector: 'cn-card',
   standalone: true,
-  imports: [MatCardModule, LinkButtonComponent],
+  imports: [
+    MatCardModule,
+    MarkdownComponent,
+    LabelComponent,
+    LinkButtonComponent
+  ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent {
+export class CardComponent implements OnChanges {
   @Input({required: true})
-  public title!: string;
+  public mod!: Mod;
 
-  @Input({required: true})
-  public subtitle!: string;
+  public side = '';
 
-  @Input({required: true})
-  public description!: string;
-
-  @Input({required: true})
-  public minecraftVersions!: MinecraftVersion[];
-
-  @Input({required: true})
-  public loaders!: Lowercase<Loader>[];
-
-  @Input({required: true})
-  public hasWiki!: boolean;
-
-  @Input({required: true})
-  public isApi!: boolean;
-
-  @Input({required: true})
-  public isTemplate!: boolean;
+  public sideIcon = '';
 
   public get picture(): string {
-    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.title}/${this.title}.png`;
+    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/${this.mod.name}.png`;
   }
 
   public get preview(): string {
-    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.title}/social-preview.png`;
+    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/social-preview.png`;
   }
 
   public get github(): string {
-    return `https://github.com/crystal-nest/${this.title}`;
+    return `https://github.com/crystal-nest/${this.mod.name}`;
   }
 
   public get modrinth(): string {
-    return `https://modrinth.com/mod/${this.title}`;
+    return `https://modrinth.com/mod/${this.mod.name}`;
   }
 
   public get curseforge(): string {
-    return `https://www.curseforge.com/minecraft/mc-mods/${this.title}`;
+    return `https://www.curseforge.com/minecraft/mc-mods/${this.mod.name}`;
   }
 
   public get wiki(): string {
-    return `https://github.com/crystal-nest/${this.title}/wiki`;
+    return `https://github.com/crystal-nest/${this.mod.name}/wiki`;
+  }
+
+  public get api(): string {
+    return `https://github.com/crystal-nest/${this.mod.name}/wiki/Setup#add-as-a-dependency`;
+  }
+
+  public get template(): string {
+    return `https://github.com/new?template_name=${this.mod.name}&template_owner=Crystal-Nest`;
+  }
+
+  public ngOnChanges(changes: TypedChanges<CardComponent>): void {
+    if (changes.mod) {
+      this.side = Object.entries(this.mod).filter(([key, value]) => ['client', 'server'].includes(key) && value).map(([key]) => key.charAt(0).toUpperCase() + key.slice(1)).join(' & ');
+      this.sideIcon = this.side.replace(' & ', '-').toLowerCase();
+    }
+  }
+
+  public formatLoaders(loaders: Lowercase<ModLoader>[]): ModLoader[] {
+    return loaders.map(formatLoader);
   }
 }

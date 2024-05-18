@@ -1,10 +1,12 @@
-import {CommonModule} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {Component} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Store} from '@ngrx/store';
 
 import {ModsFormComponent} from './component/mods-form/mods-form.component';
 import {ModsForm} from './model/mods-form.interface';
+import {filterMods, retrieveMods} from './redux/actions';
+import {State, modsFeature} from './redux/feature';
 import {ModsService} from './service/mods.service';
 
 import {CardComponent} from '~cn/shared/component/card/card.component';
@@ -20,7 +22,7 @@ import {CardComponent} from '~cn/shared/component/card/card.component';
   selector: 'cn-mods',
   standalone: true,
   imports: [
-    CommonModule,
+    AsyncPipe,
     HttpClientModule,
     ModsFormComponent,
     CardComponent
@@ -30,18 +32,18 @@ import {CardComponent} from '~cn/shared/component/card/card.component';
   styleUrl: './mods.component.scss'
 })
 export class ModsComponent {
-  public readonly mods$: Observable<any[]> = of([]);// This.modsService.getMods(30, 1);
+  public readonly mods$ = this.store$.select(modsFeature.selectFilteredMods);
 
   /**
    * @constructor
    * @public
-   * @param {ModsService} modsService
+   * @param {Store<State>} store$
    */
-  public constructor(private readonly modsService: ModsService) {
-    // This.modsService.getMods(5, 1).subscribe(console.log);
+  public constructor(private readonly store$: Store<State>) {
+    this.store$.dispatch(retrieveMods());
   }
 
   public search(form: ModsForm) {
-    console.log(form);
+    this.store$.dispatch(filterMods(form));
   }
 }

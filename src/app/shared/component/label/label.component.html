@@ -1,0 +1,11 @@
+<span>{{ label }}:</span>
+<div>
+  @if (values) {
+    @for (item of values; track item.value; let last = $last) {
+      @if (item.icon) {
+        <mat-icon [svgIcon]="item.icon" />
+      }
+      <strong>{{ item.value + (last ? "" : ", ") }}</strong>
+    }
+  }
+</div>

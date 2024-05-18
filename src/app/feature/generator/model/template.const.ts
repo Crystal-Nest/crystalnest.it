@@ -1,5 +1,5 @@
-import {Loader} from './loader.type';
 import {Platform} from './platform.type';
+import {ModLoader} from '../../../core/model/mod-loader.type';
 
 /**
  * Template java group.
@@ -58,9 +58,9 @@ export const TEMPLATE_SUPPORT_SECTION = /\*\*Support us\*\*(.|\n)*/;
 /**
  * Template supported mod loaders.
  *
- * @type {Lowercase<Loader>[]}
+ * @type {Lowercase<ModLoader>[]}
  */
-export const TEMPLATE_LOADERS: Lowercase<Loader>[] = ['fabric', 'forge', 'neoforge'];
+export const TEMPLATE_LOADERS: Lowercase<ModLoader>[] = ['fabric', 'forge', 'neoforge'];
 /**
  * Template supported publishing platforms.
  *

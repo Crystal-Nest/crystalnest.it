@@ -2,9 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 
+import {MinecraftVersion} from '../../../../core/model/minecraft-version.type';
+import {MOD_LOADERS} from '../../../../core/model/mod-loader.type';
 import {GeneratorValidators} from '../../class/generator-validators.class';
-import {Loader} from '../../model/loader.type';
-import {MinecraftVersion} from '../../model/minecraft-version.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {Platform} from '../../model/platform.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
@@ -88,13 +88,9 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    *
    * @public
    * @readonly
-   * @type {Record<Lowercase<Loader>, Loader>}
+   * @type {Record<Lowercase<ModLoader>, ModLoader>}
    */
-  public readonly loaders: Record<Lowercase<Loader>, Loader> = {
-    fabric: 'Fabric',
-    forge: 'Forge',
-    neoforge: 'NeoForge'
-  };
+  public readonly loaders = MOD_LOADERS;
 
   /**
    * Available publishing platforms.

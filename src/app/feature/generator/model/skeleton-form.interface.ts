@@ -1,6 +1,6 @@
-import {Loader} from './loader.type';
-import {MinecraftVersion} from './minecraft-version.type';
 import {Platform} from './platform.type';
+import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
+import {ModLoader} from '../../../core/model/mod-loader.type';
 
 /**
  * Skeleton Generator form data.
@@ -47,11 +47,11 @@ export interface SkeletonForm {
    */
   modIdKebab: string;
   /**
-   * Which loaders to setup.
+   * Which mod loaders to setup.
    *
-   * @type {Lowercase<Loader>[]}
+   * @type {Lowercase<ModLoader>[]}
    */
-  loaders: Lowercase<Loader>[];
+  loaders: Lowercase<ModLoader>[];
   /**
    * Which platforms to setup.
    *

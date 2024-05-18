@@ -1,0 +1,28 @@
+@import "variables.scss";
+@import "theme.scss";
+
+:host {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  > span {
+    white-space: nowrap;
+  }
+
+  > div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+
+    > mat-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    > strong {
+      white-space: nowrap;
+    }
+  }
+}

@@ -7,9 +7,22 @@
   height: 4rem !important;
   margin: 0 !important;
   border-radius: 0.25rem !important;
-  align-self: center;
+  align-self: center !important;
 }
 
 .mat-mdc-card-title {
   font-size: 2rem !important;
+}
+
+.mat-mdc-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  padding: 1rem !important;
+}
+
+.mdc-card__actions {
+  margin-top: auto !important;
+  justify-content: space-between !important;
+  padding: 1rem !important;
 }

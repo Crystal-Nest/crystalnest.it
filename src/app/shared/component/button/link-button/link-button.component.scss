@@ -15,10 +15,15 @@
     gap: 1rem;
     transition-duration: 0.2s;
     border-radius: 4px;
+    cursor: pointer;
   }
 
   a:hover {
     filter: brightness(0.8);
+  }
+
+  a:active {
+    scale: 0.95;
   }
 
   span {

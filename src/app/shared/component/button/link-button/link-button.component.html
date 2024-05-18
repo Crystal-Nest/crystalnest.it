@@ -1,5 +1,5 @@
 @if (link.startsWith("http")) {
-  <a target="_blank" [href]="link">
+  <a target="_blank" [href]="disabled ? '#' : link">
     @if (icon) {
       <img [src]="icon" />
     }
@@ -8,7 +8,7 @@
     }
   </a>
 } @else {
-  <a [routerLink]="link">
+  <a [routerLink]="disabled ? null : link">
     @if (icon) {
       <img [src]="icon" />
     }

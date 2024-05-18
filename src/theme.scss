@@ -88,10 +88,13 @@ $cn-dark-theme: material.define-dark-theme(
 @include material.select-theme($cn-light-theme);
 @include material.progress-bar-theme($cn-light-theme);
 @include material.card-theme($cn-light-theme);
+@include material.menu-theme($cn-light-theme);
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
+    --mdc-elevated-card-container-color: #202020;
+    --mat-menu-container-color: #1e1b33;
   }
   @include material.core-color($cn-dark-theme);
   @include material.sidenav-color($cn-dark-theme);
@@ -105,4 +108,5 @@ $cn-dark-theme: material.define-dark-theme(
   @include material.select-color($cn-dark-theme);
   @include material.progress-bar-color($cn-dark-theme);
   @include material.card-color($cn-dark-theme);
+  @include material.menu-color($cn-dark-theme);
 }

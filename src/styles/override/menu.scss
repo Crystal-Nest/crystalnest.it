@@ -1,0 +1,20 @@
+.cdk-overlay-connected-position-bounding-box {
+  right: 0 !important;
+  width: 100% !important;
+
+  > .cdk-overlay-pane {
+    width: 100% !important;
+    top: 5rem !important;
+    right: 0 !important;
+
+    > .mat-mdc-menu-panel.cn-nav-menu {
+      max-width: 100% !important;
+      width: 100% !important;
+      transform-origin: top !important;
+      border-radius: 0 !important;
+      box-shadow:
+        0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0px 8px 10px 1px rgba(0, 0, 0, 0.14) !important;
+    }
+  }
+}

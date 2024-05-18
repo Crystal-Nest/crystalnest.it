@@ -46,11 +46,11 @@ export class LinkButtonComponent {
   public text = '';
 
   /**
-   * Whether to handle hover.
+   * Whether to disable navigation.
    *
    * @public
    * @type {boolean}
    */
   @Input()
-  public hover = true;
+  public disabled = false;
 }
