@@ -1,0 +1,23 @@
+name: ❓ Question
+description: Ask a question about this website
+labels: ["question", "medium priority"]
+assignees: ["Crystal-Spider"]
+body:
+- type: checkboxes
+  attributes:
+    label: I have confirmed no other issue asks the same question
+    description: Please search if an issue already exists for the question you're asking.
+    options:
+    - label: I have searched for existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Question
+    description: Ask a question about this website.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
+    description: |
+      Insert here anything that will give us more context about the question you're asking.
