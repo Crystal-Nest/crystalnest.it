@@ -1,1 +1,47 @@
-
+name: 🐞 Bug report 
+description: File a bug report
+labels: ["bug", "medium priority"]
+assignees: ["Crystal-Spider"]
+body:
+- type: checkboxes
+  attributes:
+    label: I have confirmed no other issue reports this bug
+    description: Please search if an issue already exists for the bug you've encountered.
+    options:
+    - label: I have searched for existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Current behavior
+    description: A concise description of what you're experiencing.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected behavior
+    description: A concise description of what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps to reproduce
+    description: Steps to reproduce the behavior.
+    placeholder: |
+      1. With this config...
+      2. Enter a world...
+      3. Do this...
+      4. Bug happens...
+- type: input
+  attributes:
+    label: Operating System
+    description: |
+      OS you're using.
+    placeholder: |
+      E.g. Windows 10/11, macOS 14, Android 14, etc.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
+    description: |
+      Insert here anything that will give us more context about the issue you are encountering.
