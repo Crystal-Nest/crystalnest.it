@@ -1,0 +1,27 @@
+name: 🗳️ Feature request 
+description: File a feature request
+labels: ["enhancement", "medium priority"]
+assignees: ["Crystal-Spider"]
+body:
+- type: checkboxes
+  attributes:
+    label: I have confirmed no other issue asks for this
+    description: Please search if an issue already exists for the feature you wish for.
+    options:
+    - label: I have searched for existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Desired behavior
+    description: A concise description of what you'd like to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Current behavior
+    description: Optionally, a concise description of the current behavior.
+- type: textarea
+  attributes:
+    label: Additional context
+    description: |
+      Insert here anything that will give us more context about the feature you wish for.
