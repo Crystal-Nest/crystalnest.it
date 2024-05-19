@@ -6,7 +6,7 @@
   </mat-card-header>
   <img mat-card-image [src]="preview" />
   <mat-card-content>
-    <markdown #description class="description" [class.scrollable]="scrollable" [data]="mod.description" (scroll)="checkScrolledToBottom($event)" />
+    <markdown #description class="description" [class.scrollable]="scrollable" [class.scrollable-top]="!scrollable" [data]="mod.description" (scroll)="checkScrolledToBottom($event)" />
     <div class="cn-grid-tiny details">
       <cn-label class="cn-cell-12" label="Minecraft" [value]="mod.versions" />
       <cn-label class="cn-cell-12" label="Loader" [icons]="mod.loaders" [value]="formatLoaders(mod.loaders)" />

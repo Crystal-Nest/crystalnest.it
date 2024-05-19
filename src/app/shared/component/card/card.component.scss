@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 :host {
   mat-card {
     height: 100%;
@@ -10,6 +12,10 @@
         &.scrollable {
           mask-image: linear-gradient(180deg, #000 80%, transparent);
         }
+
+        &.scrollable-top {
+          mask-image: linear-gradient(0deg, #000 80%, transparent);
+        }
       }
 
       > .details {
@@ -19,6 +25,8 @@
         > .releases {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          gap: $grid-gap-tiny;
         }
       }
     }
