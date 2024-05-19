@@ -1,8 +1,8 @@
 <header>
   <nav class="cn-grid">
     <ul class="cn-cell-9 navigation">
-      <li #title>
-        <cn-link-button icon="/assets/images/home-round.png" link="" text="Crystal Nest" [disabled]="true" [matMenuTriggerFor]="menu" />
+      <li>
+        <cn-link-button icon="/assets/images/home-round.png" link="" text="Crystal Nest" [disabled]="true" [matMenuTriggerFor]="menu" (menuClosed)="onMenuClose()" (menuOpened)="onMenuOpen()" />
         <cn-link-button icon="/assets/images/home-round.png" link="" text="Crystal Nest" />
       </li>
       <li [class.active]="activeRoute === 'generator'"><cn-link-button link="/generator" text="Mod generator" /></li>

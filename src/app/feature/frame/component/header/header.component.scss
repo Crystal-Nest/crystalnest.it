@@ -139,18 +139,23 @@
         @media (max-width: $mobile-small) {
           &.navigation > li {
             &:first-child {
+              height: 2.5rem;
               margin-left: auto;
 
               > :first-child {
                 display: inline;
+                font-size: 1.5rem;
+                margin-right: 1rem;
               }
 
               > :not(:first-child) {
                 display: none;
               }
             }
-            &:not(:first-child) {
-              display: none;
+            &.menu > mat-icon {
+              width: 2.5rem;
+              height: 2.5rem;
+              font-size: 2.5rem;
             }
           }
         }
