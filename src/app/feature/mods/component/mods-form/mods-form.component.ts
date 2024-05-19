@@ -35,6 +35,8 @@ import {InputComponent} from '~cn/shared/component/form/input/input.component';
 export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit {
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngOnInit(): void {
     this.valueChanges('query', () => this.emitSubmit(), (_, index) => index > 0 && this.validity);

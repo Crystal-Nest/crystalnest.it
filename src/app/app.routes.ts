@@ -7,6 +7,11 @@ import {ModsEffects} from './feature/mods/redux/effects';
 import {modsFeature} from './feature/mods/redux/feature';
 import {ModsService} from './feature/mods/service/mods.service';
 
+/**
+ * Application routes.
+ *
+ * @type {Routes}
+ */
 export const ROOT_ROUTES: Routes = [
   {
     path: ROUTE.HOME,

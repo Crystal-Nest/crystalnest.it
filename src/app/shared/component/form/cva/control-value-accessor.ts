@@ -153,6 +153,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngOnInit(): void {
     this.formControl = this.ngControl.control!;
@@ -160,6 +162,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngAfterViewInit(): void {
     if (this.formControl) {
@@ -169,6 +173,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public writeValue(value: T | null): void {
     // Update also this.value for compatibility with subclasses not using ngModel on this.value.
@@ -185,6 +191,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public registerOnChange(fn: (value: T | null) => void): void {
     this.onChange = fn;
@@ -192,6 +200,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
@@ -199,6 +209,8 @@ export abstract class CnControlValueAccessor<T> implements ControlValueAccessor,
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;

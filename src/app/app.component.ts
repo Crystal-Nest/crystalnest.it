@@ -20,6 +20,12 @@ import {FrameComponent} from '~cn/feature/frame/frame.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  /**
+   * @constructor
+   * @public
+   * @param {MatIconRegistry} matIconRegistry
+   * @param {DomSanitizer} sanitizer
+   */
   public constructor(private readonly matIconRegistry: MatIconRegistry, private readonly sanitizer: DomSanitizer) {
     this.registerSvgIcon('client');
     this.registerSvgIcon('server');
@@ -29,6 +35,12 @@ export class AppComponent {
     this.registerSvgIcon('neoforge');
   }
 
+  /**
+   * Registers the specified SVG icon.
+   *
+   * @private
+   * @param {string} icon
+   */
   private registerSvgIcon(icon: string) {
     this.matIconRegistry.addSvgIcon(icon, this.sanitizer.bypassSecurityTrustResourceUrl(`assets/svg/${icon}.svg`));
   }

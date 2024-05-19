@@ -43,7 +43,13 @@ export class ModsComponent {
     this.store$.dispatch(retrieveMods());
   }
 
-  public search(form: ModsForm) {
+  /**
+   * Starts the flow to filter the list of mods.
+   *
+   * @public
+   * @param {ModsForm} form
+   */
+  public filter(form: ModsForm) {
     this.store$.dispatch(filterMods(form));
   }
 }

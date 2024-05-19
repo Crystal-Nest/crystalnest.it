@@ -30,15 +30,37 @@ import {SeparatorComponent} from '~cn/shared/component/separator/separator.compo
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  /**
+   * Active route.
+   *
+   * @public
+   * @type {!ROUTE}
+   */
   @Input({required: true})
   public activeRoute!: ROUTE;
 
+  /**
+   * Whether the navigation floating menu is open.
+   *
+   * @public
+   * @type {boolean}
+   */
   public menuOpen = false;
 
+  /**
+   * Update the tracking of the floating menu's open state.
+   *
+   * @public
+   */
   public onMenuOpen() {
     this.menuOpen = true;
   }
 
+  /**
+   * Update the tracking of the floating menu's open state.
+   *
+   * @public
+   */
   public onMenuClose() {
     this.menuOpen = false;
   }

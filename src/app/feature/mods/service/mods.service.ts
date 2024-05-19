@@ -20,15 +20,14 @@ export class ModsService {
   public constructor(private readonly http: HttpClient) {}
 
   /**
-   * Returns the list of public repositories with the `minecraft-mod` topic.  
-   * The list is paginated.
+   * Returns the GitHub GraphQL query result to retireve Crystal Nest repositories data.
    *
    * @public
    * @returns {Observable<ModsQuery>}
    */
   public getMods() {
     return this.http.get<ModsQuery>(
-      'https://crystalnest.it/api/workers/github-fetch-mods',
+      '/api/workers/github-fetch-mods',
       {responseType: 'json'}
     );
   }

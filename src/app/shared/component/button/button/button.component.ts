@@ -18,18 +18,48 @@ import {MatStepperModule} from '@angular/material/stepper';
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
+  /**
+   * Label.
+   *
+   * @public
+   * @type {!string}
+   */
   @Input({required: true})
   public label!: string;
 
+  /**
+   * Icon.
+   *
+   * @public
+   * @type {!string}
+   */
   @Input({required: true})
   public icon!: string;
 
+  /**
+   * Color.
+   *
+   * @public
+   * @type {'primary' | 'accent' | 'warn'}
+   */
   @Input()
   public color: 'primary' | 'accent' | 'warn' = 'primary';
 
+  /**
+   * Which kind of stepper button it is, if any.
+   *
+   * @public
+   * @type {'next' | 'previous' | ''}
+   */
   @Input()
   public stepperKind: 'next' | 'previous' | '' = '';
 
+  /**
+   * Whether it's disabled.
+   *
+   * @public
+   * @type {boolean}
+   */
   @Input()
   public isDisabled = false;
 }

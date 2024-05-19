@@ -23,6 +23,8 @@ export abstract class SubscriberComponent implements OnDestroy {
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngOnDestroy(): void {
     this.subject$.next();

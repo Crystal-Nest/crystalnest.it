@@ -3,6 +3,15 @@
     height: 100%;
 
     mat-card-content {
+      .description {
+        max-height: 20rem;
+        overflow-y: auto;
+
+        &.scrollable {
+          mask-image: linear-gradient(180deg, #000 80%, transparent);
+        }
+      }
+
       > .details {
         margin-top: auto;
         padding-top: 2rem;

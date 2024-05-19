@@ -67,6 +67,8 @@ export abstract class FormComponent<T> extends SubscriberComponent implements On
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngOnChanges(changes: TypedChanges<FormComponent<T>>): void {
     if (changes.formData && this.formData) {

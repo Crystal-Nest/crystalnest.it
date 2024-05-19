@@ -7,6 +7,11 @@ import {MARKED_OPTIONS, provideMarkdown} from 'ngx-markdown';
 
 import {ROOT_ROUTES} from './app.routes';
 
+/**
+ * Application configuration.
+ *
+ * @type {ApplicationConfig}
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(ROOT_ROUTES),

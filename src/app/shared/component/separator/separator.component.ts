@@ -15,6 +15,12 @@ import {Component, HostBinding, Input} from '@angular/core';
   styleUrl: './separator.component.scss'
 })
 export class SeparatorComponent {
+  /**
+   * Whether it's horizontal instead of vertical.
+   *
+   * @public
+   * @type {boolean}
+   */
   @Input()
   @HostBinding('class.horizontal')
   public horizontal = false;

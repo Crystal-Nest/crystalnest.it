@@ -1,4 +1,4 @@
-<cn-mods-form (onSubmit)="search($event)"></cn-mods-form>
+<cn-mods-form (onSubmit)="filter($event)"></cn-mods-form>
 <section>
   @for (mod of mods$ | async; track mod.name) {
     <cn-card [mod]="mod" />

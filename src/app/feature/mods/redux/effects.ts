@@ -14,10 +14,32 @@ import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
 import {ModLoader} from '~cn/core/model/mod-loader.type';
 import {ModVersion} from '~cn/core/model/mod-version.type';
 
+/**
+ * Mods effects.
+ *
+ * @export
+ * @class ModsEffects
+ * @typedef {ModsEffects}
+ */
 @Injectable()
 export class ModsEffects {
+  /**
+   * List of topics related to each mod loader.
+   *
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
   private readonly loaderTopics = ['fabric', 'forge', 'neoforge'].map(loader => `minecraft-${loader}-mod`);
 
+  /**
+   * Intercepts the action {@link retrieveMods} to retrieve the list of mods and,
+   * if mods weren't retireved already, calls {@link ModsService.getMods getMods} to retrieve the GitHub GraphQL query result for Crystal Nest mods,
+   * then emits the action {@link saveMods} to save the list of mods resulted from parsing the query result.
+   *
+   * @public
+   * @type {TypedAction<"[Mods] Save mods">}
+   */
   public retrieveMods$ = createEffect(() => this.actions$.pipe(
     ofType(retrieveMods),
     withLatestFrom(this.store$.select(modsFeature.selectMods)),
@@ -43,11 +65,18 @@ export class ModsEffects {
     ))
   ));
 
+  /**
+   * Intercepts the action {@link filteredMods} to filter the list of mods,
+   * emits the action {@link saveFilteredMods} to save the filtered list of mods.
+   *
+   * @public
+   * @type {Observable<TypedAction<"[Mods] Save filtered mods">>}
+   */
   public filterMods$ = createEffect(() => this.actions$.pipe(
     ofType(filterMods),
     withLatestFrom(this.store$.select(modsFeature.selectMods)),
     filter(([, mods]) => !!mods),
-    map(([filters, mods]) => saveFilteredMods({filteredMods: this.search(mods || [], filters)}))
+    map(([filters, mods]) => saveFilteredMods({filteredMods: this.filter(mods || [], filters)}))
   ));
 
   /**
@@ -59,7 +88,18 @@ export class ModsEffects {
    */
   public constructor(private readonly actions$: Actions, private readonly store$: Store<State>, private readonly modsService: ModsService) {}
 
-  private search(mods: Mod[], {query, client, server}: ModsForm): Mod[] {
+  /**
+   * Filters the list of mods based on the provided filters.
+   *
+   * @private
+   * @param {Mod[]} mods
+   * @param {ModsForm} filters
+   * @param {ModsForm} filters.query
+   * @param {ModsForm} filters.client
+   * @param {ModsForm} filters.server
+   * @returns {Mod[]}
+   */
+  private filter(mods: Mod[], {query, client, server}: ModsForm): Mod[] {
     return query ? new Fuse(mods.map(mod => ({
       ...mod,
       shorthand: mod.title.split(' ').map(word => word[0]).join('')
@@ -74,6 +114,14 @@ export class ModsEffects {
     }).search(query).map(result => result.item) : mods;
   }
 
+  /**
+   * Checks whether the specified side is required.
+   *
+   * @private
+   * @param {string} readme
+   * @param {'client' | 'server'} side
+   * @returns {boolean}
+   */
   private checkSide(readme: string, side: 'client' | 'server'): boolean {
     return readme.match(/!\[Overlay\]\(.*\/(.*?)\.svg\)/)?.[0].includes(side) || false;
   }

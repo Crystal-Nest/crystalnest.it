@@ -108,6 +108,8 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
 
   /**
    * @inheritdoc
+   * 
+   * @public
    */
   public ngOnInit(): void {
     this.valueChanges('autogenModId', value => {

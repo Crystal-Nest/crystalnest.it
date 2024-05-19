@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, ViewChild, AfterContentChecked} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MarkdownComponent} from 'ngx-markdown';
 
@@ -28,53 +28,165 @@ import {Mod} from '~cn/feature/mods/model/mod.interface';
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent implements OnChanges {
+export class CardComponent implements OnChanges, AfterContentChecked {
+  /**
+   * Markdown component used to display the mod description.
+   *
+   * @public
+   * @type {!MarkdownComponent}
+   */
+  @ViewChild(MarkdownComponent, {static: true})
+  public markdownComponent!: MarkdownComponent;
+
+  /**
+   * Mod to display.
+   *
+   * @public
+   * @type {!Mod}
+   */
   @Input({required: true})
   public mod!: Mod;
 
+  /**
+   * Mod side.
+   *
+   * @public
+   * @type {string}
+   */
   public side = '';
 
+  /**
+   * Icon for the {@link side mod side}.
+   *
+   * @public
+   * @type {string}
+   */
   public sideIcon = '';
 
-  public get picture(): string {
-    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/${this.mod.name}.png`;
-  }
+  /**
+   * Link to the mod picture asset.
+   *
+   * @public
+   * @type {string}
+   */
+  public picture = '';
 
-  public get preview(): string {
-    return `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/social-preview.png`;
-  }
+  /**
+   * Link to the mod social preview asset.
+   *
+   * @public
+   * @type {string}
+   */
+  public preview = '';
 
-  public get github(): string {
-    return `https://github.com/crystal-nest/${this.mod.name}`;
-  }
+  /**
+   * Link to the mod GitHub page.
+   *
+   * @public
+   * @type {string}
+   */
+  public github = '';
 
-  public get modrinth(): string {
-    return `https://modrinth.com/mod/${this.mod.name}`;
-  }
+  /**
+   * Link to the mod Modrinth page.
+   *
+   * @public
+   * @type {string}
+   */
+  public modrinth = '';
 
-  public get curseforge(): string {
-    return `https://www.curseforge.com/minecraft/mc-mods/${this.mod.name}`;
-  }
+  /**
+   * Link to the mod CurseForge page.
+   *
+   * @public
+   * @type {string}
+   */
+  public curseforge = '';
 
-  public get wiki(): string {
-    return `https://github.com/crystal-nest/${this.mod.name}/wiki`;
-  }
+  /**
+   * Link to the mod wiki.
+   *
+   * @public
+   * @type {string}
+   */
+  public wiki = '';
 
-  public get api(): string {
-    return `https://github.com/crystal-nest/${this.mod.name}/wiki/Setup#add-as-a-dependency`;
-  }
+  /**
+   * Link to the mod wiki page where how to add it as a dependency is explained.
+   *
+   * @public
+   * @type {string}
+   */
+  public api = '';
 
-  public get template(): string {
-    return `https://github.com/new?template_name=${this.mod.name}&template_owner=Crystal-Nest`;
-  }
+  /**
+   * Link to create a new mod using this mod as a template on GitHub.
+   *
+   * @public
+   * @type {string}
+   */
+  public template = '';
 
+  /**
+   * Whether the description block is scrollable.
+   *
+   * @public
+   * @type {boolean}
+   */
+  public scrollable = false;
+
+  /**
+   * @inheritdoc
+   *
+   * @public
+   * @param {TypedChanges<CardComponent>} changes
+   */
   public ngOnChanges(changes: TypedChanges<CardComponent>): void {
     if (changes.mod) {
       this.side = Object.entries(this.mod).filter(([key, value]) => ['client', 'server'].includes(key) && value).map(([key]) => key.charAt(0).toUpperCase() + key.slice(1)).join(' & ');
       this.sideIcon = this.side.replace(' & ', '-').toLowerCase();
+      this.picture = `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/${this.mod.name}.png`;
+      this.preview = `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/social-preview.png`;
+      this.github = `https://github.com/crystal-nest/${this.mod.name}`;
+      this.modrinth = `https://modrinth.com/mod/${this.mod.name}`;
+      this.curseforge = `https://www.curseforge.com/minecraft/mc-mods/${this.mod.name}`;
+      this.wiki = `https://github.com/crystal-nest/${this.mod.name}/wiki`;
+      this.api = `https://github.com/crystal-nest/${this.mod.name}/wiki/Setup#add-as-a-dependency`;
+      this.template = `https://github.com/new?template_name=${this.mod.name}&template_owner=Crystal-Nest`;
     }
   }
 
+  /**
+   * @inheritdoc
+   *
+   * @public
+   */
+  public ngAfterContentChecked() {
+    if (!this.scrollable) {
+      const {offsetHeight, scrollHeight, scrollTop} = this.markdownComponent.element.nativeElement;
+      this.scrollable = offsetHeight < scrollHeight && scrollTop !== (scrollHeight - offsetHeight);
+    }
+  }
+
+  /**
+   * Checks whether the target element has been scrolled to the bottom and is thus no longer scrollable.
+   *
+   * @public
+   * @param {Event} event
+   */
+  public checkScrolledToBottom(event: Event) {
+    if (event.type === 'scroll' && event.target instanceof HTMLElement && event.target.scrollTop === (event.target.scrollHeight - event.target.offsetHeight)) {
+      this.scrollable = false;
+    }
+  }
+
+  /**
+   * Formats the given loaders with proper capitalization.
+   *
+   * @public
+   * @param {Lowercase<ModLoader>[]} loaders
+   * @returns {ModLoader[]}
+   */
   public formatLoaders(loaders: Lowercase<ModLoader>[]): ModLoader[] {
     return loaders.map(formatLoader);
   }
