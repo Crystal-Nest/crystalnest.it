@@ -9,12 +9,16 @@
         max-height: 20rem;
         overflow-y: auto;
 
-        &.scrollable {
-          mask-image: linear-gradient(180deg, #000 80%, transparent);
+        &.scrollable-bottom {
+          mask-image: linear-gradient(0deg, transparent, #202020 20%);
         }
 
         &.scrollable-top {
-          mask-image: linear-gradient(0deg, #000 80%, transparent);
+          mask-image: linear-gradient(180deg, transparent, #202020 20%);
+        }
+
+        &.scrollable-bottom.scrollable-top {
+          mask-image: linear-gradient(0deg, transparent, #202020 20%, #202020 80%, transparent 100%);
         }
       }
 

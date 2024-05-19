@@ -128,12 +128,20 @@ export class CardComponent implements OnChanges, AfterContentChecked {
   public template = '';
 
   /**
-   * Whether the description block is scrollable.
+   * Whether the description block is scrollable above.
    *
    * @public
    * @type {boolean}
    */
-  public scrollable = false;
+  public scrollableTop = false;
+
+  /**
+   * Whether the description block is scrollable below.
+   *
+   * @public
+   * @type {boolean}
+   */
+  public scrollableBottom = false;
 
   /**
    * @inheritdoc
@@ -162,9 +170,10 @@ export class CardComponent implements OnChanges, AfterContentChecked {
    * @public
    */
   public ngAfterContentChecked() {
-    if (!this.scrollable) {
+    if (!this.scrollableTop || !this.scrollableBottom) {
       const {offsetHeight, scrollHeight, scrollTop} = this.markdownComponent.element.nativeElement;
-      this.scrollable = offsetHeight < scrollHeight && scrollTop !== (scrollHeight - offsetHeight);
+      this.scrollableTop = scrollTop > 0;
+      this.scrollableBottom = offsetHeight < scrollHeight && scrollTop !== (scrollHeight - offsetHeight);
     }
   }
 
@@ -175,8 +184,12 @@ export class CardComponent implements OnChanges, AfterContentChecked {
    * @param {Event} event
    */
   public checkScrolledToBottom(event: Event) {
-    if (event.type === 'scroll' && event.target instanceof HTMLElement && event.target.scrollTop === (event.target.scrollHeight - event.target.offsetHeight)) {
-      this.scrollable = false;
+    if (event.type === 'scroll' && event.target instanceof HTMLElement) {
+      if (event.target.scrollTop === 0) {
+        this.scrollableTop = false;
+      } else if (event.target.scrollTop === (event.target.scrollHeight - event.target.offsetHeight)) {
+        this.scrollableBottom = false;
+      }
     }
   }
 
