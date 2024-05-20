@@ -10,6 +10,7 @@ import {State, modsFeature} from './redux/feature';
 import {ModsService} from './service/mods.service';
 
 import {CardComponent} from '~cn/shared/component/card/card.component';
+import {ScrollToTopComponent} from '~cn/shared/component/scroll-to-top/scroll-to-top.component';
 
 /**
  * Mods showcase.
@@ -25,7 +26,8 @@ import {CardComponent} from '~cn/shared/component/card/card.component';
     AsyncPipe,
     HttpClientModule,
     ModsFormComponent,
-    CardComponent
+    CardComponent,
+    ScrollToTopComponent
   ],
   providers: [ModsService],
   templateUrl: './mods.component.html',

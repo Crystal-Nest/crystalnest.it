@@ -16,6 +16,12 @@ export interface ModsForm {
    */
   query: string;
   /**
+   * Whether to show advanced search.
+   *
+   * @type {boolean}
+   */
+  advanced: boolean;
+  /**
    * Supported Minecraft versions.
    *
    * @type {MinecraftVersion[]}
@@ -39,4 +45,28 @@ export interface ModsForm {
    * @type {(boolean | null)}
    */
   server: boolean | null;
+  /**
+   * Whether it has a Wiki page.
+   *
+   * @type {boolean}
+   */
+  wiki: boolean;
+  /**
+   * Whether it provides an API.
+   *
+   * @type {boolean}
+   */
+  api: boolean;
+  /**
+   * Whether it is a template.
+   *
+   * @type {boolean}
+   */
+  template: boolean;
+  /**
+   * Whether it has a stable version.
+   *
+   * @type {boolean}
+   */
+  stable: boolean;
 }

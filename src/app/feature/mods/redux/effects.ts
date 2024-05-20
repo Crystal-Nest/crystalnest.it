@@ -99,12 +99,12 @@ export class ModsEffects {
    * @param {ModsForm} filters.server
    * @returns {Mod[]}
    */
-  private filter(mods: Mod[], {query, client, server}: ModsForm): Mod[] {
+  private filter(mods: Mod[], {query, advanced}: ModsForm): Mod[] {
     return query ? new Fuse(mods.map(mod => ({
       ...mod,
       shorthand: mod.title.split(' ').map(word => word[0]).join('')
     })), {
-      keys: ['title', 'shorthand'],
+      keys: ['name', 'title', 'shorthand'],
       isCaseSensitive: false,
       minMatchCharLength: 0,
       shouldSort: true,

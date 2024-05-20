@@ -1,0 +1,19 @@
+:host {
+  position: sticky;
+  float: right;
+  z-index: 100;
+  bottom: 5.5rem;
+  right: 2rem;
+  height: 0;
+  margin-top: -5.5rem;
+
+  &:not(.visible) {
+    display: none;
+  }
+
+  mat-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+  }
+}

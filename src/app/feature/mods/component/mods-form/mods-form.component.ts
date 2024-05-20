@@ -39,7 +39,18 @@ export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit
    * @public
    */
   public ngOnInit(): void {
-    this.valueChanges('query', () => this.emitSubmit(), (_, index) => index > 0 && this.validity);
+    this.formChanges(() => this.emitSubmit(), ([prev, curr], index) => index > 0 && this.validity && (Object.keys(prev) as (keyof ModsForm)[]).some(key => key !== 'advanced' && prev[key] !== curr[key]));
+    this.valueChanges('advanced', value => {
+      const toggle = value ? 'enable' : 'disable';
+      this.form.controls.versions[toggle]();
+      this.form.controls.loaders[toggle]();
+      this.form.controls.client[toggle]();
+      this.form.controls.server[toggle]();
+      this.form.controls.wiki[toggle]();
+      this.form.controls.api[toggle]();
+      this.form.controls.template[toggle]();
+      this.form.controls.stable[toggle]();
+    }, (_, index) => index > 0 && this.validity);
   }
 
   /**
@@ -51,10 +62,15 @@ export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit
   protected override initForm(): FormType<ModsForm> {
     return {
       query: new FormControl('', {nonNullable: true}),
+      advanced: new FormControl(false, {nonNullable: true}),
       versions: new FormControl([], {nonNullable: true}),
       loaders: new FormControl([], {nonNullable: true}),
-      client: new FormControl(false),
-      server: new FormControl(false)
+      client: new FormControl(null),
+      server: new FormControl(null),
+      wiki: new FormControl(false, {nonNullable: true}),
+      api: new FormControl(false, {nonNullable: true}),
+      template: new FormControl(false, {nonNullable: true}),
+      stable: new FormControl(false, {nonNullable: true})
     };
   }
 }

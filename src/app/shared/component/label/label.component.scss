@@ -13,10 +13,13 @@
   > div {
     display: flex;
     gap: 0.5rem;
-    align-items: center;
     flex-wrap: wrap;
 
     > span {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
       > mat-icon {
         width: 1rem;
         height: 1rem;

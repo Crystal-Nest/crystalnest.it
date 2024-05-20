@@ -28,7 +28,7 @@
           gap: min(1rem, 4%);
 
           > li {
-            transition: 0.2s;
+            transition-duration: 0.2s;
             border-bottom: 0 solid $purple-a600;
             border-radius: 0.25rem;
             white-space: nowrap;

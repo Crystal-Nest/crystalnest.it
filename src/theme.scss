@@ -61,7 +61,9 @@ $cn-light-theme: material.define-light-theme(
       accent: $accent-palette,
       warn: $warn-palette,
     ),
-    typography: material.define-typography-config(),
+    typography: material.define-typography-config(
+      $font-family: "Lexend",
+    ),
     density: 0,
   )
 );
@@ -80,6 +82,7 @@ $cn-dark-theme: material.define-dark-theme(
 @include material.sidenav-theme($cn-light-theme);
 @include material.icon-theme($cn-light-theme);
 @include material.button-theme($cn-light-theme);
+@include material.fab-theme($cn-light-theme);
 @include material.form-field-theme($cn-light-theme);
 @include material.stepper-theme($cn-light-theme);
 @include material.checkbox-theme($cn-light-theme);
@@ -100,6 +103,7 @@ $cn-dark-theme: material.define-dark-theme(
   @include material.sidenav-color($cn-dark-theme);
   @include material.icon-color($cn-dark-theme);
   @include material.button-color($cn-dark-theme);
+  @include material.fab-color($cn-dark-theme);
   @include material.form-field-color($cn-dark-theme);
   @include material.stepper-color($cn-dark-theme);
   @include material.checkbox-color($cn-dark-theme);

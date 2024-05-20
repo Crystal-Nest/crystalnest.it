@@ -6,7 +6,6 @@
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
     grid-gap: 2rem;
     padding: 2rem;
-    padding-top: calc(2rem - 22px);
 
     > * {
       min-width: 24rem;
@@ -14,7 +13,6 @@
 
     @media (max-width: $desktop-tiny) {
       padding: 1rem;
-      padding-top: calc(1rem - 22px);
 
       > * {
         min-width: 16rem;

@@ -2,7 +2,7 @@
   right: 0 !important;
   width: 100% !important;
 
-  > .cdk-overlay-pane {
+  > .cdk-overlay-pane:has(.cn-nav-menu) {
     width: 100% !important;
     top: 5rem !important;
     right: 0 !important;

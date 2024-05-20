@@ -1,6 +1,6 @@
 import {Directive, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {Observable, distinctUntilChanged, filter, startWith} from 'rxjs';
+import {Observable, OperatorFunction, distinctUntilChanged, filter, pairwise, startWith} from 'rxjs';
 
 import {SubscriberComponent} from './subscriber.component';
 import {FormType} from '../model/form-type.type';
@@ -41,7 +41,7 @@ export abstract class FormComponent<T> extends SubscriberComponent implements On
    *
    * @public
    * @readonly
-   * @type {EventEmitter<R>}
+   * @type {EventEmitter<T>}
    */
   @Output()
   public readonly onSubmit: EventEmitter<T> = new EventEmitter();
@@ -91,6 +91,17 @@ export abstract class FormComponent<T> extends SubscriberComponent implements On
 
   /**
    * Shorthand for `valueChanges` form subscriptions.
+   *
+   * @protected
+   * @param {(value: [T, T]) => void} callback
+   * @param {(value: [T, T], index: number) => boolean} [allower=() => true]
+   */
+  protected formChanges(callback: (value: [T, T]) => void, allower: (value: [T, T], index: number) => boolean = () => true) {
+    (this.form.valueChanges as Observable<T>).pipe(startWith(this.form.value) as OperatorFunction<T, T>, distinctUntilChanged() as OperatorFunction<T, T>, pairwise(), filter(allower), this.takeUntil()).subscribe(callback);
+  }
+
+  /**
+   * Shorthand for `valueChanges` form field subscriptions.
    *
    * @protected
    * @template {keyof T} K

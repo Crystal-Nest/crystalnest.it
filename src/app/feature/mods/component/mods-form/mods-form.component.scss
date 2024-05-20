@@ -5,11 +5,6 @@
     padding: 2rem;
     padding-bottom: 0;
 
-    cn-button {
-      align-self: center;
-      padding-bottom: 22px;
-    }
-
     @media (max-width: $desktop-tiny) {
       padding: 1rem;
       padding-bottom: 0;
