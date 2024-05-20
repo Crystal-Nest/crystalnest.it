@@ -1,7 +1,8 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
 import {ModsQuery} from '../model/mods-query.interface';
+
+import {Service} from '~cn/core/service/service.service';
 
 /**
  * Handles HTTP calls regarding the list of public mods.
@@ -9,16 +10,10 @@ import {ModsQuery} from '../model/mods-query.interface';
  * @export
  * @class ModsService
  * @typedef {ModsService}
+ * @extends {Service}
  */
 @Injectable()
-export class ModsService {
-  /**
-   * @constructor
-   * @public
-   * @param {HttpClient} http
-   */
-  public constructor(private readonly http: HttpClient) {}
-
+export class ModsService extends Service {
   /**
    * Returns the GitHub GraphQL query result to retireve Crystal Nest repositories data.
    *
@@ -26,9 +21,6 @@ export class ModsService {
    * @returns {Observable<ModsQuery>}
    */
   public getMods() {
-    return this.http.get<ModsQuery>(
-      '/api/workers/github-fetch-mods',
-      {responseType: 'json'}
-    );
+    return this.get<ModsQuery>('/api/workers/github-fetch-mods');
   }
 }

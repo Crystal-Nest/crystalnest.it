@@ -34,12 +34,21 @@ import {InputComponent} from '~cn/shared/component/form/input/input.component';
 })
 export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit {
   /**
+   * How much time (in ms) to wait before emitting the form values to filter the mod list.
+   *
+   * @private
+   * @readonly
+   * @type {500}
+   */
+  private readonly waitBeforeFilteringTime = 500;
+
+  /**
    * @inheritdoc
    * 
    * @public
    */
   public ngOnInit(): void {
-    this.formChanges(() => this.emitSubmit(), ([prev, curr], index) => index > 0 && this.validity && (Object.keys(prev) as (keyof ModsForm)[]).some(key => key !== 'advanced' && prev[key] !== curr[key]));
+    this.formChanges(() => this.emitSubmit(), ([prev, curr], index) => index > 0 && this.validity && (Object.keys(prev) as (keyof ModsForm)[]).some(key => key !== 'advanced' && prev[key] !== curr[key]), this.waitBeforeFilteringTime);
     this.valueChanges('advanced', value => {
       const toggle = value ? 'enable' : 'disable';
       this.form.controls.versions[toggle]();

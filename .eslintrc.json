@@ -337,6 +337,11 @@
           {
             "selector": "typeLike",
             "format": ["PascalCase"]
+          },
+          {
+            "selector": ["property"],
+            "format": null,
+            "modifiers": ["requiresQuotes"]
           }
         ],
         "@typescript-eslint/no-invalid-this": [

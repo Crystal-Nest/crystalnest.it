@@ -1,4 +1,3 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs';
 
@@ -6,22 +5,18 @@ import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
 import {Branch} from '../model/branch.interface';
 import {TEMPLATE_GITHUB_USER, TEMPLATE_MOD_ID_KEBAB} from '../model/template.const';
 
+import {Service} from '~cn/core/service/service.service';
+
 /**
  * Handles HTTP calls regarding the mod template.
  *
  * @export
  * @class TemplateService
  * @typedef {TemplateService}
+ * @extends {Service}
  */
 @Injectable()
-export class TemplateService {
-  /**
-   * @constructor
-   * @public
-   * @param {HttpClient} http
-   */
-  public constructor(private readonly http: HttpClient) {}
-
+export class TemplateService extends Service {
   /**
    * Retrieves the Minecraft versions available for the template.
    *
@@ -29,15 +24,9 @@ export class TemplateService {
    * @returns {Observable<Record<MinecraftVersion, MinecraftVersion>>}
    */
   public getMinecraftVersions() {
-    return this.http.get<Branch[]>(
+    return this.get<Branch[]>(
       'https://api.github.com/repos/crystal-nest/cobweb-mod-template/branches',
-      {
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'X-GitHub-Api-Version': '2022-11-28'
-        },
-        responseType: 'json'
-      }
+      {headers: {'X-GitHub-Api-Version': '2022-11-28'} }
     ).pipe(
       map(response => response.reverse().reduce((prev, curr) => ({
         ...prev,
@@ -54,7 +43,7 @@ export class TemplateService {
    * @returns {Observable<ArrayBuffer>}
    */
   public getTemplate(minecraftVersion: MinecraftVersion) {
-    return this.http.post(
+    return this.post(
       '/api/workers/github-repo-archive',
       {
         user: TEMPLATE_GITHUB_USER,

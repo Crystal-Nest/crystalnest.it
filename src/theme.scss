@@ -24,7 +24,7 @@ $purple-a700: #ffffff;
 $purple-a800: #ffffff;
 $purple-a900: #ffffff;
 
-$purple-palette: (
+$purple-primary-palette: (
   50: $purple-50,
   100: $purple-100,
   200: $purple-200,
@@ -49,8 +49,33 @@ $purple-palette: (
   ),
 );
 
-$primary-palette: material.define-palette($purple-palette);
-$accent-palette: material.define-palette($purple-palette);
+$purple-accent-palette: (
+  50: $purple-a50,
+  100: $purple-a100,
+  200: $purple-a200,
+  300: $purple-a300,
+  400: $purple-a400,
+  500: #8a28cc,
+  600: $purple-a600,
+  700: $purple-a700,
+  800: $purple-a800,
+  900: $purple-a900,
+  contrast: (
+    50: $purple-50,
+    100: $purple-100,
+    200: $purple-200,
+    300: $purple-300,
+    400: $purple-400,
+    500: $purple-500,
+    600: $purple-600,
+    700: $purple-700,
+    800: $purple-800,
+    900: $purple-900,
+  ),
+);
+
+$primary-palette: material.define-palette($purple-primary-palette);
+$accent-palette: material.define-palette($purple-accent-palette);
 $warn-palette: material.define-palette(material.$red-palette);
 
 // https://material.angular.io/guide/theming#multiple-themes-in-one-file
@@ -62,8 +87,8 @@ $cn-light-theme: material.define-light-theme(
       warn: $warn-palette,
     ),
     typography: material.define-typography-config(
-      $font-family: "Lexend",
-    ),
+        $font-family: "Lexend",
+      ),
     density: 0,
   )
 );
