@@ -73,7 +73,7 @@
             grid-column-end: span 1;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            grid-gap: $grid-gap-tiny;
+            gap: $grid-gap-tiny;
             width: 6rem;
 
             > li {

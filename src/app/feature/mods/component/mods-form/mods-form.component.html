@@ -1,8 +1,20 @@
-<form class="cn-grid" [formGroup]="form">
-  <cn-input class="cn-cell-12" formControlName="query" hint="Title, ID, acronym" label="Search" />
-  <!-- <cn-checkbox class="cn-cell-4 align-self-end" formControlName="advanced" label="Filters" /> -->
-  <!--
-  <cn-checkbox class="cn-cell-2" formControlName="client" label="Client-side" [indeterminate]="true" />
-  <cn-checkbox class="cn-cell-2" formControlName="server" label="Server-side" [indeterminate]="true" />
-  -->
+<form [formGroup]="form">
+  <div [class.no-space]="!form.controls.advanced.value">
+    <cn-input formControlName="query" label="Search" />
+    <cn-toggle formControlName="advanced" label="More" />
+  </div>
+  @if (form.controls.advanced.value) {
+    <div>
+      <cn-select formControlName="versions" label="Minecraft versions" [multiple]="true" [options]="minecraftVersions" />
+      <cn-select formControlName="loaders" label="Mod loaders" [multiple]="true" [options]="loaders" />
+    </div>
+    <div class="checks no-space">
+      <cn-checkbox formControlName="client" label="Client-side" [tristate]="true" />
+      <cn-checkbox formControlName="server" label="Server-side" [tristate]="true" />
+      <cn-checkbox formControlName="stable" label="Is stable" />
+      <cn-checkbox formControlName="api" label="Provides API" />
+      <cn-checkbox formControlName="wiki" label="Has wiki" />
+      <cn-checkbox formControlName="template" label="Is template" />
+    </div>
+  }
 </form>

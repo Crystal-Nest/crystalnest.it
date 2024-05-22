@@ -1,5 +1,6 @@
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
 import {provideEffects} from '@ngrx/effects';
@@ -34,6 +35,12 @@ export const appConfig: ApplicationConfig = {
         }
       }
     }),
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic'
+      }
+    },
     {
       provide: SCROLL_TO_TOP_OPTIONS,
       useValue: {

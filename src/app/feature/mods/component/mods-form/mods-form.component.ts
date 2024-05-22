@@ -1,14 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
 import {ModsForm} from '../../model/mods-form.interface';
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
+import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
+import {MOD_LOADERS} from '~cn/core/model/mod-loader.type';
 import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
 import {CardComponent} from '~cn/shared/component/card/card.component';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
+import {SelectComponent} from '~cn/shared/component/form/select/select.component';
+import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component';
 
 /**
  * Generator form.
@@ -24,8 +28,10 @@ import {InputComponent} from '~cn/shared/component/form/input/input.component';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    InputComponent,
     CheckboxComponent,
+    ToggleComponent,
+    InputComponent,
+    SelectComponent,
     ButtonComponent,
     CardComponent
   ],
@@ -33,6 +39,24 @@ import {InputComponent} from '~cn/shared/component/form/input/input.component';
   styleUrl: './mods-form.component.scss'
 })
 export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit {
+  /**
+   * Available Minecraft versions.
+   *
+   * @public
+   * @type {!Record<MinecraftVersion, MinecraftVersion>}
+   */
+  @Input({required: true})
+  public minecraftVersions!: Record<MinecraftVersion, MinecraftVersion>;
+
+  /**
+   * Available mod loaders.
+   *
+   * @public
+   * @readonly
+   * @type {Record<Lowercase<ModLoader>, ModLoader>}
+   */
+  public readonly loaders = MOD_LOADERS;
+
   /**
    * How much time (in ms) to wait before emitting the form values to filter the mod list.
    *

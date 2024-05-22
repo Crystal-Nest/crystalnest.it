@@ -2,12 +2,55 @@
 
 :host {
   form {
-    padding: 2rem;
-    padding-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.75rem;
+    padding: 1.75rem;
+    margin: 2rem;
+    margin-bottom: 0;
+    min-width: fit-content;
+    border-radius: var(--mdc-elevated-card-container-shape);
+    background-color: var(--mdc-elevated-card-container-color);
+    box-shadow: var(--mdc-elevated-card-container-elevation);
+
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      flex: 1 0 100%;
+      width: 100%;
+      padding-bottom: 1rem;
+
+      > * {
+        flex: 1;
+      }
+
+      &:first-child > :not(:first-child) {
+        flex: 0;
+        margin: auto;
+      }
+
+      &.no-space {
+        padding-bottom: 0;
+      }
+
+      &.checks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+
+        @media (min-width: $desktop-small) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (min-width: $desktop-large) {
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+        }
+      }
+    }
 
     @media (max-width: $desktop-tiny) {
-      padding: 1rem;
-      padding-bottom: 0;
+      margin: 1rem;
+      margin-bottom: 0;
     }
   }
 }

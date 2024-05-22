@@ -1,6 +1,9 @@
 @import "theme.scss";
 
 :host {
+  -webkit-user-select: none;
+  user-select: none;
+
   a,
   a:visited,
   a:hover,

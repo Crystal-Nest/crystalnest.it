@@ -56,8 +56,11 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @public
    * @type {!(Record<MinecraftVersion, MinecraftVersion> | null)}
    */
-  @Input({required: true})
-  public versions!: Record<MinecraftVersion, MinecraftVersion> | null;
+  @Input({
+    required: true,
+    transform: (value: Record<MinecraftVersion, MinecraftVersion> | null) => value ? value : {}
+  })
+  public versions!: Record<MinecraftVersion, MinecraftVersion>;
 
   /**
    * List of form steps.

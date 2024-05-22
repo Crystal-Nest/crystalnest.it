@@ -10,15 +10,15 @@
         overflow-y: auto;
 
         &.scrollable-bottom {
-          mask-image: linear-gradient(0deg, transparent, #202020 20%);
+          mask-image: linear-gradient(0deg, transparent, black 20%);
         }
 
         &.scrollable-top {
-          mask-image: linear-gradient(180deg, transparent, #202020 20%);
+          mask-image: linear-gradient(180deg, transparent, black 20%);
         }
 
         &.scrollable-bottom.scrollable-top {
-          mask-image: linear-gradient(0deg, transparent, #202020 20%, #202020 80%, transparent 100%);
+          mask-image: linear-gradient(0deg, transparent, black 20%, black 80%, transparent 100%);
         }
       }
 

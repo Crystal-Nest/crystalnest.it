@@ -95,11 +95,39 @@ export class ModsEffects {
    * @param {Mod[]} mods
    * @param {ModsForm} filters
    * @param {ModsForm} filters.query
+   * @param {ModsForm} filters.advanced
+   * @param {ModsForm} filters.versions
+   * @param {ModsForm} filters.loaders
+   * @param {ModsForm} filters.wiki
+   * @param {ModsForm} filters.api
+   * @param {ModsForm} filters.template
+   * @param {ModsForm} filters.stable
    * @param {ModsForm} filters.client
    * @param {ModsForm} filters.server
    * @returns {Mod[]}
    */
-  private filter(mods: Mod[], {query, advanced}: ModsForm): Mod[] {
+  private filter(mods: Mod[], {query, advanced, versions, loaders, wiki, api, template, stable, client, server}: ModsForm): Mod[] {
+    // eslint-disable-next-line complexity
+    return advanced ? this.filterByName(mods, query).filter(mod =>
+      versions.every(version => mod.versions.includes(version)) &&
+      loaders.every(version => mod.loaders.includes(version)) &&
+      (!wiki || mod.hasWiki) &&
+      (!api || mod.isApi) &&
+      (!template || mod.isTemplate) &&
+      (!stable || mod.stable) &&
+      (client === null || mod.client === client) &&
+      (server === null || mod.server === server)) : this.filterByName(mods, query);
+  }
+
+  /**
+   * Filters the list of mods based on the query.
+   *
+   * @private
+   * @param {Mod[]} mods
+   * @param {string} query
+   * @returns {Mods[]}
+   */
+  private filterByName(mods: Mod[], query: string): Mod[] {
     return query ? new Fuse(mods.map(mod => ({
       ...mod,
       shorthand: mod.title.split(' ').map(word => word[0]).join('')
