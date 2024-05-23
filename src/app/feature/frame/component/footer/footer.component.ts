@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 
 import {LinkButtonComponent} from '~cn/shared/component/button/link-button/link-button.component';
-import {SeparatorComponent} from '~cn/shared/component/separator/separator.component';
 
 /**
  * Footer component.
@@ -13,7 +12,7 @@ import {SeparatorComponent} from '~cn/shared/component/separator/separator.compo
 @Component({
   selector: 'cn-footer',
   standalone: true,
-  imports: [LinkButtonComponent, SeparatorComponent],
+  imports: [LinkButtonComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

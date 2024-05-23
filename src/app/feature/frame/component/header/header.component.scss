@@ -1,5 +1,4 @@
-@import "variables.scss";
-@import "theme.scss";
+@import "variables", "theme.scss";
 
 :host {
   position: sticky;
@@ -8,8 +7,8 @@
 
   header {
     display: flex;
-    background-color: $purple-500;
-    color: white;
+    background-color: $purple-700;
+    color: #cccccc;
     height: 5rem;
     padding: 1rem;
 
@@ -29,12 +28,12 @@
 
           > li {
             transition-duration: 0.2s;
-            border-bottom: 0 solid $purple-a600;
+            border-bottom: 0 solid $purple-a700;
             border-radius: 0.25rem;
             white-space: nowrap;
 
             &:first-child {
-              color: white;
+              color: #dddddd;
               height: 3rem;
               font-size: 2rem;
               margin-right: 2rem;
@@ -58,6 +57,10 @@
 
         &.support {
           justify-content: end;
+
+          > .mat-divider {
+            height: 1.5rem;
+          }
         }
 
         > li {
@@ -80,7 +83,7 @@
               justify-self: end;
             }
 
-            > cn-separator {
+            > .mat-divider {
               display: none;
             }
           }
@@ -125,7 +128,7 @@
                 font-size: 2.75rem;
 
                 &:hover {
-                  filter: brightness(0.8);
+                  filter: brightness(1.2);
                 }
 
                 &:active {
@@ -179,7 +182,7 @@
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid $purple-a600;
+      border-bottom: 1px solid $purple-a700;
       padding-bottom: 0.5rem;
     }
 

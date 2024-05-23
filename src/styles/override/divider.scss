@@ -1,0 +1,12 @@
+@import "variables", "theme";
+
+.mat-divider {
+  border-top-width: 2px !important;
+  border-color: $purple-500 !important;
+  border-radius: $separator-border-radius;
+
+  &.mat-divider-vertical {
+    border-top-width: 0 !important;
+    border-right-width: 2px !important;
+  }
+}

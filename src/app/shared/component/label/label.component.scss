@@ -1,5 +1,4 @@
-@import "variables.scss";
-@import "theme.scss";
+@import "variables", "theme";
 
 :host {
   display: flex;

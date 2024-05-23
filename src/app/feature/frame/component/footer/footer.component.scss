@@ -1,4 +1,4 @@
-@import "variables.scss";
+@import "variables";
 
 :host {
   footer {
@@ -23,7 +23,7 @@
             height: 2.75rem;
             font-size: 1.75rem;
             white-space: nowrap;
-            color: white;
+            color: #eeeeee;
           }
         }
       }

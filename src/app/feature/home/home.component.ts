@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {RouterModule} from '@angular/router';
 
 /**
  * Homepage.
@@ -11,7 +10,7 @@ import {RouterModule} from '@angular/router';
 @Component({
   selector: 'cn-home',
   standalone: true,
-  imports: [RouterModule],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

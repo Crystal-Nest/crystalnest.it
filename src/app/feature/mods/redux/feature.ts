@@ -1,7 +1,8 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
 
-import {saveFilteredMods, saveMods} from './actions';
+import {filterMods, saveFilteredMods, saveMods} from './actions';
 import {Mod} from '../model/mod.interface';
+import {ModsForm} from '../model/mods-form.interface';
 
 /**
  * Mods store.
@@ -23,6 +24,12 @@ export interface State {
    * @type {Mod[] | null}
    */
   filteredMods: Mod[] | null;
+  /**
+   * Form persistance data.
+   *
+   * @type {ModsForm | null}
+   */
+  form: ModsForm | null;
 }
 
 /**
@@ -32,7 +39,8 @@ export interface State {
  */
 export const INITIAL_STATE: State = {
   mods: null,
-  filteredMods: null
+  filteredMods: null,
+  form: null
 };
 
 /**
@@ -50,6 +58,10 @@ export const modsFeature = createFeature({
     on(saveFilteredMods, (state, {filteredMods}) => ({
       ...state,
       filteredMods
+    })),
+    on(filterMods, (state, form) => ({
+      ...state,
+      form
     }))
   )
 });

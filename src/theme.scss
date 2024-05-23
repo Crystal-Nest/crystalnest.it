@@ -2,29 +2,29 @@
 
 @include material.core();
 
-$purple-50: #ffffff;
-$purple-100: #ffffff;
-$purple-200: #ffffff;
-$purple-300: #ffffff;
-$purple-400: #ffffff;
-$purple-500: #252140;
-$purple-600: #ffffff;
-$purple-700: #120d26;
-$purple-800: #ffffff;
-$purple-900: #ffffff;
+$purple-50: #eeeeee;
+$purple-100: #eeeeee;
+$purple-200: #8a22f1;
+$purple-300: #8a22f1;
+$purple-400: #eeeeee;
+$purple-500: #8a22f1;
+$purple-600: #c071f5;
+$purple-700: #1f1b3b;
+$purple-800: #eeeeee;
+$purple-900: #eeeeee;
 
-$purple-a50: #ffffff;
-$purple-a100: #ffffff;
-$purple-a200: #ffffff;
-$purple-a300: #ffffff;
-$purple-a400: #ffffff;
-$purple-a500: #ffffff;
-$purple-a600: #b073d9;
-$purple-a700: #ffffff;
-$purple-a800: #ffffff;
-$purple-a900: #ffffff;
+$purple-a50: #eeeeee;
+$purple-a100: #eeeeee;
+$purple-a200: #eeeeee;
+$purple-a300: #eeeeee;
+$purple-a400: #eeeeee;
+$purple-a500: #8a22f1;
+$purple-a600: #eeeeee;
+$purple-a700: #c071f5;
+$purple-a800: #eeeeee;
+$purple-a900: #eeeeee;
 
-$purple-primary-palette: (
+$purple-palette: (
   50: $purple-50,
   100: $purple-100,
   200: $purple-200,
@@ -49,36 +49,10 @@ $purple-primary-palette: (
   ),
 );
 
-$purple-accent-palette: (
-  50: $purple-a50,
-  100: $purple-a100,
-  200: $purple-a200,
-  300: $purple-a300,
-  400: $purple-a400,
-  500: #8a28cc,
-  600: $purple-a600,
-  700: $purple-a700,
-  800: $purple-a800,
-  900: $purple-a900,
-  contrast: (
-    50: $purple-50,
-    100: $purple-100,
-    200: $purple-200,
-    300: $purple-300,
-    400: $purple-400,
-    500: $purple-500,
-    600: $purple-600,
-    700: $purple-700,
-    800: $purple-800,
-    900: $purple-900,
-  ),
-);
-
-$primary-palette: material.define-palette($purple-primary-palette);
-$accent-palette: material.define-palette($purple-accent-palette);
+$primary-palette: material.define-palette($purple-palette);
+$accent-palette: material.define-palette($purple-palette);
 $warn-palette: material.define-palette(material.$red-palette);
 
-// https://material.angular.io/guide/theming#multiple-themes-in-one-file
 $cn-light-theme: material.define-light-theme(
   (
     color: (
@@ -117,11 +91,13 @@ $cn-dark-theme: material.define-dark-theme(
 @include material.progress-bar-theme($cn-light-theme);
 @include material.card-theme($cn-light-theme);
 @include material.menu-theme($cn-light-theme);
+@include material.divider-theme($cn-light-theme);
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
     --mdc-elevated-card-container-color: #202020;
+    --mat-select-panel-background-color: #2b2b2b;
     --mat-menu-container-color: #1e1b33;
   }
   @include material.core-color($cn-dark-theme);
@@ -138,4 +114,5 @@ $cn-dark-theme: material.define-dark-theme(
   @include material.progress-bar-color($cn-dark-theme);
   @include material.card-color($cn-dark-theme);
   @include material.menu-color($cn-dark-theme);
+  @include material.divider-color($cn-dark-theme);
 }

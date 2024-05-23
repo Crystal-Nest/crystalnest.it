@@ -1,5 +1,6 @@
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
+import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
@@ -35,6 +36,16 @@ export const appConfig: ApplicationConfig = {
         }
       }
     }),
+    {
+      provide: MAT_RIPPLE_GLOBAL_OPTIONS,
+      useValue: {
+        disabled: true,
+        animation: {
+          enterDuration: 0,
+          exitDuration: 0
+        }
+      }
+    },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {

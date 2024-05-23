@@ -1,0 +1,16 @@
+.mdc-checkbox__ripple {
+  display: none !important;
+}
+
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
+  border-color: #cccccc !important;
+}
+
+.mdc-form-field:has(.mdc-checkbox) {
+  color: #cccccc !important;
+
+  &:hover {
+    filter: brightness(1.2) !important;
+  }
+}

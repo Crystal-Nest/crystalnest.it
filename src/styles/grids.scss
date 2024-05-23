@@ -1,5 +1,5 @@
-@import "variables", "mixins";
 @import "@material/layout-grid/mdc-layout-grid";
+@import "variables";
 
 // Property grid-gap is overridden forcibly to workaround this known bug: https://github.com/material-components/material-components-web/issues/1879
 

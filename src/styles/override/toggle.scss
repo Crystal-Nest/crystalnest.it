@@ -1,0 +1,15 @@
+.mdc-switch__ripple {
+  display: none !important;
+}
+
+.mdc-switch.mdc-switch--unselected:enabled:focus:not(:active) .mdc-switch__handle::after {
+  background: var(--mdc-switch-unselected-handle-color) !important;
+}
+
+.mdc-switch.mdc-switch--unselected:enabled:hover:not(:active) .mdc-switch__handle::after {
+  background: var(--mdc-switch-unselected-focus-handle-color) !important;
+}
+
+.mdc-switch.mdc-switch--selected:enabled .mdc-switch__icon {
+  fill: white !important;
+}

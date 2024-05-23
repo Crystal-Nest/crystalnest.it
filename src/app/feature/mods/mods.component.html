@@ -1,4 +1,4 @@
-<cn-mods-form [minecraftVersions]="minecraftVersions" (onSubmit)="filter($event)"></cn-mods-form>
+<cn-mods-form [formData]="form$ | async" [minecraftVersions]="minecraftVersions" (onSubmit)="filter($event)"></cn-mods-form>
 <section>
   @for (mod of mods$ | async; track mod.name) {
     <cn-card [mod]="mod" />

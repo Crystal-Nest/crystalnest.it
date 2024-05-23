@@ -47,6 +47,15 @@ export class ModsComponent {
   public readonly mods$ = this.store$.select(modsFeature.selectFilteredMods);
 
   /**
+   * Form persistance data.
+   *
+   * @public
+   * @readonly
+   * @type {Observable<ModsForm | null>}
+   */
+  public readonly form$ = this.store$.select(modsFeature.selectForm);
+
+  /**
    * Available Minecraft versions.
    *
    * @public

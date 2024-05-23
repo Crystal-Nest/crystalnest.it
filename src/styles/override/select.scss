@@ -11,3 +11,12 @@ div.mat-mdc-select-panel {
   margin: 0 !important;
   margin-left: 16px !important;
 }
+
+.mat-mdc-option:focus.mdc-list-item,
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+  background-color: inherit !important;
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: var(--mat-option-focus-state-layer-color) !important;
+}

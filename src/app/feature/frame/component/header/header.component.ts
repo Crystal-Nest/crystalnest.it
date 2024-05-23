@@ -1,12 +1,12 @@
 import {NgStyle} from '@angular/common';
 import {Component, Input} from '@angular/core';
+import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 
 import {ROUTE} from '~cn/core/model/route.enum';
 import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
 import {LinkButtonComponent} from '~cn/shared/component/button/link-button/link-button.component';
-import {SeparatorComponent} from '~cn/shared/component/separator/separator.component';
 
 /**
  * Header component.
@@ -22,9 +22,9 @@ import {SeparatorComponent} from '~cn/shared/component/separator/separator.compo
     NgStyle,
     MatMenuModule,
     MatIconModule,
+    MatDividerModule,
     ButtonComponent,
-    LinkButtonComponent,
-    SeparatorComponent
+    LinkButtonComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
