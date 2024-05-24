@@ -1,8 +1,15 @@
+@import "variables";
+
 :host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
   .cn-main-content {
-    min-height: calc(100% - 5rem);
+    min-height: calc(100vh - ($footer-height - $header-height));
     height: fit-content;
     display: flex;
     flex-direction: column;
+    flex: 1;
   }
 }

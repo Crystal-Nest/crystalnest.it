@@ -1,6 +1,6 @@
 @use "@angular/material" as material;
 @import "variables", "grids";
-@import "override/button", "override/card", "override/checkbox", "override/divider", "override/input", "override/menu", "override/stepper", "override/select", "override/toggle";
+@import "override/button", "override/card", "override/checkbox", "override/divider", "override/input", "override/markdown", "override/menu", "override/stepper", "override/select", "override/toggle";
 
 * {
   box-sizing: border-box;
@@ -8,10 +8,19 @@
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 html,
 body {
   width: 100%;
-  height: 100%;
   font-family: Lexend, Roboto, "Helvetica Neue", sans-serif;
 }
 
