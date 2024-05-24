@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -12,6 +12,7 @@ import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../mode
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
+import {TypedChanges} from '~cn/core/model/typed-changes.type';
 import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
@@ -49,7 +50,7 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
   templateUrl: './generator-form.component.html',
   styleUrl: './generator-form.component.scss'
 })
-export class GeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit {
+export class GeneratorFormComponent extends FormComponent<SkeletonForm> implements OnInit, OnChanges {
   /**
    * Available Minecraft versions.
    *
@@ -108,6 +109,18 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
     modrinth: 'Modrinth',
     curseforge: 'CurseForge'
   };
+
+  /**
+   * @inheritdoc
+   *
+   * @public
+   * @param {TypedChanges<GeneratorFormComponent>} changes
+   */
+  public override ngOnChanges(changes: TypedChanges<GeneratorFormComponent>): void {
+    if (changes.versions) {
+      this.form.controls.minecraftVersion.setValue(Object.values(this.versions)[0] as MinecraftVersion);
+    }
+  }
 
   /**
    * @inheritdoc

@@ -1,6 +1,3 @@
 This generator assumes the use of IntelliJ IDEA as IDE. Etc.
-<cn-generator-form [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
+<cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
 Follow the instruction on the readme to finish the setup!
-@if (progress >= 0) {
-  <mat-progress-bar [mode]="progressMode" [value]="progress" />
-}

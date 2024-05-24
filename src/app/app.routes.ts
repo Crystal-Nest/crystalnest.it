@@ -3,6 +3,9 @@ import {provideEffects} from '@ngrx/effects';
 import {provideState} from '@ngrx/store';
 
 import {ROUTE} from './core/model/route.enum';
+import {GeneratorEffects} from './feature/generator/redux/effects';
+import {generatorFeature} from './feature/generator/redux/feature';
+import {TemplateService} from './feature/generator/service/template.service';
 import {ModsEffects} from './feature/mods/redux/effects';
 import {modsFeature} from './feature/mods/redux/feature';
 import {ModsService} from './feature/mods/service/mods.service';
@@ -19,7 +22,8 @@ export const ROOT_ROUTES: Routes = [
   },
   {
     path: ROUTE.GENERATOR,
-    loadComponent: () => import('~cn/feature/generator/generator.component').then(m => m.GeneratorComponent)
+    loadComponent: () => import('~cn/feature/generator/generator.component').then(m => m.GeneratorComponent),
+    providers: [provideState(generatorFeature), TemplateService, provideEffects(GeneratorEffects)]
   },
   // TODO: Create versioning page.
   {

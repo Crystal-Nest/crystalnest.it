@@ -4,6 +4,13 @@ import {Store} from '@ngrx/store';
 
 import {State} from './feature';
 
+/**
+ * Core effects.
+ *
+ * @export
+ * @class CoreEffects
+ * @typedef {CoreEffects}
+ */
 @Injectable()
 export class CoreEffects {
   /**

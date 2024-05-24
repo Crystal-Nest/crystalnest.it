@@ -1,7 +1,7 @@
 import {ProgressBarMode} from '@angular/material/progress-bar';
 import {createFeature, createReducer, createSelector, on} from '@ngrx/store';
 
-import {decrementCallCounter, incrementCallCounter, saveLoadingType, saveProgress} from './actions';
+import {decrementCallCounter, incrementCallCounter, incrementProgress, saveLoadingType, saveProgress} from './actions';
 
 /**
  * Core store.
@@ -53,13 +53,20 @@ export const coreFeature = createFeature({
         loadingType: 'query' as ProgressBarMode
       };
     }),
-    on(saveLoadingType, (state, {loadingType}) => ({
-      ...state,
-      loadingType: state.callCounter > 0 && state.loadingType === 'determinate' ? 'determinate' : loadingType
-    })),
+    on(saveLoadingType, (state, {loadingType, force}) => {
+      console.log(state, loadingType, force);
+      return {
+        ...state,
+        loadingType: !force && state.callCounter > 0 && state.loadingType === 'determinate' ? 'determinate' : loadingType
+      };
+    }),
     on(saveProgress, (state, {progress}) => ({
       ...state,
       progress
+    })),
+    on(incrementProgress, (state, {increment}) => ({
+      ...state,
+      progress: state.progress + increment
     }))
   ),
   extraSelectors: ({selectCallCounter}) => ({

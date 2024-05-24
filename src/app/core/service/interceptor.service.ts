@@ -48,7 +48,10 @@ export class Interceptor implements HttpInterceptor {
       }),
       filter(event => event.type === HttpEventType.Response),
       tap<HttpEvent<unknown>>(() => this.store$.dispatch(decrementCallCounter())),
-      catchError(() => of()) // TODO: handle errors
+      catchError(() => {
+        this.store$.dispatch(decrementCallCounter());
+        return of(); // TODO: handle errors
+      })
     );
   }
 }

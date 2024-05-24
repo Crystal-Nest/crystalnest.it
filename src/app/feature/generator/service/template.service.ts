@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {map} from 'rxjs';
 
 import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
 import {Branch} from '../model/branch.interface';
@@ -27,11 +26,6 @@ export class TemplateService extends Service {
     return this.get<Branch[]>(
       'https://api.github.com/repos/crystal-nest/cobweb-mod-template/branches',
       {headers: {'X-GitHub-Api-Version': '2022-11-28'} }
-    ).pipe(
-      map(response => response.reverse().reduce((prev, curr) => ({
-        ...prev,
-        [curr.name]: curr.name
-      }), {} as Record<MinecraftVersion, MinecraftVersion>))
     );
   }
 

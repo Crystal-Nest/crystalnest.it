@@ -14,9 +14,14 @@ export const decrementCallCounter = createAction('[Core] Decrement call counter'
 /**
  * Saves the loading type.
  */
-export const saveLoadingType = createAction('[Core] Save loading type', props<{loadingType: ProgressBarMode}>());
+export const saveLoadingType = createAction('[Core] Save loading type', props<{loadingType: ProgressBarMode; force?: boolean}>());
 
 /**
  * Saves the progress.
  */
 export const saveProgress = createAction('[Core] Save progress', props<{progress: number}>());
+
+/**
+ * Increments the progress.
+ */
+export const incrementProgress = createAction('[Core] Increment progress', props<{increment: number}>());
