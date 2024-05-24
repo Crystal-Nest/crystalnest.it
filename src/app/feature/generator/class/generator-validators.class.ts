@@ -38,7 +38,12 @@ export class GeneratorValidators {
    * @readonly
    * @type {ValidatorFn[]}
    */
-  public static readonly modTitle: ValidatorFn[] = [Validators.required, Validators.minLength(this.modIdMinLength), Validators.maxLength(this.modIdMaxLength)];
+  public static readonly modTitle: ValidatorFn[] = [
+    Validators.required,
+    Validators.minLength(this.modIdMinLength),
+    Validators.maxLength(this.modIdMaxLength),
+    GeneratorValidators.notMatch('cobweb')
+  ];
 
   /**
    * Checks whether the value does not include any of the given values.  
@@ -51,7 +56,7 @@ export class GeneratorValidators {
    */
   public static notInclude(...values: string[]): ValidatorFn {
     return control => {
-      if (control.value && typeof control.value === 'string' && values.some(value => control.value.toLowerCase().includes(value.toLowerCase()))) {
+      if (control.value && typeof control.value === 'string' && values.some(value => control.value.toLowerCase().trim().includes(value.toLowerCase().trim()))) {
         return {notInclude: true};
       }
       return null;
@@ -69,7 +74,7 @@ export class GeneratorValidators {
    */
   public static notMatch(...values: string[]): ValidatorFn {
     return control => {
-      if (control.value && values.some(value => control.value.toLowerCase() === value.toLowerCase())) {
+      if (control.value && values.some(value => control.value.toLowerCase().trim() === value.toLowerCase().trim())) {
         return {notMatch: true};
       }
       return null;

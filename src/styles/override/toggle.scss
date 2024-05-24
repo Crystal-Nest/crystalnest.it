@@ -11,5 +11,16 @@
 }
 
 .mdc-switch.mdc-switch--selected:enabled .mdc-switch__icon {
-  fill: white !important;
+  fill: black !important;
+}
+
+.mat-mdc-slide-toggle .mdc-label {
+  color: #eeeeee !important;
+}
+
+.mdc-switch.mdc-switch--unselected:hover,
+.mdc-switch.mdc-switch--unselected + .mdc-label:hover,
+.mdc-switch.mdc-switch--selected.mdc-switch--checked:hover {
+  background-color: inherit !important;
+  filter: brightness(1.2) !important;
 }

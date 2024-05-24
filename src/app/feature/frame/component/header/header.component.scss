@@ -7,7 +7,7 @@
 
   header {
     display: flex;
-    background-color: $purple-700;
+    background-color: $cn-color-700;
     color: #cccccc;
     height: 5rem;
     padding: 1rem;
@@ -28,7 +28,7 @@
 
           > li {
             transition-duration: 0.2s;
-            border-bottom: 0 solid $purple-a700;
+            border-bottom: 0 solid $cn-color-a700;
             border-radius: 0.25rem;
             white-space: nowrap;
 
@@ -182,7 +182,7 @@
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid $purple-a700;
+      border-bottom: 1px solid $cn-color-a700;
       padding-bottom: 0.5rem;
     }
 

@@ -121,8 +121,8 @@ export class GeneratorEffects {
     const rootChange: Change = [root, modIdKebab];
     const modIdChange: Change = [TEMPLATE_MOD_ID, modId];
     const modIdKebabChange: Change = [TEMPLATE_MOD_ID_KEBAB, modIdKebab];
-    const modTitleChange: Change = [TEMPLATE_MOD_TITLE, modTitle];
-    const groupChange: Change = [TEMPLATE_GROUP, group, othersMod];
+    const modTitleChange: Change = [TEMPLATE_MOD_TITLE, modTitle.trim()];
+    const groupChange: Change = [new RegExp(`${TEMPLATE_GROUP.replace('.', '\\.')}(?!\\.cobweb\\.)`, 'g'), group, othersMod];
     const groupPathChange: Change = [TEMPLATE_GROUP_PATH, group.replaceAll('.', '/'), othersMod];
     const fcapChange: Change = [/.*f(orge-)?c(onfig-)?a(pi-)?p(ort)?.*\n/g, '', noConfig];
     const loaderChanges = this.loadersChanges(excludedLoaders);
@@ -236,7 +236,7 @@ export class GeneratorEffects {
       loadingType: 'indeterminate',
       force: true
     }));
-    return zip;
+    return this.removeEmptyDirs(zip);
   }
 
   /**
@@ -328,6 +328,41 @@ export class GeneratorEffects {
    */
   private process(value: string, changes: Change[]): string {
     return changes.reduce((content, [search, replace, flag]) => flag ?? true ? content[typeof search === 'string' ? 'replaceAll' : 'replace'](search, replace) : content, value);
+  }
+
+  /**
+   * Removes all empty directories.
+   *
+   * @private
+   * @param {JSZip} zip
+   * @returns {JSZip}
+   */
+  private removeEmptyDirs(zip: JSZip): JSZip {
+    for (const dir of zip.filter((path, entry) => entry.dir && this.isEmptyDir(zip.files, path)).map(entry => entry.name)) {
+      zip.remove(dir);
+    }
+    return zip;
+  }
+
+  /**
+   * Checks whether the given directory is empty.
+   *
+   * @private
+   * @param {Record<string, JSZipObject>} files
+   * @param {string} dir
+   * @returns {boolean}
+   */
+  private isEmptyDir(files: Record<string, JSZipObject>, dir: string) {
+    for (const [path, entry] of Object.entries(files)) {
+      if (entry.dir) {
+        if (path.startsWith(dir) && path !== dir) {
+          return false;
+        }
+      } else if (path.startsWith(dir)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**

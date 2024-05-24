@@ -53,13 +53,10 @@ export const coreFeature = createFeature({
         loadingType: 'query' as ProgressBarMode
       };
     }),
-    on(saveLoadingType, (state, {loadingType, force}) => {
-      console.log(state, loadingType, force);
-      return {
-        ...state,
-        loadingType: !force && state.callCounter > 0 && state.loadingType === 'determinate' ? 'determinate' : loadingType
-      };
-    }),
+    on(saveLoadingType, (state, {loadingType, force}) => ({
+      ...state,
+      loadingType: !force && state.callCounter > 0 && state.loadingType === 'determinate' ? 'determinate' : loadingType
+    })),
     on(saveProgress, (state, {progress}) => ({
       ...state,
       progress

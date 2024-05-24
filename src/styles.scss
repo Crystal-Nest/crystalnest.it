@@ -1,6 +1,6 @@
 @use "@angular/material" as material;
 @import "variables", "grids";
-@import "override/card", "override/checkbox", "override/divider", "override/input", "override/menu", "override/stepper", "override/select", "override/toggle";
+@import "override/button", "override/card", "override/checkbox", "override/divider", "override/input", "override/menu", "override/stepper", "override/select", "override/toggle";
 
 * {
   box-sizing: border-box;

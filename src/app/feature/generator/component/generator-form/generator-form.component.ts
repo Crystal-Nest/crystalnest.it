@@ -181,7 +181,8 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
             'model',
             'services',
             'META-INF'
-          )
+          ),
+          Validators.pattern('^([a-z]+(\.|_))*[a-z]+$')
         ]);
         this.form.controls.authors.setValidators([Validators.required, GeneratorValidators.notInclude(...TEMPLATE_AUTHORS)]);
         this.form.controls.githubUser.setValidators([Validators.required, GeneratorValidators.notMatch(TEMPLATE_GITHUB_USER)]);
@@ -200,7 +201,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   protected override initForm(): FormType<SkeletonForm> {
     return {
-      minecraftVersion: new FormControl('1.20.4', {
+      minecraftVersion: new FormControl('' as MinecraftVersion, {
         nonNullable: true,
         validators: Validators.required
       }),
