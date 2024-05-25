@@ -1,4 +1,4 @@
-import {createFeature, createReducer, on} from '@ngrx/store';
+import {createFeature, createReducer, createSelector, on} from '@ngrx/store';
 
 import {saveForm, saveTemplateAndForm, saveTemplateMinecraftVersions} from './actions';
 import {SkeletonForm} from '../model/skeleton-form.interface';
@@ -13,8 +13,23 @@ import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
  * @typedef {State}
  */
 export interface State {
+  /**
+   * Available mod template Minecraft versions.
+   *
+   * @type {Record<MinecraftVersion, MinecraftVersion>}
+   */
   minecraftVersions: Record<MinecraftVersion, MinecraftVersion>;
-  template: ArrayBuffer | null;
+  /**
+   * Template cache.
+   *
+   * @type {Record<MinecraftVersion, ArrayBuffer>}
+   */
+  templates: Record<MinecraftVersion, ArrayBuffer>;
+  /**
+   * Latest submitted form for persistance.
+   *
+   * @type {SkeletonForm | null}
+   */
   form: SkeletonForm | null;
 }
 
@@ -25,7 +40,7 @@ export interface State {
  */
 export const INITIAL_STATE: State = {
   minecraftVersions: {},
-  template: null,
+  templates: {},
   form: null
 };
 
@@ -42,12 +57,18 @@ export const generatorFeature = createFeature({
     })),
     on(saveTemplateAndForm, (state, {template, form}) => ({
       ...state,
-      template,
+      templates: {
+        ...state.templates,
+        [form.minecraftVersion]: template
+      },
       form
     })),
     on(saveForm, (state, {form}) => ({
       ...state,
       form
     }))
-  )
+  ),
+  extraSelectors: ({selectTemplates}) => ({
+    selectTemplate: (version: MinecraftVersion) => createSelector(selectTemplates, state => state[version])
+  })
 });

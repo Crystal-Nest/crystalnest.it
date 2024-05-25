@@ -25,3 +25,8 @@ export const saveProgress = createAction('[Core] Save progress', props<{progress
  * Increments the progress.
  */
 export const incrementProgress = createAction('[Core] Increment progress', props<{increment: number}>());
+
+/**
+ * Starts the download flow for the given `file`.
+ */
+export const download = createAction('[Core] Download', props<{file: Blob; id: string}>());

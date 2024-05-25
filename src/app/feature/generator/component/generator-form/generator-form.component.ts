@@ -111,6 +111,15 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
   };
 
   /**
+   * Oldest Minecraft version (minor part) supported by NeoForge.
+   *
+   * @private
+   * @readonly
+   * @type {20}
+   */
+  private readonly neoforgeMinecraftVersion = 20;
+
+  /**
    * @inheritdoc
    *
    * @public
@@ -128,6 +137,14 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @public
    */
   public ngOnInit(): void {
+    this.valueChanges('minecraftVersion', value => {
+      if (+value.split('.')[1]! < this.neoforgeMinecraftVersion && this.form.controls.loaders.value.includes('neoforge')) {
+        this.form.controls.loaders.setValue(this.form.controls.loaders.value.filter(loader => loader !== 'neoforge'));
+        this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
+      } else {
+        this.form.controls.loaders.setValidators(Validators.required);
+      }
+    }, (value, index) => !!(index && value));
     this.valueChanges('autogenModId', value => {
       if (value) {
         this.form.controls.modId.disable();
@@ -151,9 +168,9 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         this.form.controls.group.setValue(TEMPLATE_GROUP);
         this.form.controls.authors.setValue(TEMPLATE_AUTHORS.join(', '));
         this.form.controls.githubUser.setValue(TEMPLATE_GITHUB_USER);
-        this.form.controls.group.setValidators([Validators.required]);
-        this.form.controls.authors.setValidators([Validators.required]);
-        this.form.controls.githubUser.setValidators([Validators.required]);
+        this.form.controls.group.setValidators(Validators.required);
+        this.form.controls.authors.setValidators(Validators.required);
+        this.form.controls.githubUser.setValidators(Validators.required);
       } else {
         this.form.controls.group.enable();
         this.form.controls.authors.enable();

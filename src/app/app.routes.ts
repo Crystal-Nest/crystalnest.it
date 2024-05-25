@@ -25,10 +25,9 @@ export const ROOT_ROUTES: Routes = [
     loadComponent: () => import('~cn/feature/generator/generator.component').then(m => m.GeneratorComponent),
     providers: [provideState(generatorFeature), TemplateService, provideEffects(GeneratorEffects)]
   },
-  // TODO: Create versioning page.
   {
     path: ROUTE.VERSIONING,
-    loadComponent: () => import('~cn/feature/home/home.component').then(m => m.HomeComponent)
+    loadComponent: () => import('~cn/feature/versioning/versioning.component').then(m => m.VersioningComponent)
   },
   {
     path: ROUTE.MODS,

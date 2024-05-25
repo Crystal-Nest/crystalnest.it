@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+
+  h1 {
+    font-size: 3em;
+    font-weight: 300;
+    font-family: "Silkscreen";
+    font-style: normal;
+    text-align: center;
+    line-height: 48px;
+  }
+}

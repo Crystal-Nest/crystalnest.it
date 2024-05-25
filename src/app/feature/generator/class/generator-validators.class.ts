@@ -38,12 +38,7 @@ export class GeneratorValidators {
    * @readonly
    * @type {ValidatorFn[]}
    */
-  public static readonly modTitle: ValidatorFn[] = [
-    Validators.required,
-    Validators.minLength(this.modIdMinLength),
-    Validators.maxLength(this.modIdMaxLength),
-    GeneratorValidators.notMatch('cobweb')
-  ];
+  public static readonly modTitle: ValidatorFn[] = [Validators.required, Validators.minLength(this.modIdMinLength), Validators.maxLength(this.modIdMaxLength)];
 
   /**
    * Checks whether the value does not include any of the given values.  
@@ -56,8 +51,13 @@ export class GeneratorValidators {
    */
   public static notInclude(...values: string[]): ValidatorFn {
     return control => {
-      if (control.value && typeof control.value === 'string' && values.some(value => control.value.toLowerCase().trim().includes(value.toLowerCase().trim()))) {
-        return {notInclude: true};
+      if (control.value) {
+        if (typeof control.value === 'string' && values.some(value => GeneratorValidators.includes(control.value, value))) {
+          return {notInclude: true};
+        }
+        if (Array.isArray(control.value) && values.some(value => control.value.some((element: string) => GeneratorValidators.includes(element, value)))) {
+          return {notInclude: true};
+        }
       }
       return null;
     };
@@ -91,5 +91,18 @@ export class GeneratorValidators {
    */
   public static modId(char: ModIdSpecialChar): ValidatorFn[] {
     return [...GeneratorValidators.modTitle, Validators.pattern(`[a-z0-9${char}]+`)];
+  }
+
+  /**
+   * Checks whether the first string contains the second one.
+   *
+   * @private
+   * @static
+   * @param {string} haystack
+   * @param {string} needle
+   * @returns {boolean}
+   */
+  private static includes(haystack: string, needle: string): boolean {
+    return haystack.toLowerCase().trim().includes(needle.toLowerCase().trim());
   }
 }

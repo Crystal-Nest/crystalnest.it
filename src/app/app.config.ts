@@ -1,3 +1,4 @@
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
@@ -63,6 +64,10 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true
+    },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
     }
   ]
 };

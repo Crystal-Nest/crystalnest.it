@@ -76,6 +76,9 @@ devDependencies:
   '@ngrx/effects':
     specifier: ^17.2.0
     version: 17.2.0(@angular/core@17.1.2)(@ngrx/store@17.2.0)(rxjs@7.8.1)
+  '@ngrx/operators':
+    specifier: ^17.2.0
+    version: 17.2.0(rxjs@7.8.1)
   '@ngrx/router-store':
     specifier: ^17.2.0
     version: 17.2.0(@angular/common@17.1.2)(@angular/core@17.1.2)(@angular/router@17.1.2)(@ngrx/store@17.2.0)(rxjs@7.8.1)
@@ -2954,6 +2957,15 @@ packages:
 
   /@ngrx/operators@17.0.0-beta.0(rxjs@7.8.1):
     resolution: {integrity: sha512-EbO8AONuQ6zo2v/mPyBOi4y0CTAp1x4Z+bx7ZF+Pd8BL5ma53BTCL1TmzaeK5zPUe0yApudLk9/ZbHXPnVox5A==}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: true
+
+  /@ngrx/operators@17.2.0(rxjs@7.8.1):
+    resolution: {integrity: sha512-W7SrGK4VQSJlCtMrkxNChVBDgJGSCdZ4yLBi80xoE9CmhTMMhu9J+8BbDDhZ+PPbTHylKJobkwHq+tJ8mkf4eQ==}
     peerDependencies:
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:

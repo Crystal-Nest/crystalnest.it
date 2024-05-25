@@ -11,8 +11,23 @@ import {decrementCallCounter, incrementCallCounter, incrementProgress, saveLoadi
  * @typedef {State}
  */
 export interface State {
+  /**
+   * Current amount of pending HTTP calls.
+   *
+   * @type {number}
+   */
   callCounter: number;
+  /**
+   * Loading type.
+   *
+   * @type {ProgressBarMode}
+   */
   loadingType: ProgressBarMode;
+  /**
+   * Ignored if {@link loadingType} is different from `determinate`, controls how much of the loading bar to fill.
+   *
+   * @type {number}
+   */
   progress: number;
 }
 

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {concatLatestFrom} from '@ngrx/operators';
 import {Store} from '@ngrx/store';
 import JSZip, {JSZipObject} from '@progress/jszip-esm';
-import {filter, ignoreElements, map, switchMap, tap, withLatestFrom} from 'rxjs';
+import {filter, map, switchMap, withLatestFrom} from 'rxjs';
 
 import {buildMod, generateMod, retrieveTemplateMinecraftVersions, saveForm, saveTemplateAndForm, saveTemplateMinecraftVersions} from './actions';
 import {State, generatorFeature} from './feature';
@@ -11,8 +12,9 @@ import {SkeletonForm} from '../model/skeleton-form.interface';
 import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from '../model/template.const';
 import {TemplateService} from '../service/template.service';
 
+import {observe} from '~cn/core/function/core.function';
 import {ModLoader} from '~cn/core/model/mod-loader.type';
-import {decrementCallCounter, incrementCallCounter, incrementProgress, saveLoadingType, saveProgress} from '~cn/core/redux/actions';
+import {decrementCallCounter, download, incrementCallCounter, incrementProgress, saveLoadingType, saveProgress} from '~cn/core/redux/actions';
 
 /**
  * Change to apply to a file, replacing the first value with the second one, only if the third one is true or absent.
@@ -28,6 +30,14 @@ type Change = [(string | RegExp), string] | [(string | RegExp), string, boolean]
  */
 @Injectable()
 export class GeneratorEffects {
+  /**
+   * Intercepts the action {@link retrieveTemplateMinecraftVersions} to retrieve the list of available mod template Minecraft versions and,
+   * if it wasn't retireved already, calls {@link TemplateService.getMinecraftVersions getMinecraftVersions} to retrieve it,
+   * then emits the action {@link saveTemplateMinecraftVersions} to save it.
+   *
+   * @public
+   * @type {TypedAction<"[Generator] Save template Minecraft versions">}
+   */
   public retrieveTemplateMinecraftVersions$ = createEffect(() => this.actions$.pipe(
     ofType(retrieveTemplateMinecraftVersions),
     withLatestFrom(this.store$.select(generatorFeature.selectMinecraftVersions)),
@@ -40,9 +50,17 @@ export class GeneratorEffects {
     ))
   ));
 
+  /**
+   * Intercepts the action {@link generateMod} to start the mod generation flow and,
+   * if the template for the specified version wasn't already retrieved, calls {@link TemplateService.getTemplate getTemplate} to retrieve it,
+   * then emits the action {@link saveTemplateAndForm} to save both the template and the form data.
+   *
+   * @public
+   * @type {TypedAction<"[Generator] Save template and form">}
+   */
   public retrieveTemplate$ = createEffect(() => this.actions$.pipe(
     ofType(generateMod),
-    withLatestFrom(this.store$.select(generatorFeature.selectTemplate)),
+    concatLatestFrom(({minecraftVersion}) => this.store$.select(generatorFeature.selectTemplate(minecraftVersion))),
     filter(([, template]) => !template),
     switchMap(([form]) => this.templateService.getTemplate(form.minecraftVersion).pipe(
       map(template => saveTemplateAndForm({
@@ -52,16 +70,35 @@ export class GeneratorEffects {
     ))
   ));
 
+  /**
+   * Intercepts the action {@link generateMod} to start the mod generation flow and,
+   * if the template for the specified version was already retrieved,
+   * emits the action {@link saveForm} to save the form data.
+   *
+   * @public
+   * @type {TypedAction<"[Generator] Save form">}
+   */
   public saveModGenerationData$ = createEffect(() => this.actions$.pipe(
     ofType(generateMod),
-    withLatestFrom(this.store$.select(generatorFeature.selectTemplate)),
+    concatLatestFrom(({minecraftVersion}) => this.store$.select(generatorFeature.selectTemplate(minecraftVersion))),
     filter(([, template]) => !!template),
     map(([form]) => saveForm({form}))
   ));
 
+  /**
+   * Intercepts either actions {@link saveTemplateAndForm} and {@link saveForm} to save mod generation data,
+   * emits the actions:
+   * - {@link incrementCallCounter} to increase the pending calls counter;
+   * - {@link saveLoadingType} to update the loading type to `determinate`;
+   * - {@link saveProgress} to set the progress to `0`;
+   * - {@link buildMod} to start the mod building flow.
+   *
+   * @public
+   * @type {TypedAction<"[Core] Increment call counter" | "[Core] Save loading type" | "[Core] Save progress" | "[Generator] Build mod">}
+   */
   public updateGenerationProgress$ = createEffect(() => this.actions$.pipe(
     ofType(saveTemplateAndForm, saveForm),
-    withLatestFrom(this.store$.select(generatorFeature.selectTemplate)),
+    concatLatestFrom(({form}) => this.store$.select(generatorFeature.selectTemplate(form.minecraftVersion))),
     switchMap(([{form}, template]) => [
       incrementCallCounter(),
       saveLoadingType({loadingType: 'determinate'}),
@@ -73,11 +110,25 @@ export class GeneratorEffects {
     ])
   ));
 
+  /**
+   * Intercepts the action {@link buildMod} to start the mod building flow,
+   * emits the actions {@link download} to download the mod and {@link decrementCallCounter} to decrease the pending calls counter.
+   *
+   * @public
+   * @type {TypedAction<"[Core] Download" | "[Core] Decrement call counter">}
+   */
   public generateMod$ = createEffect(() => this.actions$.pipe(
     ofType(buildMod),
-    tap(({form, template}) => new JSZip().loadAsync(template).then(data => this.processTemplate(data, form).generateAsync({type: 'blob'}).then(file => this.download(file, form.modIdKebab)))),
-    ignoreElements()
-  ), {dispatch: false});
+    switchMap(({form, template}) => observe(new JSZip().loadAsync(template).then(data => this.processTemplate(data, form).generateAsync({type: 'blob'}))).pipe(
+      switchMap(file => [
+        download({
+          file,
+          id: form.modIdKebab
+        }),
+        decrementCallCounter()
+      ])
+    ))
+  ));
 
   /**
    * @constructor
@@ -165,6 +216,7 @@ export class GeneratorEffects {
                 [/^description = .*$/m, `description = ${description.trim().replaceAll('\n', '\\n')}`],
                 [TEMPLATE_GITHUB_USER, githubUser, othersMod],
                 fcapChange,
+                [/.*curse.*\n/, '', excludedPlatforms.includes('curseforge')],
                 ...loaderChanges
               ])
             );
@@ -363,23 +415,5 @@ export class GeneratorEffects {
       }
     }
     return true;
-  }
-
-  /**
-   * Downloads the given `file`.
-   *
-   * @private
-   * @param {Blob} file
-   * @param {string} id
-   */
-  private download(file: Blob, id: string) {
-    const anchor = document.createElement('a');
-    anchor.style.display = 'none';
-    anchor.href = URL.createObjectURL(file);
-    anchor.download = `cobweb-mod-skeleton (${id})`;
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    this.store$.dispatch(decrementCallCounter());
   }
 }

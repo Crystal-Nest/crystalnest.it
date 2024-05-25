@@ -574,8 +574,8 @@
         "rxjs/finnish": [
           "warn",
           {
-            "functions": true,
-            "methods": true,
+            "functions": false,
+            "methods": false,
             "names": {
               "^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$": false
             },
