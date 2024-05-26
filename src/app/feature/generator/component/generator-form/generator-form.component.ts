@@ -3,7 +3,7 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 
 import {MinecraftVersion} from '../../../../core/model/minecraft-version.type';
-import {MOD_LOADERS} from '../../../../core/model/mod-loader.type';
+import {MOD_LOADERS, ModLoader} from '../../../../core/model/mod-loader.type';
 import {GeneratorValidators} from '../../class/generator-validators.class';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {Platform} from '../../model/platform.type';
@@ -91,10 +91,9 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * Available mod loaders.
    *
    * @public
-   * @readonly
-   * @type {Record<Lowercase<ModLoader>, ModLoader>}
+   * @type {Partial<Record<Lowercase<ModLoader>, ModLoader>>}
    */
-  public readonly loaders = MOD_LOADERS;
+  public loaders: Partial<Record<Lowercase<ModLoader>, ModLoader>> = {...MOD_LOADERS};
 
   /**
    * Available publishing platforms.
@@ -117,7 +116,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @readonly
    * @type {20}
    */
-  private readonly neoforgeMinecraftVersion = 20;
+  private readonly neoforgeTransitionVersion = 20;
 
   /**
    * @inheritdoc
@@ -138,11 +137,18 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   public ngOnInit(): void {
     this.valueChanges('minecraftVersion', value => {
-      if (+value.split('.')[1]! < this.neoforgeMinecraftVersion && this.form.controls.loaders.value.includes('neoforge')) {
+      const minor = +value.split('.')[1]!;
+      if (minor < this.neoforgeTransitionVersion) {
         this.form.controls.loaders.setValue(this.form.controls.loaders.value.filter(loader => loader !== 'neoforge'));
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
+        delete this.loaders.neoforge;
+      } else if (minor > this.neoforgeTransitionVersion) {
+        this.form.controls.loaders.setValue(this.form.controls.loaders.value.filter(loader => loader !== 'forge'));
+        this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('forge')]);
+        delete this.loaders.forge;
       } else {
         this.form.controls.loaders.setValidators(Validators.required);
+        this.loaders = {...MOD_LOADERS};
       }
     }, (value, index) => !!(index && value));
     this.valueChanges('autogenModId', value => {

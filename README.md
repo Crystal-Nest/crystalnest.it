@@ -1,18 +1,23 @@
 # Crystal Nest
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+Crystal Nest website!
 
-## Development server
+_Supports desktop and mobile!_
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## [Mod generator](https://crystalnest.it/#/generator)
 
-## Code scaffolding
+Create your new mod with our mod template generator!  
+Based on [Crystal Nest Cobweb Mod Template](https://github.com/Crystal-Nest/cobweb-mod-template), automatically generates a tailored mod template with the custom data you provide!
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The intended use of this generator is to first create a repository from our official template, and then update each branch with the generated content.
 
-## Build
+## [Mod semantic versioning](https://crystalnest.it/#/versioning)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `docs/` directory.
+Read about our versioning standard to know what our version numbers mean, and whether it's a standard that you can find suitable for your own mods too!
+
+## [Mod showcase](https://crystalnest.it/#/mods)
+
+Explore all our released mods in the official browsing tab, where you'll find detailed information and relevant links for each mod, organized in adaptive cards that fit any screen resolution!
 
 ## **Support us**
 

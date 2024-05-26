@@ -196,6 +196,20 @@ export class GeneratorEffects {
               ))
             );
             break;
+          case path === `${root}/common/build.gradle`:
+            // Common build.gradle: update configuration dependency and platform publishing tasks.
+            zip.file(
+              this.process(path, [rootChange]),
+              this.alter(entry, [fcapChange, ...excludedPlatforms.map(platform => [new RegExp(`.*${platform}.*\\n`, 'i'), ''] as Change)])
+            );
+            break;
+          case path === `${root}/forge/build.gradle`:
+            // Forge build.gradle: update configuration dependency and platform publishing tasks.
+            zip.file(
+              this.process(path, [rootChange]),
+              this.alter(entry, [fcapChange, [/\n.*publishing(.*\n)*?}\n/, '', excludedPlatforms.includes('maven')]])
+            );
+            break;
           case path.endsWith('build.gradle'):
             // Subprojects build.gradle: update configuration dependency.
             zip.file(
