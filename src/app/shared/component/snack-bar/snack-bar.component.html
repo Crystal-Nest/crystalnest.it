@@ -1,0 +1,9 @@
+<div class="content">
+  <mat-icon fontIcon="error" />
+  <div class="text">
+    <span class="title" matSnackBarLabel>Network error</span>
+    <span class="message" matSnackBarLabel>{{ data.status }} - {{ data.error.message }}</span>
+  </div>
+  <button class="close" mat-button matSnackBarAction (click)="snackBarRef.dismiss()"><mat-icon fontIcon="close" /></button>
+</div>
+<button class="report" mat-button matSnackBarAction (click)="snackBarRef.dismissWithAction()">Report<mat-icon fontIcon="open_in_new" /></button>

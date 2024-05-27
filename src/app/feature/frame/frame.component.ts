@@ -1,5 +1,7 @@
 import {AsyncPipe} from '@angular/common';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
 import {NavigationEnd, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
@@ -9,8 +11,10 @@ import {FooterComponent} from './component/footer/footer.component';
 import {HeaderComponent} from './component/header/header.component';
 import {LoaderComponent} from './component/loader/loader.component';
 
+import {SubscriberComponent} from '~cn/core/abstract/subscriber.component';
 import {ROUTE, isValidRoute} from '~cn/core/model/route.enum';
 import {State, coreFeature} from '~cn/core/redux/feature';
+import {SnackBarComponent} from '~cn/shared/component/snack-bar/snack-bar.component';
 
 /**
  * Frame component.
@@ -31,30 +35,42 @@ import {State, coreFeature} from '~cn/core/redux/feature';
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })
-export class FrameComponent {
+export class FrameComponent extends SubscriberComponent {
   /**
    * Whether the website is loading.
    *
    * @public
+   * @readonly
    * @type {Observable<boolean>}
    */
-  public loading$ = this.store$.select(coreFeature.selectLoading);
+  public readonly loading$ = this.store$.select(coreFeature.selectLoading);
 
   /**
    * Which kind of loading is being performed.
    *
    * @public
+   * @readonly
    * @type {Observable<ProgressBarMode>}
    */
-  public loadingType$ = this.store$.select(coreFeature.selectLoadingType);
+  public readonly loadingType$ = this.store$.select(coreFeature.selectLoadingType);
 
   /**
    * Loading progress.
    *
    * @public
+   * @readonly
    * @type {Observable<number>}
    */
-  public progress$ = this.store$.select(coreFeature.selectProgress);
+  public readonly progress$ = this.store$.select(coreFeature.selectProgress);
+
+  /**
+   * Latest HTTP error.
+   *
+   * @private
+   * @readonly
+   * @type {Observable<HttpErrorResponse | null>}
+   */
+  private readonly error$ = this.store$.select(coreFeature.selectError);
 
   /**
    * Active route.
@@ -70,9 +86,15 @@ export class FrameComponent {
    * @param {Store<State>} store$
    * @param {Router} router
    * @param {Title} title
+   * @param {MatSnackBar} snackBar
    */
-  public constructor(private readonly store$: Store<State>, private readonly router: Router, private readonly title: Title) {
+  public constructor(private readonly store$: Store<State>, private readonly router: Router, private readonly title: Title, private readonly snackBar: MatSnackBar) {
+    super();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => this.setTitle((event as NavigationEnd).urlAfterRedirects.slice(1)));
+    this.error$.pipe(filter(error => !!error), this.takeUntil()).subscribe(error => this.snackBar.openFromComponent(SnackBarComponent, {data: error}).onAction().pipe(this.takeUntil()).subscribe(() => window.open(
+      `https://github.com/Crystal-Nest/crystalnest.it/issues/new?assignees=Crystal-Spider&labels=bug%2Cmedium+priority&projects=&title=${error!.status}%20HTTP%20error&error=${this.encodeError(error!)}&template=error_report.yml`,
+      '_blank'
+    )));
   }
 
   /**
@@ -100,5 +122,17 @@ export class FrameComponent {
         break;
     }
     this.activeRoute = isValidRoute(route) ? route as ROUTE : ROUTE.HOME;
+  }
+
+  /**
+   * Encodes a JSON snippet for a GitHub query URL to open an issue.
+   *
+   * @private
+   * @param {HttpErrorResponse} error
+   * @returns {string}
+   */
+  private encodeError(error: HttpErrorResponse): string {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    return encodeURI(`\`\`\`json\n${JSON.stringify(error, null, 2)}\n\`\`\``);
   }
 }

@@ -84,6 +84,7 @@ $cn-dark-theme: material.define-dark-theme(
   @include material.card-theme($cn-dark-theme);
   @include material.menu-theme($cn-dark-theme);
   @include material.divider-theme($cn-dark-theme);
+  @include material.snack-bar-theme($cn-dark-theme);
   --mdc-elevated-card-container-color: #202020;
   --mat-stepper-container-color: #202020;
   --mat-select-panel-background-color: #2b2b2b;

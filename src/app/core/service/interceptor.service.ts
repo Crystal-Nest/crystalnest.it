@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Observable, catchError, filter, of, tap} from 'rxjs';
 
-import {decrementCallCounter, incrementCallCounter, saveLoadingType, saveProgress} from '../redux/actions';
+import {decrementCallCounter, incrementCallCounter, saveError, saveLoadingType, saveProgress} from '../redux/actions';
 import {State} from '../redux/feature';
 
 /**
@@ -48,9 +48,10 @@ export class Interceptor implements HttpInterceptor {
       }),
       filter(event => event.type === HttpEventType.Response),
       tap<HttpEvent<unknown>>(() => this.store$.dispatch(decrementCallCounter())),
-      catchError(() => {
+      catchError(error => {
         this.store$.dispatch(decrementCallCounter());
-        return of(); // TODO: handle errors
+        this.store$.dispatch(saveError({error}));
+        return of();
       })
     );
   }

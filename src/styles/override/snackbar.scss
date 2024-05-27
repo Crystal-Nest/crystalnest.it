@@ -1,0 +1,17 @@
+.cn-snack-bar {
+  > .mdc-snackbar__surface {
+    background-color: #ffe8e8 !important;
+    border: thin solid #dc2626 !important;
+    padding: 0 !important;
+  }
+
+  button > span {
+    max-height: 2rem !important;
+    padding: 0 !important;
+  }
+
+  .report > .mdc-button__label {
+    color: #334155 !important;
+    font-size: small !important;
+  }
+}

@@ -1,3 +1,4 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {ProgressBarMode} from '@angular/material/progress-bar';
 import {createAction, props} from '@ngrx/store';
 
@@ -30,3 +31,8 @@ export const incrementProgress = createAction('[Core] Increment progress', props
  * Starts the download flow for the given `file`.
  */
 export const download = createAction('[Core] Download', props<{file: Blob; id: string}>());
+
+/**
+ * Saves the HTTP error.
+ */
+export const saveError = createAction('[Core] Save error', props<{error: HttpErrorResponse | null}>());

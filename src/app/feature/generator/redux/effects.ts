@@ -36,9 +36,10 @@ export class GeneratorEffects {
    * then emits the action {@link saveTemplateMinecraftVersions} to save it.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Generator] Save template Minecraft versions">}
    */
-  public retrieveTemplateMinecraftVersions$ = createEffect(() => this.actions$.pipe(
+  public readonly retrieveTemplateMinecraftVersions$ = createEffect(() => this.actions$.pipe(
     ofType(retrieveTemplateMinecraftVersions),
     withLatestFrom(this.store$.select(generatorFeature.selectMinecraftVersions)),
     filter(([, versions]) => !Object.keys(versions).length),
@@ -56,9 +57,10 @@ export class GeneratorEffects {
    * then emits the action {@link saveTemplateAndForm} to save both the template and the form data.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Generator] Save template and form">}
    */
-  public retrieveTemplate$ = createEffect(() => this.actions$.pipe(
+  public readonly retrieveTemplate$ = createEffect(() => this.actions$.pipe(
     ofType(generateMod),
     concatLatestFrom(({minecraftVersion}) => this.store$.select(generatorFeature.selectTemplate(minecraftVersion))),
     filter(([, template]) => !template),
@@ -76,9 +78,10 @@ export class GeneratorEffects {
    * emits the action {@link saveForm} to save the form data.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Generator] Save form">}
    */
-  public saveModGenerationData$ = createEffect(() => this.actions$.pipe(
+  public readonly saveModGenerationData$ = createEffect(() => this.actions$.pipe(
     ofType(generateMod),
     concatLatestFrom(({minecraftVersion}) => this.store$.select(generatorFeature.selectTemplate(minecraftVersion))),
     filter(([, template]) => !!template),
@@ -94,9 +97,10 @@ export class GeneratorEffects {
    * - {@link buildMod} to start the mod building flow.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Core] Increment call counter" | "[Core] Save loading type" | "[Core] Save progress" | "[Generator] Build mod">}
    */
-  public updateGenerationProgress$ = createEffect(() => this.actions$.pipe(
+  public readonly updateGenerationProgress$ = createEffect(() => this.actions$.pipe(
     ofType(saveTemplateAndForm, saveForm),
     concatLatestFrom(({form}) => this.store$.select(generatorFeature.selectTemplate(form.minecraftVersion))),
     switchMap(([{form}, template]) => [
@@ -115,9 +119,10 @@ export class GeneratorEffects {
    * emits the actions {@link download} to download the mod and {@link decrementCallCounter} to decrease the pending calls counter.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Core] Download" | "[Core] Decrement call counter">}
    */
-  public generateMod$ = createEffect(() => this.actions$.pipe(
+  public readonly generateMod$ = createEffect(() => this.actions$.pipe(
     ofType(buildMod),
     switchMap(({form, template}) => observe(new JSZip().loadAsync(template).then(data => this.processTemplate(data, form).generateAsync({type: 'blob'}))).pipe(
       switchMap(file => [

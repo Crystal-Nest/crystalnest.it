@@ -1,7 +1,8 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {ProgressBarMode} from '@angular/material/progress-bar';
 import {createFeature, createReducer, createSelector, on} from '@ngrx/store';
 
-import {decrementCallCounter, incrementCallCounter, incrementProgress, saveLoadingType, saveProgress} from './actions';
+import {decrementCallCounter, incrementCallCounter, incrementProgress, saveError, saveLoadingType, saveProgress} from './actions';
 
 /**
  * Core store.
@@ -29,6 +30,7 @@ export interface State {
    * @type {number}
    */
   progress: number;
+  error: HttpErrorResponse | null;
 }
 
 /**
@@ -39,7 +41,8 @@ export interface State {
 export const INITIAL_STATE: State = {
   callCounter: 0,
   loadingType: 'query',
-  progress: -1
+  progress: -1,
+  error: null
 };
 
 /**
@@ -79,6 +82,10 @@ export const coreFeature = createFeature({
     on(incrementProgress, (state, {increment}) => ({
       ...state,
       progress: state.progress + increment
+    })),
+    on(saveError, (state, {error}) => ({
+      ...state,
+      error
     }))
   ),
   extraSelectors: ({selectCallCounter}) => ({

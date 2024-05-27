@@ -38,9 +38,10 @@ export class ModsEffects {
    * then emits the action {@link saveMods} to save the list of mods resulted from parsing the query result.
    *
    * @public
+   * @readonly
    * @type {TypedAction<"[Mods] Save mods">}
    */
-  public retrieveMods$ = createEffect(() => this.actions$.pipe(
+  public readonly retrieveMods$ = createEffect(() => this.actions$.pipe(
     ofType(retrieveMods),
     withLatestFrom(this.store$.select(modsFeature.selectMods)),
     filter(([, mods]) => !mods),
@@ -70,9 +71,10 @@ export class ModsEffects {
    * emits the action {@link saveFilteredMods} to save the filtered list of mods.
    *
    * @public
+   * @readonly
    * @type {Observable<TypedAction<"[Mods] Save filtered mods">>}
    */
-  public filterMods$ = createEffect(() => this.actions$.pipe(
+  public readonly filterMods$ = createEffect(() => this.actions$.pipe(
     ofType(filterMods),
     withLatestFrom(this.store$.select(modsFeature.selectMods)),
     filter(([, mods]) => !!mods),

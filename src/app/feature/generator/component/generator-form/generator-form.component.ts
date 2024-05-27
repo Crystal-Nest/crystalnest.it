@@ -88,14 +88,6 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
   ];
 
   /**
-   * Available mod loaders.
-   *
-   * @public
-   * @type {Partial<Record<Lowercase<ModLoader>, ModLoader>>}
-   */
-  public loaders: Partial<Record<Lowercase<ModLoader>, ModLoader>> = {...MOD_LOADERS};
-
-  /**
    * Available publishing platforms.
    *
    * @public
@@ -117,6 +109,14 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @type {20}
    */
   private readonly neoforgeTransitionVersion = 20;
+
+  /**
+   * Available mod loaders.
+   *
+   * @public
+   * @type {Partial<Record<Lowercase<ModLoader>, ModLoader>>}
+   */
+  public loaders: Partial<Record<Lowercase<ModLoader>, ModLoader>> = {...MOD_LOADERS};
 
   /**
    * @inheritdoc

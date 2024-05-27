@@ -19,9 +19,10 @@ export class CoreEffects {
    * Intercepts the action {@link download} to download the given `file`.
    *
    * @public
+   * @readonly
    * @type {Observable<never>}
    */
-  public download$ = createEffect(() => this.actions$.pipe(
+  public readonly download$ = createEffect(() => this.actions$.pipe(
     ofType(download),
     tap(({file, id}) => this.download(file, id)),
     ignoreElements()

@@ -3,6 +3,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
 import {provideEffects} from '@ngrx/effects';
@@ -51,6 +52,15 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
         subscriptSizing: 'dynamic'
+      }
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        politeness: 'assertive',
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: 'cn-snack-bar'
       }
     },
     {
