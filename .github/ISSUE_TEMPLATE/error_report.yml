@@ -1,0 +1,44 @@
+name: 🌐 Error report 
+description: File an error report
+labels: ["bug", "medium priority"]
+assignees: ["Crystal-Spider"]
+body:
+- type: checkboxes
+  attributes:
+    label: I have confirmed no other issue reports this error
+    description: Please search if an issue already exists for the same error.
+    options:
+    - label: I have searched for existing issues
+      required: true
+- id: error
+  type: textarea
+  attributes:
+    label: Error body
+    description: This should be already filled. Insert the JSON error.
+  validations:
+    required: true
+- id: steps
+  type: textarea
+  attributes:
+    label: Steps to reproduce
+    description: Steps to reproduce the behavior.
+    placeholder: |
+      1. Open the website with this URL...
+      2. Do this...
+      3. Click there...
+      4. Error happens...
+- id: os
+  type: input
+  attributes:
+    label: Operating System
+    description: |
+      OS you're using.
+    placeholder: |
+      E.g. Windows 10/11, macOS 14, Android 14, etc.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
+    description: |
+      Insert here anything that will give us more context about the issue you are encountering.
