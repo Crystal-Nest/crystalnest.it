@@ -32,7 +32,7 @@ body:
   attributes:
     label: Operating System
     description: |
-      OS you're using.
+      This should be already filled. Insert the OS you're using.
     placeholder: |
       E.g. Windows 10/11, macOS 14, Android 14, etc.
   validations:
