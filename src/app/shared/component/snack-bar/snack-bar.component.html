@@ -2,7 +2,7 @@
   <mat-icon fontIcon="error" />
   <div class="text">
     <span class="title" matSnackBarLabel>Network error</span>
-    <span class="message" matSnackBarLabel>{{ data.status }} - {{ data.error.message }}</span>
+    <span class="message" matSnackBarLabel>{{ data.status }} - {{ data.error.message || data.statusText }}</span>
   </div>
   <button class="close" mat-button matSnackBarAction (click)="snackBarRef.dismiss()"><mat-icon fontIcon="close" /></button>
 </div>

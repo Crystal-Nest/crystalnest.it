@@ -1,0 +1,9 @@
+@import "variables";
+
+:host {
+  padding: 2rem;
+
+  @media (max-width: $desktop-tiny) {
+    padding: 1rem;
+  }
+}
