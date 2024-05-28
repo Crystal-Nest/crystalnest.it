@@ -8,6 +8,7 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {provideRouter} from '@angular/router';
 import {provideEffects} from '@ngrx/effects';
 import {provideState, provideStore} from '@ngrx/store';
+import {AngularDeviceInformationService} from 'angular-device-information';
 import {MARKED_OPTIONS, provideMarkdown} from 'ngx-markdown';
 
 import {ROOT_ROUTES} from './app.routes';
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideState(coreFeature),
     provideEffects(CoreEffects),
     provideRouter(ROOT_ROUTES),
+    AngularDeviceInformationService,
     provideAnimationsAsync(),
     provideMarkdown({
       markedOptions: {

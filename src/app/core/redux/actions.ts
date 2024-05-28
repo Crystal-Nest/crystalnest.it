@@ -36,3 +36,8 @@ export const download = createAction('[Core] Download', props<{file: Blob; id: s
  * Saves the HTTP error.
  */
 export const saveError = createAction('[Core] Save error', props<{error: HttpErrorResponse | null}>());
+
+/**
+ * Opens a new tab with a precompiled issue.
+ */
+export const openIssue = createAction('[Core] Open issue', props<{title: string; body: string}>());

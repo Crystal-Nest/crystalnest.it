@@ -1,5 +1,4 @@
 import {AsyncPipe} from '@angular/common';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
@@ -13,6 +12,7 @@ import {LoaderComponent} from './component/loader/loader.component';
 
 import {SubscriberComponent} from '~cn/core/abstract/subscriber.component';
 import {ROUTE, isValidRoute} from '~cn/core/model/route.enum';
+import {openIssue} from '~cn/core/redux/actions';
 import {State, coreFeature} from '~cn/core/redux/feature';
 import {SnackBarComponent} from '~cn/shared/component/snack-bar/snack-bar.component';
 
@@ -91,10 +91,10 @@ export class FrameComponent extends SubscriberComponent {
   public constructor(private readonly store$: Store<State>, private readonly router: Router, private readonly title: Title, private readonly snackBar: MatSnackBar) {
     super();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => this.setTitle((event as NavigationEnd).urlAfterRedirects.slice(1)));
-    this.error$.pipe(filter(error => !!error), this.takeUntil()).subscribe(error => this.snackBar.openFromComponent(SnackBarComponent, {data: error}).onAction().pipe(this.takeUntil()).subscribe(() => window.open(
-      `https://github.com/Crystal-Nest/crystalnest.it/issues/new?assignees=Crystal-Spider&labels=bug%2Cmedium+priority&projects=&title=${error!.status}%20HTTP%20error&error=${this.encodeError(error!)}&template=error_report.yml`,
-      '_blank'
-    )));
+    this.error$.pipe(filter(error => !!error), this.takeUntil()).subscribe(error => this.snackBar.openFromComponent(SnackBarComponent, {data: error}).onAction().pipe(this.takeUntil()).subscribe(() => this.store$.dispatch(openIssue({
+      title: `${error!.status} HTTP error`,
+      body: `\`\`\`json\n${JSON.stringify(error, null, 2)}\n\`\`\``
+    }))));
   }
 
   /**
@@ -122,17 +122,5 @@ export class FrameComponent extends SubscriberComponent {
         break;
     }
     this.activeRoute = isValidRoute(route) ? route as ROUTE : ROUTE.HOME;
-  }
-
-  /**
-   * Encodes a JSON snippet for a GitHub query URL to open an issue.
-   *
-   * @private
-   * @param {HttpErrorResponse} error
-   * @returns {string}
-   */
-  private encodeError(error: HttpErrorResponse): string {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    return encodeURI(`\`\`\`json\n${JSON.stringify(error, null, 2)}\n\`\`\``);
   }
 }
