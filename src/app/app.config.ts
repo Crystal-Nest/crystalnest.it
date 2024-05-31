@@ -5,7 +5,7 @@ import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideRouter} from '@angular/router';
+import {provideRouter, withInMemoryScrolling} from '@angular/router';
 import {provideEffects} from '@ngrx/effects';
 import {provideState, provideStore} from '@ngrx/store';
 import {AngularDeviceInformationService} from 'angular-device-information';
@@ -28,7 +28,10 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState(coreFeature),
     provideEffects(CoreEffects),
-    provideRouter(ROOT_ROUTES),
+    provideRouter(ROOT_ROUTES, withInMemoryScrolling({
+      scrollPositionRestoration: 'top',
+      anchorScrolling: 'enabled'
+    })),
     AngularDeviceInformationService,
     provideAnimationsAsync(),
     provideMarkdown({

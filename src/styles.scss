@@ -30,15 +30,22 @@ p {
 
 ul {
   list-style-position: inside;
+
+  > li {
+    text-indent: 1rem hanging;
+  }
 }
 
 a {
   color: #68b0f3;
+  text-decoration: none;
 
   &:hover {
     color: #86bfff;
+    text-decoration: none;
   }
   &:active {
     color: #95c5ff;
+    text-decoration: none;
   }
 }

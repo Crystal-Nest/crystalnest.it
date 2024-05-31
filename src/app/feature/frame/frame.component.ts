@@ -90,7 +90,7 @@ export class FrameComponent extends SubscriberComponent {
    */
   public constructor(private readonly store$: Store<State>, private readonly router: Router, private readonly title: Title, private readonly snackBar: MatSnackBar) {
     super();
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => this.setTitle((event as NavigationEnd).urlAfterRedirects.slice(1)));
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => this.setTitle((event as NavigationEnd).urlAfterRedirects.slice(1).split('#')[0]!));
     this.error$.pipe(filter(error => !!error), this.takeUntil()).subscribe(error => this.snackBar.openFromComponent(SnackBarComponent, {data: error}).onAction().pipe(this.takeUntil()).subscribe(() => this.store$.dispatch(openIssue({
       title: `${error!.status} HTTP error`,
       body: `\`\`\`json\n${JSON.stringify(error, null, 2)}\n\`\`\``

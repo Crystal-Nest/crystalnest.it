@@ -1,11 +1,109 @@
-<main>
-  <h1>Welcome to the Crystal Nest!</h1>
-  <h1>We are dusting off some cobwebs, in the meantime...</h1>
-  <h1>...consider supporting us!</h1>
-</main>
-<!-- 
-Made of 4 numbers and optionally a lable (alpha/beta).
-As usual, increasing left-most numbers reset other numbers to the right.
-Labels work the same as being right-most numbers, this way mods can be compatible with the stable version without needing to update the dependency declaration.
-First version works differently with labels as it's correct that mods should explicitly state the dependency to the full version too.
--->
+<a fragment="overview" id="overview" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Overview</h1>
+</a>
+<mat-divider />
+<div>
+  <span class="eop">A well-known standard for versioning is <a href="https://semver.org/" target="_blank">Semantic Versioning</a>. Building on this foundation, <strong>C</strong>rystal <strong>N</strong>est <strong>S</strong>emantic <strong>V</strong>ersioning (CNSV) aims to standardize versioning specifically for Minecraft mods.</span>
+  <span>A CNSV-compliant version consists of two independent parts:</span>
+  <ul class="eop">
+    <li>The <strong>Minecraft Version</strong>, indicating the supported Minecraft version.</li>
+    <li>The <strong>Mod Version</strong>, indicating the features and changes available.</li>
+  </ul>
+  <span class="eop">The Minecraft Version comes first, followed by the Mod Version, separated by a hyphen, to help users easily identify the required version. For example, a valid version could be <code>1.20.4-1.0.0</code>.</span>
+  <span>When using our <a href="https://github.com/Crystal-Nest/cobweb-mod-template" target="_blank">template</a> or <a routerLink="/generator">mod generator</a>, the Minecraft Version and Mod Version are two separate properties. During the build process, these properties are combined to create a valid CNSV version.</span>
+  <span>Both the template and the mod generator ensure compliance with other <a fragment="related-conventions" routerLink="/versioning">related conventions</a>.</span>
+</div>
+<a fragment="minecraft-version" id="minecraft-version" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Minecraft Version</h1>
+</a>
+<mat-divider />
+<div>
+  <span>The Minecraft Version is straightforward: it must match the supported Minecraft version.</span>
+  <span>When updating your mod to support a new Minecraft version, you only need to update the Minecraft Version, unless you also make significant changes to your mod's features or API, if any.</span>
+</div>
+<a fragment="mod-version" id="mod-version" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Mod Version</h1>
+</a>
+<mat-divider />
+<div>
+  <span>The Mod Version, adhering to the Semantic Versioning standard, consists of three non-negative numbers: Major, Minor, and Patch.</span>
+  <span>When incrementing a number, all numbers to its right must be reset to 0.</span>
+  <ul>
+    <li>The Major version is incremented for breaking changes, affecting either end-users or API users.</li>
+    <li>The Minor version is incremented for backward-compatible changes that introduce new features or deprecate existing ones.</li>
+    <li>The Patch version is incremented for backward-compatible bug fixes.</li>
+  </ul>
+  <span class="eop">This system ensures that users and developers can easily determine the safety of updating your mod.</span>
+  <span class="eop">Optionally, the Mod Version can be followed by a hyphen and an <em>alpha</em> or <em>beta</em> designation, such as <code>1.20.4-1.0.0-alpha</code>. These versions are called <em>pre-release</em> or <em>unstable</em>. When no additional designation is used, versions are considered <em>release</em> or <em>stable</em>.</span>
+  <span>Unstable versions have different semantics for the Major, Minor, and Patch numbers:</span>
+  <ul>
+    <li>
+      Alpha
+      <ul>
+        <li>Highly unstable, frequently changing, and likely to break backward compatibility.</li>
+        <li>Only the Patch number should be incremented, regardless of backward compatibility.</li>
+        <li>The Minor number can be incremented for very significant changes, regardless of backward compatibility.</li>
+        <li>The Major number must not change.</li>
+      </ul>
+    </li>
+    <li>
+      Beta
+      <ul>
+        <li>Unstable but generally maintains backward compatibility.</li>
+        <li>The Patch number should follow standard semantic rules.</li>
+        <li>The Minor number should be incremented for breaking changes.</li>
+        <li>The Major number must not change.</li>
+      </ul>
+    </li>
+  </ul>
+  <span class="eop">When transitioning from an alpha to a beta, you only need to change the designation unless there are breaking changes. When moving from an unstable to a stable version, simply remove the designation unless there are breaking changes. For example, <code>1.0.1-alpha</code> -> <code>1.0.2-alpha</code> -> <code>1.0.2-beta</code> -> <code>1.2.0-beta</code> -> <code>1.2.0</code>.</span>
+  <span>An exception to the standard Minor and Patch semantics occurs when the Major version is 0. In this case, you are indicating that the mod and its API are not ready for public use, and backward compatibility is not guaranteed:</span>
+  <ul>
+    <li>The standard semantics apply to Minor and Patch numbers, but substantial breaking changes should increment the Minor version rather than the Major.</li>
+    <li>Alpha and beta versions can be declared with a Major version of 0, but start with alpha and then beta, with no stable versions.</li>
+    <li>When the mod and its API become stable, increment the Major version to 1.</li>
+  </ul>
+</div>
+<a fragment="depending" id="depending" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Depending</h1>
+</a>
+<mat-divider />
+<div>
+  <span class="eop">When depending on another mod that complies with CNSV, you only need to check the Mod Version, as the Minecraft Version is assumed to be the same (otherwise, the game wouldn't load).</span>
+  <span>Fabric and Forge/NeoForge use different conventions for specifying allowed versions when depending on another mod:</span>
+  <ul>
+    <li><strong>Fabric</strong>: Fabric uses its own <a href="https://fabricmc.net/wiki/documentation:fabric_mod_json_spec#versionrange" target="_blank">version range specification</a>. For a CNSV-compliant mod, you can use <code>^mod_version</code>, ensuring compatibility with the specified version and up within the same major version.</li>
+    <li><strong>Forge and NeoForge</strong>: These platforms use the <a href="https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html" target="_blank">Maven Version Range</a>. For a CNSV-compliant mod, you can use <code>[mod_version,)</code>, ensuring compatibility with the specified version and up within the same major version.</li>
+  </ul>
+</div>
+<a fragment="related-conventions" id="related-conventions" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Related conventions</h1>
+</a>
+<mat-divider />
+<div>
+  <span>The CNSV standard influences other naming conventions involving Minecraft and Mod versions:</span>
+  <ul>
+    <!-- Lines are long on purpose: prevent unwanted spacing due to newline characters. -->
+    <li>To refer to the same Mod Version across any Minecraft Version, use the format <code>vMOD</code>, where <code>MOD</code> is the Mod Version.<br />For example, <code>v1.0.0</code> refers to all mod builds with the same Mod Version, regardless of the Minecraft Version.</li>
+    <li>For artifact (<code>.jar</code> file) naming, use the format <code>ID-LOADER-MC-MOD</code>, where <code>ID</code> is the mod <code>ID</code> in kebab case, <code>LOADER</code> is the supported mod loader in lowercase, <code>MC</code> is the Minecraft Version, and <code>MOD</code> is the Mod Version.<br />For example, <code>cobweb-fabric-1.20.4-1.0.0</code> is the artifact for the Cobweb <code>v1.0.0</code> build that supports Fabric and Minecraft 1.20.4.</li>
+    <li>When publishing a mod release on GitHub, the release must include artifacts for all supported mod loaders and use the format <code>vMC-MOD</code> for both the tag and release name, where <code>M</code>C is the Minecraft Version and <code>MOD</code> is the Mod Version.<br />For example, <code>v1.20.4-1.0.0</code> is the release for <code>v1.0.0</code> that supports Minecraft 1.20.4 and contains artifacts for every supported mod loader.</li>
+    <li>When publishing an artifact to a modding platform such as Modrinth or CurseForge, use the format <code>[LOADER - MC] TITLE vMOD</code> for the display name, where <code>LOADER</code> is the supported mod loader, <code>TITLE</code> is the mod title, <code>MC</code> is the Minecraft Version, and <code>MOD</code> is the Mod Version.<br />For example, <code>[Fabric - 1.20.4] Cobweb v1.0.0</code> is the display name for the artifact <code>cobweb-fabric-1.20.4-1.0.0</code>.</li>
+    <li>For Maven package naming, use the format <code>GROUP:ID-LOADER:MC-MOD</code>, where <code>GROUP</code> is the Java group, <code>ID</code> is the mod ID in kebab case, <code>LOADER</code> is the supported mod loader in <strong>lowercase</strong>, <code>MC</code> is the Minecraft Version, and <code>MOD</code> is the Mod Version.<br />For example, <code>it.crystalnest:cobweb-fabric:1.20.4-1.0.0</code> is the Maven package for the Cobweb <code>v1.0.0</code> build that supports Fabric and Minecraft 1.20.4.<br />In XML format, it would be:<markdown [data]="xmlMavenPackageSnippet" /></li>
+  </ul>
+  <span>Our template and mod generator handle all these aspects automatically.</span>
+</div>
+<a fragment="final-notes" id="final-notes" routerLink="/versioning">
+  <mat-icon fontIcon="link" />
+  <h1>Final notes</h1>
+</a>
+<mat-divider />
+<div>
+  <span class="eop">Since we introduced the CNSV standard after we began development, only our most recent mod versions adhere to it. Previously, we followed a loose interpretation of <a href="https://docs.minecraftforge.net/en/latest/gettingstarted/versioning/" target="_blank">Forge Semantic Versioning</a>.</span>
+  <span class="eop">If you have any questions about the Mod Version, please refer to the <a href="https://semver.org/#faq" target="_blank">Semantic Versioning FAQ</a>.</span>
+  <span>Still have questions? Come chat with us on <a href="https://discord.gg/BP6EdBfAmt" target="_blank">Discord</a>!</span>
+</div>

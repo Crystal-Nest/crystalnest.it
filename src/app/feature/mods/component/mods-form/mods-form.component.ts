@@ -62,9 +62,9 @@ export class ModsFormComponent extends FormComponent<ModsForm> implements OnInit
    *
    * @private
    * @readonly
-   * @type {300}
+   * @type {200}
    */
-  private readonly waitBeforeFilteringTime = 300;
+  private readonly waitBeforeFilteringTime = 200;
 
   /**
    * @inheritdoc

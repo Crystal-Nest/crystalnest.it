@@ -2,27 +2,27 @@
 
 @include material.core();
 
-$cn-color-50: #eeeeee;
-$cn-color-100: #eeeeee;
+$cn-color-50: #e3e3e3;
+$cn-color-100: #e3e3e3;
 $cn-color-200: #c071f5;
 $cn-color-300: #c071f5;
-$cn-color-400: #eeeeee;
+$cn-color-400: #e3e3e3;
 $cn-color-500: #c071f5;
 $cn-color-600: #8458b6;
 $cn-color-700: #1f1b3b;
-$cn-color-800: #eeeeee;
-$cn-color-900: #eeeeee;
+$cn-color-800: #e3e3e3;
+$cn-color-900: #e3e3e3;
 
-$cn-color-a50: #eeeeee;
-$cn-color-a100: #eeeeee;
-$cn-color-a200: #eeeeee;
-$cn-color-a300: #eeeeee;
-$cn-color-a400: #eeeeee;
+$cn-color-a50: #e3e3e3;
+$cn-color-a100: #e3e3e3;
+$cn-color-a200: #e3e3e3;
+$cn-color-a300: #e3e3e3;
+$cn-color-a400: #e3e3e3;
 $cn-color-a500: #000000;
-$cn-color-a600: #eeeeee;
+$cn-color-a600: #e3e3e3;
 $cn-color-a700: #c071f5;
-$cn-color-a800: #eeeeee;
-$cn-color-a900: #eeeeee;
+$cn-color-a800: #e3e3e3;
+$cn-color-a900: #e3e3e3;
 
 $cn-color-palette: (
   50: $cn-color-50,
@@ -89,5 +89,5 @@ $cn-dark-theme: material.define-dark-theme(
   --mat-stepper-container-color: #202020;
   --mat-select-panel-background-color: #2b2b2b;
   --mat-menu-container-color: #1e1b33;
-  --mdc-form-field-label-text-color: #eeeeee;
+  --mdc-form-field-label-text-color: #e3e3e3;
 }

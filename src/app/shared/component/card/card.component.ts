@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, ViewChild, AfterContentChecked} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import {MarkdownComponent} from 'ngx-markdown';
+import {MarkdownComponent, MarkdownModule} from 'ngx-markdown';
 
 import {LinkButtonComponent} from '../button/link-button/link-button.component';
 import {LabelComponent} from '../label/label.component';
@@ -21,7 +21,7 @@ import {Mod} from '~cn/feature/mods/model/mod.interface';
   standalone: true,
   imports: [
     MatCardModule,
-    MarkdownComponent,
+    MarkdownModule,
     LabelComponent,
     LinkButtonComponent
   ],

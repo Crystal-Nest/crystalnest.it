@@ -8,7 +8,7 @@
   header {
     display: flex;
     background-color: $cn-color-700;
-    color: #cccccc;
+    color: #e3e3e3;
     height: $header-height;
     padding: 1rem;
 
@@ -33,7 +33,6 @@
             white-space: nowrap;
 
             &:first-child {
-              color: #dddddd;
               height: 3rem;
               font-size: 2rem;
               margin-right: 2rem;
@@ -173,6 +172,7 @@
   align-items: start;
   gap: 0.5rem;
   font-size: 1.25rem;
+  color: #e3e3e3;
 
   > * {
     width: 100%;

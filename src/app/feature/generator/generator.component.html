@@ -1,3 +1,15 @@
-This generator assumes the use of IntelliJ IDEA as IDE. Etc.
+This generator assumes the use of IntelliJ IDEA as IDE.
+<br />
+It assumes you will publish your code publicly on GitHub.
+<br />
+The default license is GPL-3.0, but you can change it to the one that better fits your needs.
+<br />
+If you do not publish your source code on GitHub, make sure to change the automatically generated changelog string when publishing your version (in the root build.gradle) to point to the correct changelog.
+<br />
+
 <cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
+
+<br />
 Follow the instruction on the readme to finish the setup!
+<br />
+More questions? Come chat on our Discord!

@@ -1,17 +1,67 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   flex: 1;
+  padding: 2rem;
+  padding-left: 0.75rem;
+  color: #e3e3e3;
 
   h1 {
-    font-size: 3em;
-    font-weight: 300;
-    font-family: "Silkscreen";
-    font-style: normal;
-    text-align: center;
-    line-height: 48px;
+    font-size: 2em;
+    font-weight: 400;
+  }
+
+  > a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: inherit;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    > mat-icon {
+      visibility: hidden;
+    }
+
+    &:hover {
+      filter: brightness(1.2);
+
+      > mat-icon {
+        visibility: visible;
+      }
+    }
+  }
+
+  > mat-divider {
+    margin: 0.125rem 0 1rem 1.5rem;
+  }
+
+  > div {
+    padding-left: 2rem;
+    line-height: 1.5;
+
+    > span {
+      display: block;
+    }
+
+    > ul {
+      margin: 0.25rem 0;
+
+      ul {
+        margin-left: 1rem;
+      }
+
+      markdown {
+        text-indent: 1rem each-line;
+      }
+    }
+
+    > *.eop {
+      margin-bottom: 0.5rem;
+    }
   }
 }
