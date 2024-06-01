@@ -3,5 +3,8 @@
   @for (mod of mods$ | async; track mod.name) {
     <cn-card [mod]="mod" />
   }
+  @if (!((mods$ | async)?.length ?? true)) {
+    <span>No mod matches your filters.</span>
+  }
 </section>
 <cn-scroll-to-top />

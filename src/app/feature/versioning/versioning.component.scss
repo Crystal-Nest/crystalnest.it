@@ -44,6 +44,10 @@
     padding-left: 2rem;
     line-height: 1.5;
 
+    > *.eop {
+      margin-bottom: 0.5rem;
+    }
+
     > span {
       display: block;
     }
@@ -52,8 +56,8 @@
       margin: 0.25rem 0;
     }
 
-    > *.eop {
-      margin-bottom: 0.5rem;
+    ul {
+      padding-left: 1rem;
     }
   }
 }
