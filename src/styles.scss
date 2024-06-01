@@ -28,12 +28,10 @@ p {
   margin-bottom: 1rem;
 }
 
-ul {
-  list-style-position: inside;
-
-  > li {
-    text-indent: 1rem hanging;
-  }
+ul,
+ol {
+  list-style-position: outside;
+  padding-left: 1rem;
 }
 
 a {
