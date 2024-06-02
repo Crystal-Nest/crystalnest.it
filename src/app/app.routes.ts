@@ -36,7 +36,6 @@ export const ROOT_ROUTES: Routes = [
   },
   {
     path: '**',
-    loadComponent: () => import('~cn/feature/home/home.component').then(m => m.HomeComponent)
-    // TODO: Create 404 page.
+    loadComponent: () => import('~cn/feature/error/error.component').then(m => m.ErrorComponent)
   }
 ];

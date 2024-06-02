@@ -1,0 +1,13 @@
+<span class="error-code">404</span>
+<span class="error-desc"
+  ><em>You find yourself lost deep within the crystal cave... There's no chamber called "{{ route }}" here, retrace your steps and head back while you still can.</em></span
+>
+<span class="error-details">
+  The page you're looking for doesn't exist. You might have mistyped the address, or the page may have been moved to a different URL.
+  <br />
+  Please return to the homepage or report the issue if you believe this is an error.
+</span>
+<section class="error-actions">
+  <cn-button icon="home" label="Homepage" routerLink="" />
+  <cn-button icon="open_in_new" label="Report" (click)="openIssue()" />
+</section>

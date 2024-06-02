@@ -39,7 +39,7 @@ export class CoreEffects {
   public readonly openIssue$ = createEffect(() => this.actions$.pipe(
     ofType(openIssue),
     tap(({title, body}) => window.open(
-      `https://github.com/Crystal-Nest/crystalnest.it/issues/new?assignees=Crystal-Spider&labels=bug%2Cmedium+priority&projects=&title=${encodeURI(title)}&error=${encodeURI(body)}&os=${encodeURI(this.deviceInfo)}&template=error_report.yml`,
+      `https://github.com/Crystal-Nest/crystalnest.it/issues/new?assignees=Crystal-Spider&labels=bug%2Cmedium+priority&projects=&title=${encodeURIComponent(title)}&error=${encodeURIComponent(body)}&os=${this.deviceInfo}&template=error_report.yml`,
       '_blank'
     )),
     ignoreElements()
@@ -54,7 +54,7 @@ export class CoreEffects {
    */
   private get deviceInfo() {
     const {os, osVersion, browser, browserMajorVersion} = this.deviceInformationService.getDeviceInfo();
-    return `${this.deviceInformationService.getDeviceType()} - ${os} ${osVersion}, ${browser} ${browserMajorVersion}`;
+    return encodeURIComponent(`${this.deviceInformationService.getDeviceType()} - ${os} ${osVersion}, ${browser} ${browserMajorVersion}`);
   }
 
   /**
