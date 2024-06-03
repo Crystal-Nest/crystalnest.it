@@ -36,7 +36,8 @@
     <li>The Minor version is incremented for backward-compatible changes that introduce new features or deprecate existing ones.</li>
     <li>The Patch version is incremented for backward-compatible bug fixes.</li>
   </ul>
-  <span class="eop">This system ensures that users and developers can easily determine the safety of updating your mod.</span>
+  <span>This system ensures that users and developers can easily determine the safety of updating your mod.</span>
+  <br />
   <span class="eop">Optionally, the Mod Version can be followed by a hyphen and an <em>alpha</em> or <em>beta</em> designation, such as <code>1.20.4-1.0.0-alpha</code>. These versions are called <em>pre-release</em> or <em>unstable</em>. When no additional designation is used, versions are considered <em>release</em> or <em>stable</em>.</span>
   <span>Unstable versions have different semantics for the Major, Minor, and Patch numbers:</span>
   <ul>
@@ -59,13 +60,48 @@
       </ul>
     </li>
   </ul>
-  <span class="eop">When transitioning from an alpha to a beta, you only need to change the designation unless there are breaking changes. When moving from an unstable to a stable version, simply remove the designation unless there are breaking changes. For example, <code>1.0.1-alpha</code> -> <code>1.0.2-alpha</code> -> <code>1.0.2-beta</code> -> <code>1.2.0-beta</code> -> <code>1.2.0</code>.</span>
+  <span>When transitioning from an alpha to a beta, you only need to change the designation unless there are breaking changes. When moving from an unstable to a stable version, simply remove the designation unless there are breaking changes. For example, <code>1.0.1-alpha</code> -> <code>1.0.2-alpha</code> -> <code>1.0.2-beta</code> -> <code>1.2.0-beta</code> -> <code>1.2.0</code>.</span>
+  <br />
   <span>An exception to the standard Minor and Patch semantics occurs when the Major version is 0. In this case, you are indicating that the mod and its API are not ready for public use, and backward compatibility is not guaranteed:</span>
   <ul>
     <li>The standard semantics apply to Minor and Patch numbers, but substantial breaking changes should increment the Minor version rather than the Major.</li>
     <li>Alpha and beta versions can be declared with a Major version of 0, but start with alpha and then beta, with no stable versions.</li>
     <li>When the mod and its API become stable, increment the Major version to 1.</li>
   </ul>
+  <br />
+  <span>If you need to update your mod for only a subset of supported Minecraft versions, such as fixing a bug in older versions, follow these guidelines:</span>
+  <ul>
+    <li><strong>Increment the Mod Version for new releases only</strong>: when releasing a new Mod Version for just a subset of your supported Minecraft versions, increment the Mod Version only for those releases, leaving the others unchanged.</li>
+    <li><strong>Maintain consistency across versions</strong>: if you later release a new version for a Minecraft version that didn't have its Mod Version increased, ensure you increment its Mod Version to match the highest current version, not the next sequential number. This maintains consistency with the changes introduced.</li>
+  </ul>
+  <span>For example, you might find and fix a bug in version <code>1.19.4</code>. Later, you find another bug affecting all versions and fix that too. Here's how your versions should be updated:</span>
+  <ul>
+    <li>
+      Initial versions:
+      <ul>
+        <li><code>1.20.4-1.0.0</code></li>
+        <li><code>1.20.2-1.0.0</code></li>
+        <li><code>1.19.4-1.0.0</code></li>
+      </ul>
+    </li>
+    <li>
+      Bugfix for 1.19.4 only:
+      <ul>
+        <li><code>1.20.4-1.0.0</code></li>
+        <li><code>1.20.2-1.0.0</code></li>
+        <li><code>1.19.4-1.0.1</code></li>
+      </ul>
+    </li>
+    <li>
+      Bugfix for all versions:
+      <ul>
+        <li><code>1.20.4-1.0.2</code></li>
+        <li><code>1.20.2-1.0.2</code></li>
+        <li><code>1.19.4-1.0.2</code></li>
+      </ul>
+    </li>
+  </ul>
+  <span>In this example, <code>1.20.4</code> and <code>1.20.2</code> skipped Mod Version <code>1.0.1</code>. This ensures your Mod Version scheme remains consistent and aligned with the changes made.</span>
 </div>
 <a fragment="depending" id="depending" routerLink="/versioning">
   <mat-icon fontIcon="link" />
