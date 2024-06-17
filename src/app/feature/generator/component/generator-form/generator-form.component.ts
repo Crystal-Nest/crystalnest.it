@@ -59,7 +59,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   @Input({
     required: true,
-    transform: (value: Record<MinecraftVersion, MinecraftVersion> | null) => value ? value : {}
+    transform: (value: Record<MinecraftVersion, MinecraftVersion> | null) => value || {}
   })
   public versions!: Record<MinecraftVersion, MinecraftVersion>;
 
@@ -137,18 +137,19 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   public ngOnInit(): void {
     this.valueChanges('minecraftVersion', value => {
-      const minor = +value.split('.')[1]!;
-      if (minor < this.neoforgeTransitionVersion) {
-        this.form.controls.loaders.setValue(this.form.controls.loaders.value.filter(loader => loader !== 'neoforge'));
+      const [minor, patch] = value.split('.').slice(1).map(version => +version) as [number, number];
+      if (minor < this.neoforgeTransitionVersion || (minor === this.neoforgeTransitionVersion && patch === 1)) {
+        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'neoforge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
         delete this.loaders.neoforge;
       } else if (minor > this.neoforgeTransitionVersion) {
-        this.form.controls.loaders.setValue(this.form.controls.loaders.value.filter(loader => loader !== 'forge'));
+        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'forge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('forge')]);
         delete this.loaders.forge;
       } else {
         this.form.controls.loaders.setValidators(Validators.required);
         this.loaders = {...MOD_LOADERS};
+        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS) as Lowercase<ModLoader>[]);
       }
     }, (value, index) => !!(index && value));
     this.valueChanges('autogenModId', value => {
