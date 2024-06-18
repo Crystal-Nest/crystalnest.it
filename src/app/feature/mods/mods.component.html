@@ -4,7 +4,7 @@
     <cn-card [mod]="mod" />
   }
   @if (!((mods$ | async)?.length ?? true)) {
-    <span>No mod matches your filters.</span>
+    <span>None of our projects match your filters.</span>
   }
 </section>
 <cn-scroll-to-top />

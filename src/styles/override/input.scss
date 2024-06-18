@@ -2,10 +2,6 @@
   width: 100% !important;
 }
 
-.mat-mdc-text-field-wrapper {
-  height: 3rem !important;
-}
-
 .mat-mdc-form-field-infix {
   display: flex !important;
   align-items: center !important;
@@ -28,5 +24,5 @@
 
 :root {
   --mat-form-field-container-height: 3rem;
-  --mat-form-field-container-vertical-padding: 0.5rem;
+  --mat-form-field-container-vertical-padding: 0.75rem;
 }

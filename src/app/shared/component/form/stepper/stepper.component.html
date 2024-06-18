@@ -1,4 +1,4 @@
-<mat-stepper #stepper animationDuration="0" orientation="horizontal" [linear]="true">
+<mat-stepper #stepper animationDuration="0" [linear]="true" [orientation]="orientation">
   @for (step of steps; track $index) {
     @if (!step.isVisible || step.isVisible()) {
       <mat-step>

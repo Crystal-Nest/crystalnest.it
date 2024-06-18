@@ -1,6 +1,10 @@
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {StepperOrientation} from '@angular/cdk/stepper';
+import {AsyncPipe} from '@angular/common';
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {Observable, map} from 'rxjs';
 
 import {MinecraftVersion} from '../../../../core/model/minecraft-version.type';
 import {MOD_LOADERS, ModLoader} from '../../../../core/model/mod-loader.type';
@@ -36,6 +40,7 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
   selector: 'cn-generator-form',
   standalone: true,
   imports: [
+    AsyncPipe,
     StepDirective,
     MatIconModule,
     ReactiveFormsModule,
@@ -62,6 +67,14 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
     transform: (value: Record<MinecraftVersion, MinecraftVersion> | null) => value || {}
   })
   public versions!: Record<MinecraftVersion, MinecraftVersion>;
+
+  /**
+   * Stepper orientation.
+   *
+   * @public
+   * @type {Observable<StepperOrientation>}
+   */
+  public stepperOrientation$: Observable<StepperOrientation> = this.breakpointObserver.observe('(min-width: 46.25rem)').pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'), this.takeUntil());
 
   /**
    * List of form steps.
@@ -117,6 +130,15 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @type {Partial<Record<Lowercase<ModLoader>, ModLoader>>}
    */
   public loaders: Partial<Record<Lowercase<ModLoader>, ModLoader>> = {...MOD_LOADERS};
+
+  /**
+   * @constructor
+   * @public
+   * @param {BreakpointObserver} breakpointObserver
+   */
+  public constructor(private readonly breakpointObserver: BreakpointObserver) {
+    super();
+  }
 
   /**
    * @inheritdoc
