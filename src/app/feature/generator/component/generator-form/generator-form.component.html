@@ -1,34 +1,38 @@
 <form [formGroup]="form">
-  <cn-toggle class="cn-cell-3" formControlName="crystalNestMod" label="Are you a Crystal Nest's member?" />
-  <cn-stepper [orientation]="stepperOrientation$ | async" [steps]="steps">
-    <ng-template step>
-      <div class="cn-grid">
-        <cn-select class="cn-cell-6" formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [options]="versions" />
-        <cn-checkbox class="cn-cell-6" formControlName="includeConfig" label="Include configuration" />
-        <cn-select class="cn-cell-6" formControlName="loaders" hint="Which mod loaders to support" label="Loaders" [multiple]="true" [options]="loaders" />
-        <cn-select class="cn-cell-6" formControlName="platforms" hint="Which platforms to publish on" label="Platforms" [multiple]="true" [options]="platforms" />
-      </div>
-    </ng-template>
-    <ng-template step>
-      <div class="cn-grid">
-        <cn-input class="cn-cell-6" formControlName="modTitle" hint="Mod name" label="Mod title" />
-        <cn-checkbox class="cn-cell-6" formControlName="autogenModId" label="Autogenerate IDs" />
-        <cn-input class="cn-cell-6" formControlName="modId" hint="Mod unique identifier" label="Mod ID" regex="^[a-z0-9_]+$" />
-        <cn-input class="cn-cell-6" formControlName="modIdKebab" hint="Mod ID for URLs and packages" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" />
-      </div>
-    </ng-template>
-    <ng-template step>
-      <div class="cn-grid">
-        <cn-textarea class="cn-cell-12" formControlName="description" hint="Allows for multiline text" label="Mod description" />
-      </div>
-    </ng-template>
-    <ng-template step>
-      <div class="cn-grid">
-        <cn-input class="cn-cell-4" formControlName="group" hint="Java group, es. `it.crystalnest`" label="Java group" />
-        <cn-input class="cn-cell-4" formControlName="authors" hint="List of authors separated by a comma" label="Mod authors" />
-        <cn-input class="cn-cell-4" formControlName="githubUser" hint="Name of the GitHub account/organization where the source code is hosted" label="GitHub owner" />
-      </div>
-    </ng-template>
-  </cn-stepper>
+  @if (stepperOrientation$ | async; as orientation) {
+    <cn-stepper [orientation]="orientation" [steps]="steps">
+      <ng-template step>
+        <div class="cn-grid">
+          <cn-select formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [ngClass]="getCellSpan(orientation, 6)" [options]="versions" />
+          <cn-checkbox formControlName="includeConfig" label="Include configuration" [ngClass]="getCellSpan(orientation, 6) + ' ' + orientation" />
+          <cn-select formControlName="loaders" hint="Which mod loaders to support" label="Loaders" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="loaders" />
+          <cn-select formControlName="platforms" hint="Which platforms to publish on" label="Platforms" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="platforms" />
+        </div>
+      </ng-template>
+      <ng-template step>
+        <div class="cn-grid">
+          <cn-input formControlName="modTitle" hint="Mod name" label="Mod title" [ngClass]="getCellSpan(orientation, 6)" />
+          <cn-checkbox formControlName="autogenModId" label="Autogenerate IDs" [ngClass]="getCellSpan(orientation, 6) + ' ' + orientation" />
+          <cn-input formControlName="modId" hint="Mod unique identifier" label="Mod ID" regex="^[a-z0-9_]+$" [ngClass]="getCellSpan(orientation, 6)" />
+          <cn-input formControlName="modIdKebab" hint="Mod ID for URLs and packages" label="Mod ID kebab-case" regex="^[a-z0-9-]+$" [ngClass]="getCellSpan(orientation, 6)" />
+        </div>
+      </ng-template>
+      <ng-template step>
+        <div class="cn-grid" [class.short-step]="orientation === 'horizontal'">
+          <cn-textarea class="cn-cell-12" formControlName="description" hint="Allows for multiline text" label="Mod description" />
+        </div>
+      </ng-template>
+      <ng-template step>
+        <div class="cn-grid" [class.short-step]="orientation === 'horizontal'">
+          <cn-input formControlName="group" hint="Java group" label="Java group" [ngClass]="getCellSpan(orientation, 4)" />
+          <cn-input formControlName="authors" hint="Comma separaed authors" label="Mod authors" [ngClass]="getCellSpan(orientation, 4)" />
+          <cn-input formControlName="githubUser" hint="GitHub name" label="GitHub owner" [ngClass]="getCellSpan(orientation, 4)" />
+        </div>
+      </ng-template>
+    </cn-stepper>
+  }
+  <div class="cn-grid form-footer">
+    <cn-toggle class="cn-cell-8" formControlName="crystalNestMod" label="Are you a Crystal Nest's member?" />
+    <cn-button class="cn-cell-4 align-self-end" icon="download" label="Download" [isDisabled]="!validity" (click)="emitSubmit()" />
+  </div>
 </form>
-<cn-button icon="download" label="Download" [isDisabled]="!validity" (click)="emitSubmit()" />

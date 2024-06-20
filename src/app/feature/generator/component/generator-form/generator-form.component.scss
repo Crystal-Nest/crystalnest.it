@@ -1,5 +1,26 @@
+@import "variables";
+
 :host {
-  cn-checkbox {
-    padding-bottom: 1.5rem;
+  form {
+    min-width: $mobile - 2rem - 1rem;
+
+    cn-checkbox {
+      &.horizontal {
+        padding-bottom: 1.25rem;
+      }
+      &.vertical {
+        padding-bottom: 0.75rem;
+      }
+    }
+
+    .short-step {
+      // display: flex;
+      align-items: center;
+      height: 156px;
+    }
+
+    .form-footer {
+      padding: 1rem;
+    }
   }
 }

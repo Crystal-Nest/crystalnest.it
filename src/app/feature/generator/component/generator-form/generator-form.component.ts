@@ -1,6 +1,6 @@
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {StepperOrientation} from '@angular/cdk/stepper';
-import {AsyncPipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -40,7 +40,7 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
   selector: 'cn-generator-form',
   standalone: true,
   imports: [
-    AsyncPipe,
+    CommonModule,
     StepDirective,
     MatIconModule,
     ReactiveFormsModule,
@@ -233,10 +233,31 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         this.form.controls.authors.setValidators([Validators.required, GeneratorValidators.notInclude(...TEMPLATE_AUTHORS)]);
         this.form.controls.githubUser.setValidators([Validators.required, GeneratorValidators.notMatch(TEMPLATE_GITHUB_USER)]);
       }
-      this.form.controls.group.updateValueAndValidity();
-      this.form.controls.authors.updateValueAndValidity();
-      this.form.controls.githubUser.updateValueAndValidity();
+      this.form.controls.group.markAsPristine();
+      this.form.controls.group.markAsUntouched();
+      this.form.controls.authors.markAsPristine();
+      this.form.controls.authors.markAsUntouched();
+      this.form.controls.githubUser.markAsPristine();
+      this.form.controls.githubUser.markAsUntouched();
     });
+  }
+
+  /**
+   * Returns the most appropriate cell span class depending on the orientation and the base value.
+   *
+   * @public
+   * @param {StepperOrientation} orientation stepper orientation.
+   * @param {number} base value to use when the orientation allows to put multiple elements in a single row.
+   * @returns {string} cell span class.
+   */
+  public getCellSpan(orientation: StepperOrientation, base: number) {
+    switch (orientation) {
+      case 'vertical':
+        return 'cn-cell-12';
+      case 'horizontal':
+      default:
+        return `cn-cell-${base}`;
+    }
   }
 
   /**
@@ -295,7 +316,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         nonNullable: true,
         validators: Validators.required
       }),
-      crystalNestMod: new FormControl(true, {
+      crystalNestMod: new FormControl(false, {
         nonNullable: true,
         validators: Validators.required
       }),
