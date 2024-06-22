@@ -5,8 +5,8 @@
         <div class="cn-grid">
           <cn-select formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [ngClass]="getCellSpan(orientation, 6)" [options]="versions" />
           <cn-checkbox formControlName="includeConfig" label="Include configuration" [ngClass]="getCellSpan(orientation, 6) + ' ' + orientation" />
-          <cn-select formControlName="loaders" hint="Which mod loaders to support" label="Loaders" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="loaders" />
-          <cn-select formControlName="platforms" hint="Which platforms to publish on" label="Platforms" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="platforms" />
+          <cn-select formControlName="loaders" hint="Mod loaders to support" label="Loaders" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="loaders" />
+          <cn-select formControlName="platforms" hint="Platforms to publish on" label="Platforms" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="platforms" />
         </div>
       </ng-template>
       <ng-template step>
@@ -32,7 +32,7 @@
     </cn-stepper>
   }
   <div class="cn-grid form-footer">
-    <cn-toggle class="cn-cell-8" formControlName="crystalNestMod" label="Are you a Crystal Nest's member?" />
+    <cn-toggle class="cn-cell-8" formControlName="crystalNestMod" label="I'm a Crystal Nest member" />
     <cn-button class="cn-cell-4 align-self-end" icon="download" label="Download" [isDisabled]="!validity" (click)="emitSubmit()" />
   </div>
 </form>

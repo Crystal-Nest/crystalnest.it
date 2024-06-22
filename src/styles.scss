@@ -46,3 +46,28 @@ a {
     text-decoration: none;
   }
 }
+
+div.cn-section-content {
+  padding-left: 2rem;
+  line-height: 1.5;
+
+  > mat-divider {
+    margin: 0.75rem 33%;
+  }
+
+  > *.eop {
+    margin-bottom: 0.5rem;
+  }
+
+  > span {
+    display: block;
+  }
+
+  > ul {
+    margin: 0.25rem 0;
+  }
+
+  ul {
+    padding-left: 1rem;
+  }
+}

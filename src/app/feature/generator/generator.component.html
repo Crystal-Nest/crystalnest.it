@@ -1,15 +1,37 @@
-This generator assumes the use of IntelliJ IDEA as IDE.
-<br />
-It assumes you will publish your code publicly on GitHub.
-<br />
-The default license is GPL-3.0, but you can change it to the one that better fits your needs.
-<br />
-If you do not publish your source code on GitHub, make sure to change the automatically generated changelog string when publishing your version (in the root build.gradle) to point to the correct changelog.
-<br />
-
-<cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
-
-<br />
-Follow the instruction on the readme to finish the setup!
-<br />
-More questions? Come chat on our Discord!
+<cn-section fragment="mod-skeleton-gen" route="generator" title="Mod Skeleton Generator">
+  <span class="eop">This mod generator is designed to significantly accelerate the setup and development of new mods, offering a customizable yet standardized template adaptable to any mod. Built on <a href="https://github.com/jaredlll08/MultiLoader-Template" target="_blank">Jared's Multiloader template</a>, it enhances the original with additional Javadocs, annotations, standards, and the <a href="https://github.com/Crystal-Nest/cobweb" target="_blank">Cobweb</a> dependency, further simplifying development.</span>
+  <span>This is the same tool used by us, the Crystal Nest team, to create new mods or port them to new Minecraft versions.</span>
+  <span class="eop">While the default license is <a href="https://spdx.org/licenses/GPL-3.0-or-later.html" target="_blank">GPL-3.0-or-later</a>, you are free to change it to any license that better suits your needs.</span>
+  <cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
+  <span class="cn-no-form-message"><strong>Increase the window size or go to a larger device to use the mod generator!</strong></span>
+</cn-section>
+<cn-section fragment="assumptions" route="generator" title="Assumptions">
+  <span>Our template works on the following few assumptions:</span>
+  <ul>
+    <li>IntelliJ IDEA is the IDE of choice.</li>
+    <li>Cobweb is a required dependency.</li>
+    <li>The source code is publicly available on GitHub.</li>
+  </ul>
+  <span>These are motivated by the following reasons:</span>
+  <ul>
+    <li>IntelliJ IDEA, even the free community edition, is a powerful IDE that speeds up mod development, especially with the <a href="https://plugins.jetbrains.com/plugin/8327-minecraft-development" target="_blank">Minecraft Development plugin</a>.</li>
+    <li>
+      Publishing your source code on GitHub is good practice, even with an All Rights Reserved license. It allows you to:
+      <ul>
+        <li>Receive PRs for new features, bug fixes, or version porting.</li>
+        <li>Facilitate compatibility with other mods by other modders.</li>
+        <li>Track development with GitHub issues and projects.</li>
+        <li>Create a wiki for modder and user information.</li>
+        <li>Set up release actions to publish your mod automatically.</li>
+        <li>Share your knowledge and help others learn from your solutions.</li>
+      </ul>
+    </li>
+    <li>Cobweb is a mod API that reduces code duplication by providing abstractions for common tasks like game object registration and configuration handling. Check out its <a href="https://github.com/Crystal-Nest/cobweb/wiki" target="_blank">wiki</a> for a complete feature overview.</li>
+  </ul>
+  <span>If you do not satisfy them, we strongly advise you to update your development setup.</span>
+</cn-section>
+<cn-section fragment="setup" route="generator" title="Setup">
+  <span>Extract the zip folder and open the contents with IntelliJ IDEA. If not done automatically, load the Gradle project.</span>
+  <span class="eop">Follow the instruction on the readme to finish the setup!</span>
+  <span>Still have questions? Come chat with us on <a href="https://discord.gg/BP6EdBfAmt" target="_blank">Discord</a>!</span>
+</cn-section>

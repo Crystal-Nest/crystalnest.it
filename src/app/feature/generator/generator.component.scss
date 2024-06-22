@@ -2,8 +2,22 @@
 
 :host {
   padding: 2rem;
+  padding-top: 1rem;
+  padding-left: 0.75rem;
 
-  @media (max-width: $desktop-tiny) {
-    padding: 1rem;
+  .cn-no-form-message {
+    padding: 1rem 0;
+    font-size: larger;
+    display: none;
+  }
+
+  @media (max-width: $mobile) {
+    cn-generator-form {
+      display: none;
+    }
+
+    .cn-no-form-message {
+      display: block;
+    }
   }
 }

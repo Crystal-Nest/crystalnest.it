@@ -3,7 +3,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MarkdownComponent, MarkdownModule} from 'ngx-markdown';
 
 import {LinkButtonComponent} from '../button/link-button/link-button.component';
-import {LabelComponent} from '../label/label.component';
+import {LabelComponent} from '../text/label/label.component';
 
 import {ModLoader, formatLoader} from '~cn/core/model/mod-loader.type';
 import {TypedChanges} from '~cn/core/model/typed-changes.type';

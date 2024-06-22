@@ -2,66 +2,6 @@
   height: 100%;
   flex: 1;
   padding: 2rem;
+  padding-top: 1rem;
   padding-left: 0.75rem;
-  color: #e3e3e3;
-
-  h1 {
-    font-size: 2em;
-    font-weight: 400;
-  }
-
-  > a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: fit-content;
-    margin-top: 1rem;
-    text-decoration: none;
-    color: inherit;
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    > mat-icon {
-      visibility: hidden;
-    }
-
-    &:hover {
-      filter: brightness(1.2);
-
-      > mat-icon {
-        visibility: visible;
-      }
-    }
-  }
-
-  > mat-divider {
-    margin: 0.125rem 0 1rem 1.5rem;
-  }
-
-  > div {
-    padding-left: 2rem;
-    line-height: 1.5;
-
-    > mat-divider {
-      margin: 0.75rem 33%;
-    }
-
-    > *.eop {
-      margin-bottom: 0.5rem;
-    }
-
-    > span {
-      display: block;
-    }
-
-    > ul {
-      margin: 0.25rem 0;
-    }
-
-    ul {
-      padding-left: 1rem;
-    }
-  }
 }

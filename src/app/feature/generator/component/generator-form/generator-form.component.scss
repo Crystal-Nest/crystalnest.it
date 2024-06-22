@@ -2,7 +2,8 @@
 
 :host {
   form {
-    min-width: $mobile - 2rem - 1rem;
+    min-width: $mobile - 4rem - 2rem;
+    padding-top: 1rem;
 
     cn-checkbox {
       &.horizontal {
@@ -19,7 +20,8 @@
     }
 
     .form-footer {
-      padding: 1rem;
+      padding: 1.5rem;
+      padding-bottom: 0;
     }
   }
 }

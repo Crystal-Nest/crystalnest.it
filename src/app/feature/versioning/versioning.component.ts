@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
-import {RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
+
+import {SectionComponent} from '~cn/shared/component/text/section/section.component';
 
 /**
  * Versioning page.
@@ -14,12 +13,7 @@ import {MarkdownModule} from 'ngx-markdown';
 @Component({
   selector: 'cn-versioning',
   standalone: true,
-  imports: [
-    RouterModule,
-    MarkdownModule,
-    MatDividerModule,
-    MatIconModule
-  ],
+  imports: [MarkdownModule, SectionComponent],
   templateUrl: './versioning.component.html',
   styleUrl: './versioning.component.scss'
 })

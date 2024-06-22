@@ -10,6 +10,7 @@ import {State, generatorFeature} from './redux/feature';
 import {TemplateService} from './service/template.service';
 
 import {SubscriberComponent} from '~cn/core/abstract/subscriber.component';
+import {SectionComponent} from '~cn/shared/component/text/section/section.component';
 
 /**
  * MultiLoader Skeleton Generator.
@@ -22,7 +23,12 @@ import {SubscriberComponent} from '~cn/core/abstract/subscriber.component';
 @Component({
   selector: 'cn-generator',
   standalone: true,
-  imports: [AsyncPipe, HttpClientModule, GeneratorFormComponent],
+  imports: [
+    AsyncPipe,
+    HttpClientModule,
+    SectionComponent,
+    GeneratorFormComponent
+  ],
   providers: [TemplateService],
   templateUrl: './generator.component.html',
   styleUrl: './generator.component.scss'
