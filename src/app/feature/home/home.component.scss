@@ -1,17 +1,116 @@
+@import "variables", "theme";
+
 :host {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100%;
-  flex: 1;
+  background: url("assets/images/crystal-cave.png") #00000044;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: darken;
 
-  h1 {
-    font-size: 3em;
-    font-weight: 300;
-    font-family: "Silkscreen";
-    font-style: normal;
-    text-align: center;
-    line-height: 48px;
+  > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    min-width: $mobile;
+    max-width: 60rem;
+
+    > img {
+      height: 14rem;
+      margin-bottom: 1rem;
+    }
+
+    > span {
+      text-align: center;
+    }
+
+    > .title {
+      font-size: 6rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-color: #00bd3c;
+      background-image: linear-gradient(180deg, $cn-color-300 0, $cn-color-600 60%);
+      background-size: 100%;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      color: transparent;
+      white-space: nowrap;
+    }
+
+    > .subtitle {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #afb6be;
+      margin-bottom: 2rem;
+    }
+
+    > .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 70%;
+      margin-bottom: 2rem;
+    }
+
+    > ul {
+      list-style: none;
+
+      > li {
+        height: 4rem;
+      }
+    }
+
+    @media (max-width: $desktop-tiny) {
+      padding: 2rem;
+      min-width: 0;
+
+      > img {
+        height: 12rem;
+      }
+
+      .title {
+        font-size: 4.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+      }
+
+      > .nav-buttons {
+        width: 100%;
+        margin-bottom: 0;
+      }
+
+      > ul {
+        display: none;
+      }
+    }
+
+    @media (max-width: $mobile) {
+      > img {
+        height: 10rem;
+      }
+
+      .title {
+        font-size: 2.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+      }
+
+      > .nav-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
   }
 }

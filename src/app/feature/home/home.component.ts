@@ -1,4 +1,8 @@
 import {Component} from '@angular/core';
+import {RouterModule} from '@angular/router';
+
+import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
+import {LinkButtonComponent} from '~cn/shared/component/button/link-button/link-button.component';
 
 /**
  * Homepage.
@@ -10,7 +14,7 @@ import {Component} from '@angular/core';
 @Component({
   selector: 'cn-home',
   standalone: true,
-  imports: [],
+  imports: [RouterModule, ButtonComponent, LinkButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
