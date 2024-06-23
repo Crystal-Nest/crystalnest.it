@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: url("assets/images/crystal-cave.png") #00000044;
+  background: url("assets/images/crystal-cave-wall.png") #00000080;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -36,7 +36,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       background-color: #00bd3c;
-      background-image: linear-gradient(180deg, $cn-color-300 0, $cn-color-600 60%);
+      background-image: linear-gradient(180deg, $cn-color-300 0, $cn-color-600 70%);
       background-size: 100%;
       -webkit-text-fill-color: transparent;
       -moz-text-fill-color: transparent;
