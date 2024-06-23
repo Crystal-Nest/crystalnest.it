@@ -1,7 +1,7 @@
 <mat-stepper #stepper animationDuration="0" [linear]="true" [orientation]="orientation">
   @for (step of steps; track $index) {
     @if (!step.isVisible || step.isVisible()) {
-      <mat-step>
+      <mat-step [hasError]="!!step.hasErrors?.()">
         <ng-template matStepLabel>{{ step.label }}</ng-template>
         <ng-container [ngTemplateOutlet]="contents.get($index)!"></ng-container>
         <div class="cn-stepper-footer">

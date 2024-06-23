@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: url("assets/images/crystal-cave-wall.png") #00000080;
+  background: url("assets/images/crystal-cave-wall.png") #00000090;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -35,8 +35,8 @@
       margin-bottom: 2rem;
       -webkit-background-clip: text;
       background-clip: text;
-      background-color: #00bd3c;
-      background-image: linear-gradient(180deg, $cn-color-300 0, $cn-color-600 70%);
+      background-color: $cn-color-300;
+      background-image: linear-gradient(180deg, $cn-color-300 50%, $cn-color-600 100%);
       background-size: 100%;
       -webkit-text-fill-color: transparent;
       -moz-text-fill-color: transparent;
@@ -47,7 +47,7 @@
     > .subtitle {
       font-size: 2rem;
       font-weight: 400;
-      color: #afb6be;
+      color: #e3e3e3;
       margin-bottom: 2rem;
     }
 

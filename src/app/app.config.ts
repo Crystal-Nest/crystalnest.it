@@ -1,3 +1,4 @@
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
@@ -55,9 +56,11 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: {
-        subscriptSizing: 'dynamic'
-      }
+      useValue: {subscriptSizing: 'dynamic'}
+    },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {showError: true}
     },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,

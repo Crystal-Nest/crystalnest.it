@@ -85,17 +85,21 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   public readonly steps: Step[] = [
     {
-      label: 'Minecraft and loaders'
+      label: 'Minecraft and loaders',
+      hasErrors: () => this.form.controls.minecraftVersion.invalid || this.form.controls.loaders.invalid || this.form.controls.platforms.invalid
     },
     {
-      label: 'Project details'
+      label: 'Project details',
+      hasErrors: () => this.form.controls.modTitle.invalid || this.form.controls.modId.invalid || this.form.controls.modIdKebab.invalid
     },
     {
       label: 'Project description',
+      hasErrors: () => this.form.controls.description.invalid,
       hasNext: () => !this.form.controls.crystalNestMod.value
     },
     {
       label: 'Ownership',
+      hasErrors: () => this.form.controls.group.invalid || this.form.controls.authors.invalid || this.form.controls.githubUser.invalid,
       isVisible: () => !this.form.controls.crystalNestMod.value
     }
   ];

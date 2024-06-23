@@ -25,7 +25,7 @@
       <ng-template step>
         <div class="cn-grid" [class.short-step]="orientation === 'horizontal'">
           <cn-input formControlName="group" hint="Java group" label="Java group" [ngClass]="getCellSpan(orientation, 4)" />
-          <cn-input formControlName="authors" hint="Comma separaed authors" label="Mod authors" [ngClass]="getCellSpan(orientation, 4)" />
+          <cn-input formControlName="authors" hint="List of authors" label="Mod authors" [ngClass]="getCellSpan(orientation, 4)" />
           <cn-input formControlName="githubUser" hint="GitHub name" label="GitHub owner" [ngClass]="getCellSpan(orientation, 4)" />
         </div>
       </ng-template>

@@ -30,4 +30,10 @@ export interface Step {
    * @type {?() => boolean}
    */
   isVisible?: () => boolean;
+  /**
+   * Whether the step should display the error state in the top label.
+   *
+   * @type {?() => boolean}
+   */
+  hasErrors?: () => boolean;
 }
