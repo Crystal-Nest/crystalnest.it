@@ -84,11 +84,6 @@
 
       > .nav-buttons {
         width: 100%;
-        margin-bottom: 0;
-      }
-
-      > ul {
-        display: none;
       }
     }
 
@@ -110,6 +105,10 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+      }
+
+      > ul > li {
+        grid-column-end: span 4;
       }
     }
   }
