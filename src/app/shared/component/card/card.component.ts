@@ -170,10 +170,10 @@ export class CardComponent implements OnChanges, AfterContentChecked {
    * @public
    */
   public ngAfterContentChecked() {
-    if (!this.scrollableTop || !this.scrollableBottom) {
+    if (!(this.scrollableTop && this.scrollableBottom)) {
       const {offsetHeight, scrollHeight, scrollTop} = this.markdownComponent.element.nativeElement;
       this.scrollableTop = scrollTop > 0;
-      this.scrollableBottom = offsetHeight < scrollHeight && scrollTop !== (scrollHeight - offsetHeight);
+      this.scrollableBottom = offsetHeight < scrollHeight && Math.ceil(scrollTop) < (scrollHeight - offsetHeight);
     }
   }
 
@@ -187,7 +187,7 @@ export class CardComponent implements OnChanges, AfterContentChecked {
     if (event.type === 'scroll' && event.target instanceof HTMLElement) {
       if (event.target.scrollTop === 0) {
         this.scrollableTop = false;
-      } else if (event.target.scrollTop === (event.target.scrollHeight - event.target.offsetHeight)) {
+      } else if (Math.ceil(event.target.scrollTop) >= (event.target.scrollHeight - event.target.offsetHeight)) {
         this.scrollableBottom = false;
       }
     }
