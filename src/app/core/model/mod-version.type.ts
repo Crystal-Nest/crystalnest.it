@@ -4,4 +4,4 @@
  * @export
  * @typedef {ModVersion}
  */
-export type ModVersion = `${number}.${number}.${number}.${number}${'-alpha' | '-beta' | ''}`;
+export type ModVersion = `${number}.${number}.${number}${'-alpha' | '-beta' | ''}`;

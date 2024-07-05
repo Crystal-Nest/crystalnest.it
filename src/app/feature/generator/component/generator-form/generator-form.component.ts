@@ -163,7 +163,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   public ngOnInit(): void {
     this.valueChanges('minecraftVersion', value => {
-      const [minor, patch] = value.split('.').slice(1).map(version => +version) as [number, number];
+      const [minor = 0, patch = 0] = value.split('.').slice(1).map(version => +version);
       if (minor < this.neoforgeTransitionVersion || (minor === this.neoforgeTransitionVersion && patch === 1)) {
         this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'neoforge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);

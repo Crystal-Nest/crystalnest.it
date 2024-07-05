@@ -4,4 +4,4 @@
  * @export
  * @typedef {MinecraftVersion}
  */
-export type MinecraftVersion = `1.${number}.${number}`;
+export type MinecraftVersion = `1.${number}` | `1.${number}.${number}`;

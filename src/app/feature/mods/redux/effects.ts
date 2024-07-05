@@ -58,7 +58,7 @@ export class ModsEffects {
           stable: repository.latestRelease?.name.split('-')[1] as ModVersion || null,
           latest: repository.releases.nodes[0]?.name.split('-').filter((_, index) => index > 0).join('-') as ModVersion || null,
           loaders: repository.repositoryTopics.nodes.filter(topic => this.loaderTopics.includes(topic.topic.name)).map(topic => topic.topic.name.split('-')[1]) as Lowercase<ModLoader>[],
-          versions: repository.object.text.match(/\[!\[1\.[0-9]+\.[0-9]+\]\(.*?\)\]\(.*?\)/g)?.map(match => match.match(/(1\.[0-9]+\.[0-9]+)/)).map(value => value?.[0]) as MinecraftVersion[],
+          versions: repository.object.text.match(/\[!\[1\.[0-9]+(\.[0-9]+)?\]\(.*?\)\]\(.*?\)/g)?.map(match => match.match(/(1\.[0-9]+(\.[0-9]+)?)/)).map(value => value?.[0]) as MinecraftVersion[],
           client: this.checkSide(repository.object.text, 'client'),
           server: this.checkSide(repository.object.text, 'server')
         }))
