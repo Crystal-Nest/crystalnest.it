@@ -55,7 +55,7 @@ export class GeneratorValidators {
         if (typeof control.value === 'string' && values.some(value => GeneratorValidators.includes(control.value, value))) {
           return {notInclude: true};
         }
-        if (Array.isArray(control.value) && values.some(value => control.value.some((element: string) => GeneratorValidators.includes(element, value)))) {
+        if (Array.isArray(control.value) && values.some(value => control.value.some((element: string) => GeneratorValidators.equals(element, value)))) {
           return {notInclude: true};
         }
       }
@@ -74,7 +74,7 @@ export class GeneratorValidators {
    */
   public static notMatch(...values: string[]): ValidatorFn {
     return control => {
-      if (control.value && values.some(value => control.value.toLowerCase().trim() === value.toLowerCase().trim())) {
+      if (control.value && values.some(value => GeneratorValidators.equals(control.value, value))) {
         return {notMatch: true};
       }
       return null;
@@ -104,5 +104,18 @@ export class GeneratorValidators {
    */
   private static includes(haystack: string, needle: string): boolean {
     return haystack.toLowerCase().trim().includes(needle.toLowerCase().trim());
+  }
+
+  /**
+   * Checks whether the first string is equal to the second one.
+   *
+   * @private
+   * @static
+   * @param {string} first
+   * @param {string} second
+   * @returns {boolean}
+   */
+  private static equals(first: string, second: string) {
+    return first.toLowerCase().trim() === second.toLowerCase().trim();
   }
 }
