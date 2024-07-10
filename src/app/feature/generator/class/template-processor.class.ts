@@ -32,137 +32,154 @@ export abstract class TemplateProcessor {
    * Mod authors.
    *
    * @protected
+   * @readonly
    * @type {string}
    */
-  protected authors: string;
+  protected readonly authors: string;
 
   /**
    * Mod description.
    *
    * @protected
+   * @readonly
    * @type {string}
    */
-  protected description: string;
+  protected readonly description: string;
 
   /**
    * Mod GitHub owner.
    *
    * @protected
+   * @readonly
    * @type {string}
    */
-  protected githubUser: string;
+  protected readonly githubUser: string;
 
   /**
    * Whether the mod is not from Crystal Nest.
    *
    * @protected
+   * @readonly
    * @type {boolean}
    */
-  protected othersMod: boolean;
+  protected readonly othersMod: boolean;
 
   /**
    * Whether to not include the configuration setup.
    *
    * @protected
+   * @readonly
    * @type {boolean}
    */
-  protected noConfig: boolean;
+  protected readonly noConfig: boolean;
 
   /**
    * Selected publishing platforms.
    *
    * @protected
+   * @readonly
    * @type {Lowercase<Platform>[]}
    */
-  protected platforms: Lowercase<Platform>[];
+  protected readonly platforms: Lowercase<Platform>[];
 
   /**
    * Template root path.
    *
    * @protected
+   * @readonly
    * @type {string}
    */
-  protected root: string;
+  protected readonly root: string;
 
   /**
    * Mod loaders to exclude from the template.
    *
    * @protected
+   * @readonly
    * @type {Lowercase<ModLoader>[]}
    */
-  protected excludedLoaders: Lowercase<ModLoader>[];
+  protected readonly excludedLoaders: Lowercase<ModLoader>[];
 
   /**
    * Publishing platforms to exclude from the template.
    *
    * @protected
+   * @readonly
    * @type {Lowercase<Platform>[]}
    */
-  protected excludedPlatforms: Lowercase<Platform>[];
+  protected readonly excludedPlatforms: Lowercase<Platform>[];
 
   /**
    * Change for the root.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected rootChange: Change;
+  protected readonly rootChange: Change;
 
   /**
    * Change for the mod ID.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected modIdChange: Change;
+  protected readonly modIdChange: Change;
 
   /**
    * Change for the mod ID in kebab case.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected modIdKebabChange: Change;
+  protected readonly modIdKebabChange: Change;
 
   /**
    * Change for the mod title.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected modTitleChange: Change;
+  protected readonly modTitleChange: Change;
 
   /**
    * Change for the Jave group.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected groupChange: Change;
+  protected readonly groupChange: Change;
 
   /**
    * Change for the Java group in file paths.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected groupPathChange: Change;
+  protected readonly groupPathChange: Change;
 
   /**
    * Change for the configuration dependency.
    *
    * @protected
+   * @readonly
    * @type {Change}
    */
-  protected fcapChange: Change;
+  protected readonly fcapChange: Change;
 
   /**
    * Changes for the mod loaders.
    *
    * @protected
+   * @readonly
    * @type {Change[]}
    */
-  protected loaderChanges: Change[];
+  protected readonly loaderChanges: Change[];
 
   /**
    * @constructor
@@ -221,7 +238,7 @@ export abstract class TemplateProcessor {
             // Directory: replace the name of the root dir, group, and modid.
             this.zip.folder(this.process(path, [this.rootChange, this.groupPathChange, this.modIdChange]));
             break;
-          case this.handle(this.zip, entry, path): break;
+          case this.handle(entry, path): break;
           case path === `${this.root}/common/build.gradle`:
             // Common build.gradle: update configuration dependency and platform publishing tasks.
             this.zip.file(
@@ -322,12 +339,11 @@ export abstract class TemplateProcessor {
    *
    * @protected
    * @abstract
-   * @param {JSZip} zip zip file.
    * @param {JSZipObject} entry file entry.
    * @param {string} path entry path.
    * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
    */
-  protected abstract handle(zip: JSZip, entry: JSZipObject, path: string): boolean;
+  protected abstract handle(entry: JSZipObject, path: string): boolean;
 
   /**
    * Processes the content of the root build.gradle file excluding the given loaders and platforms.

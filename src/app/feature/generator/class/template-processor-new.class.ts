@@ -1,4 +1,4 @@
-import JSZip, {JSZipObject} from '@progress/jszip-esm';
+import {JSZipObject} from '@progress/jszip-esm';
 
 import {TemplateProcessor} from './template-processor.class';
 import {Change} from '../model/change.type';
@@ -19,29 +19,28 @@ export class TemplateProcessorNew extends TemplateProcessor {
    * @inheritdoc
    *
    * @protected
-   * @param {JSZip} zip zip file.
    * @param {JSZipObject} entry file entry.
    * @param {string} path entry path.
    * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
    */
-  protected override handle(zip: JSZip, entry: JSZipObject, path: string): boolean {
+  protected override handle(entry: JSZipObject, path: string): boolean {
     switch (true) {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           this.alter(entry, [[/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/, '', this.isListOnlyOf(this.excludedLoaders, 'fabric')], [/.+publisher.+\n/, '', this.isListOnlyOf(this.platforms, 'maven')]])
         );
-        break;
+        return true;
       case path === `${this.root}/fabric/build.gradle`:
         // Fabric build.gradle: update configuration dependency and platform publishing tasks.
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           this.alter(entry, [this.fcapChange, [/\npublisher.+\n.+\n.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')]])
         );
-        break;
+        return true;
       case path.endsWith('multiloader-common.gradle'):
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           entry.async('string').then(content => this.processBuildGradle(
             this.process(content, [this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig]]),
@@ -49,7 +48,7 @@ export class TemplateProcessorNew extends TemplateProcessor {
             this.excludedPlatforms
           ))
         );
-        break;
+        return true;
     }
     return false;
   }

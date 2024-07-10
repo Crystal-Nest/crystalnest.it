@@ -1,4 +1,4 @@
-import JSZip, {JSZipObject} from '@progress/jszip-esm';
+import {JSZipObject} from '@progress/jszip-esm';
 
 import {TemplateProcessor} from './template-processor.class';
 import {Change} from '../model/change.type';
@@ -19,16 +19,15 @@ export class TemplateProcessorOld extends TemplateProcessor {
    * @inheritdoc
    *
    * @protected
-   * @param {JSZip} zip zip file.
    * @param {JSZipObject} entry file entry.
    * @param {string} path entry path.
    * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
    */
-  protected override handle(zip: JSZip, entry: JSZipObject, path: string): boolean {
+  protected override handle(entry: JSZipObject, path: string): boolean {
     switch (true) {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           entry.async('string').then(content => this.processBuildGradle(
             this.process(content, [[/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig]]),
@@ -36,21 +35,21 @@ export class TemplateProcessorOld extends TemplateProcessor {
             this.excludedPlatforms
           ))
         );
-        break;
+        return true;
       case path === `${this.root}/forge/build.gradle`:
         // Forge build.gradle: update configuration dependency and platform publishing tasks.
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           this.alter(entry, [this.fcapChange, [/\n.*publishing(.*\n)*?}\n/, '', this.excludedPlatforms.includes('maven')]])
         );
-        break;
+        return true;
       case path.endsWith('build.gradle'):
         // Subprojects build.gradle: update configuration dependency.
-        zip.file(
+        this.zip.file(
           this.process(path, [this.rootChange]),
           this.alter(entry, [this.fcapChange])
         );
-        break;
+        return true;
     }
     return false;
   }
