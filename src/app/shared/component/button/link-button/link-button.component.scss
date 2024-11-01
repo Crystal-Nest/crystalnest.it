@@ -1,4 +1,4 @@
-@import "theme";
+@import "variables", "theme";
 
 :host {
   -webkit-user-select: none;
@@ -20,7 +20,7 @@
   }
 
   a:hover {
-    filter: brightness(1.2);
+    filter: $hover-filter;
   }
 
   a:active {

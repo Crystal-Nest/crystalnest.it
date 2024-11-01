@@ -1,4 +1,4 @@
-@import "variables";
+@import "variables", "theme";
 
 :host {
   display: flex;
@@ -13,7 +13,7 @@
     max-width: 40rem;
     text-align: center;
     line-height: 1.5rem;
-    color: #e3e3e3;
+    color: $cn-color-400;
 
     &.error-code {
       font-size: 14rem;

@@ -1,8 +1,10 @@
+@import "variables";
+
 :host {
   .cn-stepper-footer {
     display: grid;
     grid-auto-flow: column;
-    margin-top: 24px;
+    margin-top: $stepper-margin-top;
 
     > cn-button[stepperkind="previous"] {
       justify-self: flex-start;

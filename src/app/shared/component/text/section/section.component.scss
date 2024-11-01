@@ -1,5 +1,7 @@
+@import "variables", "theme";
+
 :host {
-  color: #e3e3e3;
+  color: $cn-color-400;
 
   > a {
     display: flex;
@@ -11,7 +13,7 @@
     color: inherit;
 
     &:hover {
-      filter: brightness(1.2);
+      filter: $hover-filter;
 
       > mat-icon {
         visibility: visible;
@@ -20,7 +22,7 @@
 
     > mat-icon {
       visibility: hidden;
-      min-width: 24px;
+      min-width: $icon-min-width;
     }
 
     > h1 {
@@ -30,6 +32,6 @@
   }
 
   > mat-divider {
-    margin: 0.125rem 0 1rem 1.5rem;
+    margin: $divider-margin;
   }
 }

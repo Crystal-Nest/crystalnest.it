@@ -1,4 +1,4 @@
-// Grid.
+// Grid
 $grid-gap: 1rem;
 $grid-gap-small: 0.75rem;
 $grid-gap-tiny: 0.5rem;
@@ -10,9 +10,27 @@ $separator-border-size: 1px;
 
 // Icons
 $nav-icon-size: 2rem;
+$icon-min-width: 24px;
+
+// Label
+$label-gap: 0.5rem;
+$label-icon-size: 1rem;
+
+// Clickable elements
+$hover-filter: brightness(1.2);
+
+// Text
+$font-size: 2em;
+$font-weight: 400;
+
+// Stepper
+$stepper-margin-top: 24px;
 
 // Header
 $header-height: 5rem;
+
+// Section
+$divider-margin: 0.125rem 0 1rem 1.5rem;
 
 // Footer
 $footer-icon-size: 1.5rem;
@@ -29,3 +47,26 @@ $desktop-tiny: 46.25rem;
 $mobile: 31.25rem;
 $mobile-small: 22.5rem;
 $min-width: 17.75rem;
+
+// Theme
+$cn-color-50: #e3e3e3;
+$cn-color-100: #e3e3e3;
+$cn-color-200: #c071f5;
+$cn-color-300: #c071f5;
+$cn-color-400: #e3e3e3;
+$cn-color-500: #c071f5;
+$cn-color-600: #8458b6;
+$cn-color-700: #1f1b3b;
+$cn-color-800: #e3e3e3;
+$cn-color-900: #e3e3e3;
+
+$cn-color-a50: #e3e3e3;
+$cn-color-a100: #e3e3e3;
+$cn-color-a200: #e3e3e3;
+$cn-color-a300: #e3e3e3;
+$cn-color-a400: #e3e3e3;
+$cn-color-a500: #000000;
+$cn-color-a600: #e3e3e3;
+$cn-color-a700: #c071f5;
+$cn-color-a800: #e3e3e3;
+$cn-color-a900: #e3e3e3;

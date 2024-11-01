@@ -1,3 +1,5 @@
+@import "variables";
+
 .mdc-switch__ripple {
   display: none !important;
 }
@@ -11,17 +13,17 @@
 }
 
 .mdc-switch.mdc-switch--selected:enabled .mdc-switch__icon {
-  fill: black !important;
+  fill: $cn-color-a500 !important;
 }
 
 .mat-mdc-slide-toggle .mdc-label {
-  color: #e3e3e3 !important;
-  margin-left: 0.5rem !important;
+  color: $cn-color-400 !important;
+  margin-left: $label-gap !important;
 }
 
 .mdc-switch.mdc-switch--unselected:hover,
 .mdc-switch.mdc-switch--unselected + .mdc-label:hover,
 .mdc-switch.mdc-switch--selected.mdc-switch--checked:hover {
   background-color: inherit !important;
-  filter: brightness(1.2) !important;
+  filter: $hover-filter !important;
 }

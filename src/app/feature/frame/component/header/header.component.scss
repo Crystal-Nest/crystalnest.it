@@ -1,4 +1,4 @@
-@import "variables", "theme.scss";
+@import "variables", "theme";
 
 :host {
   position: sticky;
@@ -8,7 +8,7 @@
   header {
     display: flex;
     background-color: $cn-color-700;
-    color: #e3e3e3;
+    color: $cn-color-400;
     height: $header-height;
     padding: 1rem;
 
@@ -127,7 +127,7 @@
                 font-size: 2.75rem;
 
                 &:hover {
-                  filter: brightness(1.2);
+                  filter: $hover-filter;
                 }
 
                 &:active {
@@ -172,7 +172,7 @@
   align-items: start;
   gap: 0.5rem;
   font-size: 1.25rem;
-  color: #e3e3e3;
+  color: $cn-color-400;
 
   > * {
     width: 100%;

@@ -2,7 +2,7 @@
 
 :host {
   display: flex;
-  gap: 0.5rem;
+  gap: $label-gap;
   align-items: center;
 
   > span {
@@ -11,17 +11,17 @@
 
   > div {
     display: flex;
-    gap: 0.5rem;
+    gap: $label-gap;
     flex-wrap: wrap;
 
     > span {
       display: flex;
-      gap: 0.5rem;
+      gap: $label-gap;
       align-items: center;
 
       > mat-icon {
-        width: 1rem;
-        height: 1rem;
+        width: $label-icon-size;
+        height: $label-icon-size;
       }
 
       > strong {

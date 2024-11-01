@@ -1,28 +1,7 @@
 @use "@angular/material" as material;
+@import "variables";
 
 @include material.core();
-
-$cn-color-50: #e3e3e3;
-$cn-color-100: #e3e3e3;
-$cn-color-200: #c071f5;
-$cn-color-300: #c071f5;
-$cn-color-400: #e3e3e3;
-$cn-color-500: #c071f5;
-$cn-color-600: #8458b6;
-$cn-color-700: #1f1b3b;
-$cn-color-800: #e3e3e3;
-$cn-color-900: #e3e3e3;
-
-$cn-color-a50: #e3e3e3;
-$cn-color-a100: #e3e3e3;
-$cn-color-a200: #e3e3e3;
-$cn-color-a300: #e3e3e3;
-$cn-color-a400: #e3e3e3;
-$cn-color-a500: #000000;
-$cn-color-a600: #e3e3e3;
-$cn-color-a700: #c071f5;
-$cn-color-a800: #e3e3e3;
-$cn-color-a900: #e3e3e3;
 
 $cn-color-palette: (
   50: $cn-color-50,
