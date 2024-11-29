@@ -57,16 +57,14 @@ export const coreFeature = createFeature({
       callCounter: state.callCounter + 1
     })),
     on(decrementCallCounter, state => {
-      const callCounter = state.callCounter - 1;
-      if (callCounter > 0) {
+      if (state.callCounter > 0) {
         return {
           ...state,
-          callCounter
+          callCounter: state.callCounter - 1
         };
       }
       return {
         ...state,
-        callCounter,
         progress: -1,
         loadingType: 'query' as ProgressBarMode
       };
