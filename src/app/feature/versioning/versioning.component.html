@@ -7,11 +7,10 @@
   </ul>
   <span class="eop">The Minecraft Version comes first, followed by the Mod Version, separated by a hyphen, to help users easily identify the required version. For example, a valid version could be <code>1.20.4-1.0.0</code>.</span>
   <span>When using our <a href="https://github.com/Crystal-Nest/cobweb-mod-template" target="_blank">template</a> or <a routerLink="/generator">mod generator</a>, the Minecraft Version and Mod Version are two separate properties. During the build process, these properties are combined to create a valid CNSV version.</span>
-  <span>Both the template and the mod generator ensure compliance with other <a fragment="related-conventions" routerLink="/versioning">related conventions</a>.</span>
 </cn-section>
 <cn-section fragment="minecraft-version" route="versioning" title="Minecraft Version">
   <span>The Minecraft Version is straightforward: it must match the supported Minecraft version.</span>
-  <span>When updating your mod to support a new Minecraft version, you only need to update the Minecraft Version, unless you also make significant changes to your mod's features or API, if any.</span>
+  <span>When updating your mod to support a new Minecraft version, unless you also make significant changes to your mod's features or API, you only need to update the Minecraft Version.</span>
 </cn-section>
 <cn-section fragment="mod-version" route="versioning" title="Mod Version">
   <span>The Mod Version, adhering to the Semantic Versioning standard, consists of three non-negative numbers: Major, Minor, and Patch.</span>
@@ -23,7 +22,7 @@
   </ul>
   <span>This system ensures that users and developers can easily determine the safety of updating your mod.</span>
   <br />
-  <span class="eop">Optionally, the Mod Version can be followed by a hyphen and an <em>alpha</em> or <em>beta</em> designation, such as <code>1.20.4-1.0.0-alpha</code>. These versions are called <em>pre-release</em> or <em>unstable</em>. When no additional designation is used, versions are considered <em>release</em> or <em>stable</em>.</span>
+  <span class="eop">Optionally, the Mod Version can be followed by a hyphen and an <em>alpha</em> or <em>beta</em> designation, such as <code>1.20.4-1.0.0-alpha</code>. These versions are called <em>pre-release</em> or <em>unstable</em>. When no additional designation is used, versions are called <em>release</em> or <em>stable</em>.</span>
   <span>Unstable versions have different semantics for the Major, Minor, and Patch numbers:</span>
   <ul>
     <li>
@@ -39,19 +38,19 @@
       Beta
       <ul>
         <li>Unstable but generally maintains backward compatibility.</li>
-        <li>The Patch number should follow standard semantic rules.</li>
+        <li>The Patch number should be incremented for backward-compatible bug fixes or for backward-compatible changes that introduce new features or deprecate existing ones.</li>
         <li>The Minor number should be incremented for breaking changes.</li>
         <li>The Major number must not change.</li>
       </ul>
     </li>
   </ul>
-  <span>When transitioning from an alpha to a beta, you only need to change the designation unless there are breaking changes. When moving from an unstable to a stable version, simply remove the designation unless there are breaking changes. For example, <code>1.0.1-alpha</code> -> <code>1.0.2-alpha</code> -> <code>1.0.2-beta</code> -> <code>1.2.0-beta</code> -> <code>1.2.0</code>.</span>
+  <span>When transitioning from an alpha to a beta, you only need to change the designation, unless there are breaking changes. When moving from an unstable to a stable version, simply remove the designation unless there are breaking changes. For example, <code>1.0.1-alpha</code> -> <code>1.0.2-alpha</code> -> <code>1.0.2-beta</code> -> <code>1.2.0-beta</code> -> <code>1.2.0</code>.</span>
   <br />
-  <span>An exception to the standard Minor and Patch semantics occurs when the Major version is 0. In this case, you are indicating that the mod and its API are not ready for public use, and backward compatibility is not guaranteed:</span>
+  <span>An exception to the standard Minor and Patch semantics occurs when the Major version is <code>0</code>. In this case, you are indicating that the mod and its API are <strong>not ready for public use</strong>, and backward compatibility is not guaranteed:</span>
   <ul>
     <li>The standard semantics apply to Minor and Patch numbers, but substantial breaking changes should increment the Minor version rather than the Major.</li>
-    <li>Alpha and beta versions can be declared with a Major version of 0, but start with alpha and then beta, with no stable versions.</li>
-    <li>When the mod and its API become stable, increment the Major version to 1.</li>
+    <li>Alpha and beta designations are optional, but if you do use them, do not remove them until the Major version becomes <code>1</code>.</li>
+    <li>When the mod and its API become stable, increment the Major version to <code>1</code> and remove any alpha or beta designation.</li>
   </ul>
   <br />
   <span>If you need to update your mod for only a subset of supported Minecraft versions, such as fixing a bug in older versions, follow these guidelines:</span>
