@@ -4,7 +4,7 @@ import{a as Hs,b as Fs,c as ir,d as nr,e as rr,f as ar,g as gt,h as Ns,i as Ls,j
     `),S(4,"li"),y(5,"cn-link-button",1),v(),g(6,`
     `),S(7,"li")(8,"a",2),g(9,"crystal.aranea@gmail.com"),v()(),g(10,`
     `),S(11,"li")(12,"a",3),g(13,"Open-source"),v(),g(14," website"),v(),g(15,`
-    `),S(16,"li"),g(17,"\xA9 Crystal Nest, GPL-3.0"),v(),g(18,`
+    `),S(16,"li"),g(17,"\xA9 2025 Crystal Nest, GPLv3"),v(),g(18,`
   `),v(),g(19,`
   `),S(20,"ul",4),g(21,`
     `),S(22,"li",5),y(23,"cn-link-button",6),v(),g(24,`
