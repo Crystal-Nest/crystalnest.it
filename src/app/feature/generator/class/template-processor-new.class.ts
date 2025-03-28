@@ -43,7 +43,6 @@ export class TemplateProcessorNew extends TemplateProcessor {
         this.zip.file(
           this.process(path, [this.rootChange]),
           entry.async('string').then(content => this.processBuildGradle(
-            // eslint-disable-next-line no-template-curly-in-string
             this.process(content, [this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange]),
             this.excludedLoaders,
             this.excludedPlatforms

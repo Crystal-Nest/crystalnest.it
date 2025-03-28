@@ -30,7 +30,12 @@ export class TemplateProcessorOld extends TemplateProcessor {
         this.zip.file(
           this.process(path, [this.rootChange]),
           entry.async('string').then(content => this.processBuildGradle(
-            this.process(content, [[/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig]]),
+            this.process(content, [
+              [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod],
+              this.fcapChange,
+              [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig],
+              this.licenseChange
+            ]),
             this.excludedLoaders,
             this.excludedPlatforms
           ))
@@ -47,8 +52,7 @@ export class TemplateProcessorOld extends TemplateProcessor {
         // Subprojects build.gradle: update configuration dependency.
         this.zip.file(
           this.process(path, [this.rootChange]),
-          // eslint-disable-next-line no-template-curly-in-string
-          this.alter(entry, [this.fcapChange, this.licenseChange])
+          this.alter(entry, [this.fcapChange])
         );
         return true;
     }
