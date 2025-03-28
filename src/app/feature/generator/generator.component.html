@@ -1,7 +1,7 @@
 <cn-section fragment="mod-skeleton-gen" route="generator" title="Mod Skeleton Generator">
   <span class="eop">This mod generator is designed to significantly accelerate the setup and development of new mods, offering a customizable yet standardized template adaptable to any mod. Built on <a href="https://github.com/jaredlll08/MultiLoader-Template" target="_blank">Jared's Multiloader template</a>, it enhances the original with additional Javadocs, annotations, standards, and the <a href="https://github.com/Crystal-Nest/cobweb" target="_blank">Cobweb</a> dependency, further simplifying development.</span>
   <span>This is the same tool used by us, the Crystal Nest team, to create new mods or port them to new Minecraft versions.</span>
-  <span>The default license is <a href="https://github.com/Crystal-Nest/.github/blob/main/LICENSE" target="_blank">CNCLv1</a>, our custom (and suggested) license designed to enable open-source mod development while retaining full rights to monetization</span>
+  <span>The default license is <a href="https://github.com/Crystal-Nest/.github/blob/main/LICENSE" target="_blank">CNCLv1</a>, our custom (and suggested) license designed to enable open-source mod development while retaining full rights to monetization.</span>
   <span class="eop">There are a couple of other licenses available, but you are free to use any license that better suits your needs.</span>
   <span class="eop">Check the toggle below <strong>only</strong> if you are a Crystal Nest member, otherwise fill in the <strong>Ownership</strong> step.</span>
   <cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
