@@ -47,7 +47,8 @@ export class TemplateProcessorOld extends TemplateProcessor {
         // Subprojects build.gradle: update configuration dependency.
         this.zip.file(
           this.process(path, [this.rootChange]),
-          this.alter(entry, [this.fcapChange])
+          // eslint-disable-next-line no-template-curly-in-string
+          this.alter(entry, [this.fcapChange, this.licenseChange])
         );
         return true;
     }

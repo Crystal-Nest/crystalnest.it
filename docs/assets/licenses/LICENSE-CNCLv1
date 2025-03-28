@@ -1,0 +1,149 @@
+                        CRYSTAL NEST COMMUNITY LICENSE
+                              Version 1 (CNCLv1)
+
+Copyright (C) 2025 Crystal Nest <https://crystalnest.it/>
+Everyone is permitted to copy and distribute verbatim copies of this license
+document, but changing it is not allowed.
+
+
+                                    SUMMARY
+
+This license governs the usage, modification, and distribution of the mod
+described herein.
+
+The summary section is for informational purposes only and does not alter the
+legally binding license terms below.
+
+This license allows you to freely use the mod in modpacks, develop addons or
+compatibility integrations, or modify the mod privately for your own use.
+Public forks are allowed for collaboration, but distributing compiled versions
+of them is not.
+You cannot resell, repackage, or redistribute the mod.
+Explicit permissions from the mod author override these restrictions, and such
+permissions may be revoked by the author with at least 14 days' notice.
+If you are uncertain whether a specific use is allowed, please ask the author
+for clarification.
+A link back to this mod when referencing it is appreciated but optional.
+
+
+                                 LICENSE TERMS
+
+Subject to the terms and conditions of this license, the author grants you a
+non-exclusive, worldwide, royalty-free license to use, modify, and distribute
+the mod as outlined herein.
+
+
+                                  DEFINITIONS
+
+"Mod" means the entire project this license accompanies, including, but not
+limited to, source code, compiled binaries, assets, documentation, and any
+other related components.
+
+"Modpack" means a collection of mods, distributed as a single package through
+files or modpack launchers.
+
+"Private Use" means modification or use restricted solely to the individual
+modifying the mod, without any sharing or distribution.
+
+"Public Distribution" means making the mod or related files available publicly
+via repositories, mod-hosting platforms, or other publicly accessible methods.
+
+"Source Code" means original code provided by the author(s), including, but not
+limited to, code, scripts, configurations, or any text intended for compilation
+or interpretation, and includes functionally equivalent code.
+
+"Compiled Binary" means any packaged executable files (e.g., JAR files)
+generated from source code.
+
+"Official Distribution Platform (ODP)" means websites or platforms explicitly
+authorized by the author for distributing the mod. Common examples include
+platforms such as CurseForge and Modrinth; however, the specific authorized
+platforms are exclusively determined by the author and may change at the
+author's discretion.
+
+
+                                 ALLOWED USES
+
+1. Inclusion in Modpacks:
+   The mod may be referenced as an external dependency within modpacks but must
+   not be directly packaged.
+   Users or launchers must download the mod exclusively from an ODP.
+   Including a reference link in your project's documentation is appreciated
+   but not mandatory.
+
+2. API, Addon, and Compatibility Development:
+   Developers may freely create addons, compatibility integrations, or
+   otherwise utilize the provided API.
+   Integration must be via external referencing without embedding the mod's
+   source code or compiled binaries.
+   Including a reference link in your project's documentation is appreciated
+   but not mandatory.
+
+3. Personal Modifications:
+   Users may modify the mod. Compiled binaries from such modifications must
+   remain private and not be publicly distributed.
+
+4. Forking:
+   Public forks are permitted for development or collaborative purposes;
+   however, distributing compiled binaries from these forks is prohibited.
+
+5. Server Usage:
+   Use of the mod on private and public servers, including servers requiring
+   paid access, is permitted provided the mod remains server-side only or
+   clients obtain it through an allowed method.
+   Including a reference link in your project's documentation is appreciated
+   but not mandatory.
+
+6. Videos and Reviews:
+   Creation of videos or reviews featuring this mod is always permitted
+   provided the mod is obtained through an allowed method and the video or
+   review includes a link to an official distribution platform.
+
+7. Official Distribution Platforms:
+   All references must link exclusively to the author's designated ODPs.
+   Direct bundling or inclusion of mod files within other projects is forbidden.
+
+8. Explicit Permissions:
+   Explicit permissions from the mod author override other license restrictions.
+
+                              
+                                RESTRICTED USES
+
+1. Reselling:
+   Commercial sale or redistribution of the mod is prohibited.
+
+2. Packaging:
+   Facilitating or providing mod downloads outside official platforms,
+   bypassing official distribution channels, is prohibited.
+
+3. Redistribution:
+   Public re-uploading or redistribution of the mod's source code or compiled
+   binaries is forbidden.
+
+4. Private Modifications:
+   Public sharing or redistribution of privately modified versions is forbidden.
+
+5. Redistribution and Forking:
+   Unauthorized distribution of compiled binaries or source code is prohibited.
+   Public forks may only be used for development or collaboration; compiled
+   distribution is not permitted.
+
+
+                            REQUESTING AUTHORIZATION
+
+Uses not explicitly permitted require prior written consent from the author.
+Approval or denial is solely at the author's discretion.
+The author reserves the right to revoke any granted permissions at their sole
+discretion, provided that a minimum of 14 days’ prior written notice is given.
+
+If you are uncertain whether a specific use is allowed by this license, please
+ask the author for clarification.
+
+
+                      DISCLAIMER OF WARRANTY AND LIABILITY
+
+THE MOD IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND. THE AUTHOR DISCLAIMS
+ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM, OUT OF, OR IN CONNECTION WITH THE MOD OR ITS USE.

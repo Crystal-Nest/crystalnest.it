@@ -2,9 +2,10 @@ import {Store} from '@ngrx/store';
 import JSZip, {JSZipObject} from '@progress/jszip-esm';
 
 import {Change} from '../model/change.type';
+import {License} from '../model/license.type';
 import {Platform} from '../model/platform.type';
 import {SkeletonForm} from '../model/skeleton-form.interface';
-import {TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from '../model/template.const';
+import {LICENSES, TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from '../model/template.const';
 import {State} from '../redux/feature';
 
 import {ModLoader} from '~cn/core/model/mod-loader.type';
@@ -182,9 +183,28 @@ export abstract class TemplateProcessor {
   protected readonly loaderChanges: Change[];
 
   /**
+   * Chosen license.
+   *
+   * @protected
+   * @readonly
+   * @type {License}
+   */
+  protected readonly licenseId: License;
+
+  /**
+   * Change for the license URL when building the JARs.
+   *
+   * @protected
+   * @readonly
+   * @type {Change}
+   */
+  protected readonly licenseChange: Change;
+
+  /**
    * @constructor
    * @public
    * @param {Store<State>} store$
+   * @param {Store<State>} licenseText
    * @param {SkeletonForm} param0
    * @param {SkeletonForm} param0.minecraftVersion
    * @param {SkeletonForm} param0.loaders
@@ -199,7 +219,11 @@ export abstract class TemplateProcessor {
    * @param {SkeletonForm} param0.includeConfig
    * @param {SkeletonForm} param0.crystalNestMod
    */
-  public constructor(private readonly store$: Store<State>, {minecraftVersion, loaders, platforms, group, modId, modIdKebab, modTitle, authors, description, githubUser, includeConfig, crystalNestMod}: SkeletonForm) {
+  public constructor(
+    private readonly store$: Store<State>,
+    private readonly licenseText: string,
+    {minecraftVersion, loaders, platforms, group, modId, modIdKebab, modTitle, authors, description, githubUser, includeConfig, crystalNestMod, license}: SkeletonForm
+  ) {
     // Constants.
     this.authors = authors;
     this.description = description;
@@ -207,6 +231,9 @@ export abstract class TemplateProcessor {
     this.othersMod = !crystalNestMod;
     this.noConfig = !includeConfig;
     this.platforms = platforms;
+    this.licenseId = license;
+    // eslint-disable-next-line no-template-curly-in-string
+    this.licenseChange = ['https://spdx.org/licenses/${license}.html', 'https://github.com/Crystal-Nest/.github/blob/main/LICENSE', this.licenseId === 'CNCLv1'];
     this.root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
     this.excludedLoaders = TEMPLATE_LOADERS.filter(loader => !loaders.includes(loader));
     this.excludedPlatforms = TEMPLATE_PLATFORMS.filter(platform => !platforms.includes(platform));
@@ -260,6 +287,7 @@ export abstract class TemplateProcessor {
                 [TEMPLATE_GITHUB_USER, this.githubUser, this.othersMod],
                 this.fcapChange,
                 [/.*curse.*\n/, '', this.excludedPlatforms.includes('curseforge')],
+                ['GPL-3.0-or-later', this.licenseId],
                 ...this.loaderChanges
               ])
             );
@@ -276,6 +304,8 @@ export abstract class TemplateProcessor {
                 this.modIdChange,
                 [TEMPLATE_SUPPORT_SECTION, '**Support us**\n\nSocial links here...\n', this.othersMod],
                 [/-.*configuration.*\n/, '', !this.noConfig],
+                ['template for any mod', 'for any modpack or video'],
+                ['GNU General Public License v3.0', LICENSES[this.licenseId]],
                 ...this.loaderChanges
               ])
             );
@@ -287,6 +317,9 @@ export abstract class TemplateProcessor {
           case path.endsWith('.jar') || path.endsWith('.png'):
             // Data files: parse them as arraybuffer rather than string.
             this.zip.file(this.process(path, [this.rootChange, this.modIdChange, this.modIdKebabChange]), entry.async('arraybuffer'));
+            break;
+          case path.endsWith('LICENSE'):
+            this.zip.file(this.process(path, [this.rootChange, this.groupPathChange, this.modIdChange]), this.licenseText);
             break;
           case path.endsWith('CommonModLoader.java'):
             // File CommonModLoader.java: replace mod properties and optionally remove configuration references.

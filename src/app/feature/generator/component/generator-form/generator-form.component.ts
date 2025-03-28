@@ -9,10 +9,11 @@ import {Observable, map} from 'rxjs';
 import {MinecraftVersion} from '../../../../core/model/minecraft-version.type';
 import {MOD_LOADERS, ModLoader} from '../../../../core/model/mod-loader.type';
 import {GeneratorValidators} from '../../class/generator-validators.class';
+import {License} from '../../model/license.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {Platform} from '../../model/platform.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
-import {TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.const';
+import {LICENSES, TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.const';
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
@@ -99,10 +100,18 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
     },
     {
       label: 'Ownership',
-      hasErrors: () => this.form.controls.group.invalid || this.form.controls.authors.invalid || this.form.controls.githubUser.invalid,
+      hasErrors: () => this.form.controls.group.invalid || this.form.controls.authors.invalid || this.form.controls.githubUser.invalid || this.form.controls.license.invalid,
       isVisible: () => !this.form.controls.crystalNestMod.value
     }
   ];
+
+  /**
+   * Available licenses.
+   *
+   * @public
+   * @type {Record<License, string>}
+   */
+  public readonly licenses: Record<License, string> = LICENSES;
 
   /**
    * Available publishing platforms.
@@ -198,6 +207,7 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         this.form.controls.group.disable();
         this.form.controls.authors.disable();
         this.form.controls.githubUser.disable();
+        this.form.controls.license.disable();
         this.form.controls.group.setValue(TEMPLATE_GROUP);
         this.form.controls.authors.setValue(TEMPLATE_AUTHORS.join(', '));
         this.form.controls.githubUser.setValue(TEMPLATE_GITHUB_USER);
@@ -208,9 +218,11 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         this.form.controls.group.enable();
         this.form.controls.authors.enable();
         this.form.controls.githubUser.enable();
+        this.form.controls.license.enable();
         this.form.controls.group.setValue('');
         this.form.controls.authors.setValue('');
         this.form.controls.githubUser.setValue('');
+        this.form.controls.license.setValue('CNCLv1');
         this.form.controls.group.setValidators([
           Validators.required,
           GeneratorValidators.notInclude(
@@ -243,6 +255,8 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
       this.form.controls.authors.markAsUntouched();
       this.form.controls.githubUser.markAsPristine();
       this.form.controls.githubUser.markAsUntouched();
+      this.form.controls.license.markAsPristine();
+      this.form.controls.license.markAsUntouched();
     });
   }
 
@@ -329,6 +343,10 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
         validators: Validators.required
       }),
       includeConfig: new FormControl(true, {
+        nonNullable: true,
+        validators: Validators.required
+      }),
+      license: new FormControl('CNCLv1', {
         nonNullable: true,
         validators: Validators.required
       })

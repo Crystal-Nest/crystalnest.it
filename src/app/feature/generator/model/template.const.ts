@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import {License} from './license.type';
 import {Platform} from './platform.type';
 import {ModLoader} from '../../../core/model/mod-loader.type';
 
@@ -72,3 +74,13 @@ export const TEMPLATE_PLATFORMS: Lowercase<Platform>[] = [
   'modrinth',
   'curseforge'
 ];
+/**
+ * Available licenses and their extended names.
+ *
+ * @type {Record<License, string>}
+ */
+export const LICENSES: Record<License, string> = {
+  CNCLv1: 'Crystal Nest Community License v1',
+  'GPL-3.0-or-later': 'GNU General Public License v3.0',
+  MIT: 'MIT License'
+};

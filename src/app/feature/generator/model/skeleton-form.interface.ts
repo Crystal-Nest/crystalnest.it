@@ -1,3 +1,4 @@
+import {License} from './license.type';
 import {Platform} from './platform.type';
 import {MinecraftVersion} from '../../../core/model/minecraft-version.type';
 import {ModLoader} from '../../../core/model/mod-loader.type';
@@ -88,4 +89,10 @@ export interface SkeletonForm {
    * @type {boolean}
    */
   includeConfig: boolean;
+  /**
+   * Project's license.
+   *
+   * @type {License}
+   */
+  license: License;
 }

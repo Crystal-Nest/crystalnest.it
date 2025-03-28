@@ -11,6 +11,7 @@ import {TemplateProcessorNew} from '../class/template-processor-new.class';
 import {TemplateProcessorOld} from '../class/template-processor-old.class';
 import {TemplateProcessor} from '../class/template-processor.class';
 import {SkeletonForm} from '../model/skeleton-form.interface';
+import {LicenseService} from '../service/license.service';
 import {TemplateService} from '../service/template.service';
 
 import {observe} from '~cn/core/function/core.function';
@@ -145,8 +146,9 @@ export class GeneratorEffects {
    * @param {Actions} actions$
    * @param {Store<State>} store$
    * @param {TemplateService} templateService
+   * @param {LicenseService} licenseService
    */
-  public constructor(private readonly actions$: Actions, private readonly store$: Store<State>, private readonly templateService: TemplateService) {}
+  public constructor(private readonly actions$: Actions, private readonly store$: Store<State>, private readonly templateService: TemplateService, private readonly licenseService: LicenseService) {}
 
   /**
    * Returns the appropriate {@link TemplateProcessor}.
@@ -156,6 +158,7 @@ export class GeneratorEffects {
    * @returns {TemplateProcessor}
    */
   private getTemplateProcessor(form: SkeletonForm): TemplateProcessor {
-    return +form.minecraftVersion.split('.')[1]! >= this.newProcessorVersion ? new TemplateProcessorNew(this.store$, form) : new TemplateProcessorOld(this.store$, form);
+    const parameters: [Store<State>, string, SkeletonForm] = [this.store$, this.licenseService.getLicense(form.license), form];
+    return +form.minecraftVersion.split('.')[1]! >= this.newProcessorVersion ? new TemplateProcessorNew(...parameters) : new TemplateProcessorOld(...parameters);
   }
 }

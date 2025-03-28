@@ -5,6 +5,7 @@ import {provideState} from '@ngrx/store';
 import {ROUTE} from './core/model/route.enum';
 import {GeneratorEffects} from './feature/generator/redux/effects';
 import {generatorFeature} from './feature/generator/redux/feature';
+import {LicenseService} from './feature/generator/service/license.service';
 import {TemplateService} from './feature/generator/service/template.service';
 import {ModsEffects} from './feature/mods/redux/effects';
 import {modsFeature} from './feature/mods/redux/feature';
@@ -23,7 +24,12 @@ export const ROOT_ROUTES: Routes = [
   {
     path: ROUTE.GENERATOR,
     loadComponent: () => import('~cn/feature/generator/generator.component').then(m => m.GeneratorComponent),
-    providers: [provideState(generatorFeature), TemplateService, provideEffects(GeneratorEffects)]
+    providers: [
+      provideState(generatorFeature),
+      TemplateService,
+      LicenseService,
+      provideEffects(GeneratorEffects)
+    ]
   },
   {
     path: ROUTE.VERSIONING,
