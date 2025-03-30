@@ -33,8 +33,10 @@
     </ul>
     <ul>
       <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github128.png" [link]="github" /></li>
-      <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth128.png" [link]="modrinth" /></li>
-      <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge128.png" [link]="curseforge" /></li>
+      @if (!mod.isTemplate) {
+        <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth128.png" [link]="modrinth" /></li>
+        <li><cn-link-button icon="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge128.png" [link]="curseforge" /></li>
+      }
     </ul>
   </mat-card-actions>
 </mat-card>
