@@ -2,7 +2,7 @@
 <mat-form-field appearance="outline" floatLabel="auto">
   <mat-label>{{ label }}</mat-label>
   @if (multiple) {
-    <mat-select multiple [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (selectionChange)="selectionChange($event)">
+    <mat-select multiple [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (closed)="onTouched()" (selectionChange)="selectionChange($event)">
       @if (allowDeselect) {
         <mat-option></mat-option>
       }
@@ -11,7 +11,7 @@
       }
     </mat-select>
   } @else {
-    <mat-select [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (selectionChange)="selectionChange($event)">
+    <mat-select [disabled]="isDisabled" [errorStateMatcher]="errorMatcher" [required]="isRequired" [(ngModel)]="value" (closed)="onTouched()" (selectionChange)="selectionChange($event)">
       @if (allowDeselect) {
         <mat-option></mat-option>
       }
