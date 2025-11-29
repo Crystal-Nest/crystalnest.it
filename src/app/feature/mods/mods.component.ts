@@ -99,7 +99,7 @@ export class ModsComponent {
         }
       }
     }
-    return Object.keys(minecraftVersions).sort().reverse().reduce((prev, curr) => ({
+    return Object.keys(minecraftVersions).sort((v, w) => ((x, y) => +x[1]! !== +y[1]! ? +x[2]! - +y[2]! : +x[1]! - +y[1]!)(v.split('.'), w.split('.'))).reduce((prev, curr) => ({
       ...prev,
       [curr]: minecraftVersions[curr as MinecraftVersion]
     }), {});
