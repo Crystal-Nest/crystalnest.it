@@ -7,8 +7,6 @@ import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
 import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
 import {MOD_LOADERS} from '~cn/core/model/mod-loader.type';
-import {ButtonComponent} from '~cn/shared/component/button/button/button.component';
-import {CardComponent} from '~cn/shared/component/card/card.component';
 import {CheckboxComponent} from '~cn/shared/component/form/checkbox/checkbox.component';
 import {InputComponent} from '~cn/shared/component/form/input/input.component';
 import {SelectComponent} from '~cn/shared/component/form/select/select.component';
@@ -31,9 +29,7 @@ import {ToggleComponent} from '~cn/shared/component/form/toggle/toggle.component
     CheckboxComponent,
     ToggleComponent,
     InputComponent,
-    SelectComponent,
-    ButtonComponent,
-    CardComponent
+    SelectComponent
   ],
   templateUrl: './mods-form.component.html',
   styleUrl: './mods-form.component.scss'

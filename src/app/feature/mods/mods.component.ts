@@ -99,7 +99,20 @@ export class ModsComponent {
         }
       }
     }
-    return Object.keys(minecraftVersions).sort((v, w) => ((x, y) => +x[1]! !== +y[1]! ? +x[2]! - +y[2]! : +x[1]! - +y[1]!)(v.split('.'), w.split('.'))).reduce((prev, curr) => ({
+    // Semantic of the return value of sort is reversed, since the list must be in decreasing order.
+    return Object.keys(minecraftVersions).sort((v, w) => {
+      const [wMajor = 0, wMinor = 0, wPatch = 0] = w.split('.').map(s => +s);
+      const [vMajor = 0, vMinor = 0, vPatch = 0] = v.split('.').map(s => +s);
+      const majorDiff = wMajor - vMajor;
+      if (majorDiff === 0) {
+        const minorDiff = wMinor - vMinor;
+        if (minorDiff === 0) {
+          return wPatch - vPatch;
+        }
+        return minorDiff;
+      }
+      return majorDiff;
+    }).reduce((prev, curr) => ({
       ...prev,
       [curr]: minecraftVersions[curr as MinecraftVersion]
     }), {});
