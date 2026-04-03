@@ -263,21 +263,22 @@ export abstract class TemplateProcessor {
         switch (true) {
           case entry.dir:
             // Directory: replace the name of the root dir, group, and modid.
-            this.zip.folder(this.process(path, [this.rootChange, this.groupPathChange, this.modIdChange]));
+            this.zip.folder(this.process(path, this.rootChange, this.groupPathChange, this.modIdChange));
             break;
           case this.handle(entry, path): break;
           case path === `${this.root}/common/build.gradle`:
             // Common build.gradle: update configuration dependency and platform publishing tasks.
             this.zip.file(
-              this.process(path, [this.rootChange]),
-              this.alter(entry, [this.fcapChange, ...this.excludedPlatforms.map(platform => [new RegExp(`.*publish${platform}.*\\n`, 'i'), ''] as Change)])
+              this.process(path, this.rootChange),
+              this.alter(entry, this.fcapChange, ...this.excludedPlatforms.map(platform => [new RegExp(`.*publish${platform}.*\\n`, 'i'), ''] as Change))
             );
             break;
           case path.endsWith('gradle.properties'):
             // File gradle.properties: replace Gradle properties.
             this.zip.file(
-              this.process(path, [this.rootChange]),
-              this.alter(entry, [
+              this.process(path, this.rootChange),
+              this.alter(
+                entry,
                 this.groupChange,
                 [TEMPLATE_AUTHORS.join(', '), this.authors, this.othersMod],
                 this.modTitleChange,
@@ -289,14 +290,15 @@ export abstract class TemplateProcessor {
                 [/.*curse.*\n/, '', this.excludedPlatforms.includes('curseforge')],
                 ['GPL-3.0-or-later', this.licenseId],
                 ...this.loaderChanges
-              ])
+              )
             );
             break;
           case path.endsWith('README.md'):
             // File README.md: replace link references.
             this.zip.file(
-              this.process(path, [this.rootChange]),
-              this.alter(entry, [
+              this.process(path, this.rootChange),
+              this.alter(
+                entry,
                 [TEMPLATE_BANNER_LINK, 'Banner link here...', this.othersMod],
                 [`github.com/${TEMPLATE_GITHUB_USER}`, `github.com/${this.githubUser}`, this.othersMod],
                 this.modTitleChange,
@@ -307,52 +309,47 @@ export abstract class TemplateProcessor {
                 ['template for any mod', 'for any modpack or video'],
                 ['GNU General Public License v3.0', LICENSES[this.licenseId]],
                 ...this.loaderChanges
-              ])
+              )
             );
             break;
           case path.endsWith('settings.gradle'):
             // File settings.gradle: update project name and loaders.
-            this.zip.file(this.process(path, [this.rootChange]), this.alter(entry, [this.modIdKebabChange, ...this.loaderChanges]));
+            this.zip.file(this.process(path, this.rootChange), this.alter(entry, this.modIdKebabChange, ...this.loaderChanges));
             break;
           case path.endsWith('.jar') || path.endsWith('.png'):
             // Data files: parse them as arraybuffer rather than string.
-            this.zip.file(this.process(path, [this.rootChange, this.modIdChange, this.modIdKebabChange]), entry.async('arraybuffer'));
+            this.zip.file(this.process(path, this.rootChange, this.modIdChange, this.modIdKebabChange), entry.async('arraybuffer'));
             break;
           case path.endsWith('LICENSE'):
-            this.zip.file(this.process(path, [this.rootChange, this.groupPathChange, this.modIdChange]), this.licenseText);
+            this.zip.file(this.process(path, this.rootChange, this.groupPathChange, this.modIdChange), this.licenseText);
             break;
           case path.endsWith('CommonModLoader.java'):
             // File CommonModLoader.java: replace mod properties and optionally remove configuration references.
             this.zip.file(
-              this.process(path, [this.rootChange, this.groupPathChange, this.modIdChange]),
-              this.alter(entry, [[/\n.*config.*\n */gi, '', this.noConfig], this.groupChange, this.modIdChange])
+              this.process(path, this.rootChange, this.groupPathChange, this.modIdChange),
+              this.alter(entry, [/\n.*config.*\n */gi, '', this.noConfig], this.groupChange, this.modIdChange)
             );
             break;
           case path.endsWith('fabric.mod.json'):
             // File fabric.mod.json: optionally remove FCAP dependency and change homepage link.
             this.zip.file(
-              this.process(path, [this.rootChange]),
+              this.process(path, this.rootChange),
               // eslint-disable-next-line no-template-curly-in-string
-              this.alter(entry, [[/,\n.*fcap.*/, '', this.noConfig], [/https.*modrinth.*mod\//, this.platforms.includes('curseforge') ? 'www.curseforge.com/minecraft/mc-mods/' : 'github.com/${github_user}/', this.excludedPlatforms.includes('modrinth')]])
+              this.alter(entry, [/,\n.*fcap.*/, '', this.noConfig], [/https.*modrinth.*mod\//, this.platforms.includes('curseforge') ? 'www.curseforge.com/minecraft/mc-mods/' : 'github.com/${github_user}/', this.excludedPlatforms.includes('modrinth')])
             );
             break;
           case path.endsWith('mods.toml'):
             // Files mods.toml: optionally remove FCAP dependency and change updateJSON link.
             this.zip.file(
-              this.process(path, [this.rootChange]),
-              this.alter(entry, [[/.*(\n.*){3}fcap(.*\n){3}/, '', this.noConfig], ['updateJSONURL', '#updateJSONURL', this.excludedPlatforms.includes('modrinth')]])
+              this.process(path, this.rootChange),
+              this.alter(entry, [/.*(\n.*){3}fcap(.*\n){3}/, '', this.noConfig], ['updateJSONURL', '#updateJSONURL', this.excludedPlatforms.includes('modrinth')])
             );
             break;
           default:
             // All other files: replace mod properties.
             this.zip.file(
-              this.process(path, [
-                this.rootChange,
-                this.groupPathChange,
-                this.groupChange,
-                this.modIdChange
-              ]),
-              this.alter(entry, [this.groupChange, this.modIdKebabChange, this.modIdChange])
+              this.process(path, this.rootChange, this.groupPathChange, this.groupChange, this.modIdChange),
+              this.alter(entry, this.groupChange, this.modIdKebabChange, this.modIdChange)
             );
             break;
         }
@@ -409,8 +406,8 @@ export abstract class TemplateProcessor {
    * @param {Change[]} changes
    * @returns {Promise<string>}
    */
-  protected async alter(value: JSZipObject, changes: Change[]): Promise<string> {
-    return this.process(await value.async('string'), changes);
+  protected async alter(value: JSZipObject, ...changes: Change[]): Promise<string> {
+    return this.process(await value.async('string'), ...changes);
   }
 
   /**
@@ -421,7 +418,7 @@ export abstract class TemplateProcessor {
    * @param {Change[]} changes
    * @returns {string}
    */
-  protected process(value: string, changes: Change[]): string {
+  protected process(value: string, ...changes: Change[]): string {
     return changes.reduce((content, [search, replace, flag]) => flag ?? true ? content[typeof search === 'string' ? 'replaceAll' : 'replace'](search, replace) : content, value);
   }
 

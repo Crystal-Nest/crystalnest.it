@@ -28,14 +28,9 @@ export class TemplateProcessorOld extends TemplateProcessor {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
         this.zip.file(
-          this.process(path, [this.rootChange]),
+          this.process(path, this.rootChange),
           entry.async('string').then(content => this.processBuildGradle(
-            this.process(content, [
-              [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod],
-              this.fcapChange,
-              [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig],
-              this.licenseChange
-            ]),
+            this.process(content, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange),
             this.excludedLoaders,
             this.excludedPlatforms
           ))
@@ -44,15 +39,15 @@ export class TemplateProcessorOld extends TemplateProcessor {
       case path === `${this.root}/forge/build.gradle`:
         // Forge build.gradle: update configuration dependency and platform publishing tasks.
         this.zip.file(
-          this.process(path, [this.rootChange]),
-          this.alter(entry, [this.fcapChange, [/\n.*publishing(.*\n)*?}\n/, '', this.excludedPlatforms.includes('maven')]])
+          this.process(path, this.rootChange),
+          this.alter(entry, this.fcapChange, [/\n.*publishing(.*\n)*?}\n/, '', this.excludedPlatforms.includes('maven')])
         );
         return true;
       case path.endsWith('build.gradle'):
         // Subprojects build.gradle: update configuration dependency.
         this.zip.file(
-          this.process(path, [this.rootChange]),
-          this.alter(entry, [this.fcapChange])
+          this.process(path, this.rootChange),
+          this.alter(entry, this.fcapChange)
         );
         return true;
     }

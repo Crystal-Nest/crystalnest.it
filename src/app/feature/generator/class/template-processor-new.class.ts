@@ -28,22 +28,22 @@ export class TemplateProcessorNew extends TemplateProcessor {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
         this.zip.file(
-          this.process(path, [this.rootChange]),
-          this.alter(entry, [[/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/, '', this.isListOnlyOf(this.excludedLoaders, 'fabric')], [/.+publisher.+\n/, '', this.isListOnlyOf(this.platforms, 'maven')]])
+          this.process(path, this.rootChange),
+          this.alter(entry, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/, '', this.isListOnlyOf(this.excludedLoaders, 'fabric')], [/.+publisher.+\n/, '', this.isListOnlyOf(this.platforms, 'maven')])
         );
         return true;
       case path === `${this.root}/fabric/build.gradle`:
         // Fabric build.gradle: update configuration dependency and platform publishing tasks.
         this.zip.file(
-          this.process(path, [this.rootChange]),
-          this.alter(entry, [this.fcapChange, [/\npublisher.+\n.+\n.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')]])
+          this.process(path, this.rootChange),
+          this.alter(entry, this.fcapChange, [/\npublisher.+\n.+\n.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')])
         );
         return true;
       case path.endsWith('multiloader-common.gradle'):
         this.zip.file(
-          this.process(path, [this.rootChange]),
+          this.process(path, this.rootChange),
           entry.async('string').then(content => this.processBuildGradle(
-            this.process(content, [this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange]),
+            this.process(content, this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange),
             this.excludedLoaders,
             this.excludedPlatforms
           ))
