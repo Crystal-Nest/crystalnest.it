@@ -29,7 +29,7 @@ export class TemplateProcessorNew extends TemplateProcessor {
         // Handle build.gradle.
         this.zip.file(
           this.process(path, this.rootChange),
-          this.alter(entry, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/, '', this.isListOnlyOf(this.excludedLoaders, 'fabric')], [/.+publisher.+\n/, '', this.isListOnlyOf(this.platforms, 'maven')])
+          this.alter(entry, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/g, '', this.excludedLoaders.includes('fabric')], [/.+publisher.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')])
         );
         return true;
       case path === `${this.root}/fabric/build.gradle`:

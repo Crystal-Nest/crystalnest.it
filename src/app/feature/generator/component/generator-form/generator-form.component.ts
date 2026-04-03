@@ -172,21 +172,24 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    */
   public ngOnInit(): void {
     this.valueChanges('minecraftVersion', value => {
-      const [minor = 0, patch = 0] = value.split('.').slice(1).map(version => +version);
-      if (minor < this.neoforgeTransitionVersion || (minor === this.neoforgeTransitionVersion && patch === 1)) {
-        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'neoforge') as Lowercase<ModLoader>[]);
-        this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
-        delete this.loaders.neoforge;
-      } else if (minor > this.neoforgeTransitionVersion) {
+      const [major = 1, minor = 0, patch = 0] = value.split('.').map(version => +version);
+      if (major > 1 || minor > this.neoforgeTransitionVersion) {
+        this.loaders = {...MOD_LOADERS};
         this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'forge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('forge')]);
         delete this.loaders.forge;
+      } else if (minor < this.neoforgeTransitionVersion || (minor === this.neoforgeTransitionVersion && patch === 1)) {
+        this.loaders = {...MOD_LOADERS};
+        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'neoforge') as Lowercase<ModLoader>[]);
+        this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
+        delete this.loaders.neoforge;
       } else {
-        this.form.controls.loaders.setValidators(Validators.required);
         this.loaders = {...MOD_LOADERS};
         this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS) as Lowercase<ModLoader>[]);
+        this.form.controls.loaders.setValidators(Validators.required);
       }
-    }, (value, index) => !!(index && value));
+      this.form.controls.loaders.updateValueAndValidity();
+    }, value => !!value);
     this.valueChanges('autogenModId', value => {
       if (value) {
         this.form.controls.modId.disable();

@@ -159,6 +159,7 @@ export class GeneratorEffects {
    */
   private getTemplateProcessor(form: SkeletonForm): TemplateProcessor {
     const parameters: [Store<State>, string, SkeletonForm] = [this.store$, this.licenseService.getLicense(form.license), form];
-    return +form.minecraftVersion.split('.')[1]! >= this.newProcessorVersion ? new TemplateProcessorNew(...parameters) : new TemplateProcessorOld(...parameters);
+    const [major = 1, minor = 0] = form.minecraftVersion.split('.').slice(0, 2).map(version => +version);
+    return major > 1 || minor >= this.newProcessorVersion ? new TemplateProcessorNew(...parameters) : new TemplateProcessorOld(...parameters);
   }
 }
