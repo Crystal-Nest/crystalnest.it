@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 
+import packageJson from '../../../../../../package.json';
+
 import {LinkButtonComponent} from '~cn/shared/component/button/link-button/link-button.component';
 
 /**
@@ -16,4 +18,13 @@ import {LinkButtonComponent} from '~cn/shared/component/button/link-button/link-
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
-export class FooterComponent {}
+export class FooterComponent {
+  /**
+   * Website version.
+   *
+   * @public
+   * @readonly
+   * @type {string}
+   */
+  public readonly version = packageJson.version;
+}
