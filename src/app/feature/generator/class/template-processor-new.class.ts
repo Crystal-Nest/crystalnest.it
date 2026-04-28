@@ -77,7 +77,7 @@ export class TemplateProcessorNew extends TemplateProcessor {
       platforms.forEach(platform => {
         switch (platform) {
           case 'maven':
-            value = value.replace(/\npublishing(.*\n)+(\s+}){4,}\n/gi, '').replace(/.*\bpublish\b.*\n/g, '');
+            value = value.replace(/^\n?([ \t]*)publishing\b[^{\n]*\{[\s\S]*?^\1\}\n/gm, '').replace(/.*\bpublish\b.*\n/g, '');
             break;
           case 'github':
             value = value.replace(/.*github.* {(\n.*?)+?^  }\n/gim, '').replace(/^ +github.*\n/gim, '');
