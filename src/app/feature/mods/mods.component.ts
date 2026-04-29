@@ -93,9 +93,11 @@ export class ModsComponent {
   public extractMinecraftVersions(mods: Mod[] | null) {
     const minecraftVersions: Record<MinecraftVersion, MinecraftVersion> = {};
     for (const {versions} of mods || []) {
-      for (const version of versions) {
-        if (!(version in minecraftVersions)) {
-          minecraftVersions[version] = version;
+      if (versions?.length) {
+        for (const version of versions) {
+          if (!(version in minecraftVersions)) {
+            minecraftVersions[version] = version;
+          }
         }
       }
     }

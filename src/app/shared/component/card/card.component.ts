@@ -156,7 +156,7 @@ export class CardComponent implements OnChanges, AfterContentChecked {
       this.picture = `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/${this.mod.name}.png`;
       this.preview = `https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/${this.mod.name}/social-preview.png`;
       this.github = `https://github.com/crystal-nest/${this.mod.name}`;
-      this.modrinth = `https://modrinth.com/mod/${this.mod.name}`;
+      this.modrinth = `https://modrinth.com/mod/${this.mod.modrinthId}`;
       this.curseforge = `https://www.curseforge.com/minecraft/mc-mods/${this.mod.name}`;
       this.wiki = `https://github.com/crystal-nest/${this.mod.name}/wiki`;
       this.api = `https://github.com/crystal-nest/${this.mod.name}/wiki/Getting-started#add-as-a-dependency`;

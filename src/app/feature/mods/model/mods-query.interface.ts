@@ -92,6 +92,12 @@ export interface RepositoryQuery {
    */
   isTemplate: boolean;
   /**
+   * Website.
+   *
+   * @type {string}
+   */
+  homepageUrl: string;
+  /**
    * Topics.
    *
    * @type {QueryNodes<TopicQuery>}

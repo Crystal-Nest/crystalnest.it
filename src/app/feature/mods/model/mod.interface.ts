@@ -88,4 +88,10 @@ export interface Mod {
    * @type {boolean}
    */
   server: boolean;
+  /**
+   * Modrinth ID.
+   *
+   * @type {?string}
+   */
+  modrinthId: string;
 }
