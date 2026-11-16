@@ -3,8 +3,8 @@ var i=function(s){return s[s.State=0]="State",s[s.Transition=1]="Transition",s[s
 
 @angular/animations/fesm2022/animations.mjs:
   (**
-   * @license Angular v17.1.2
-   * (c) 2010-2022 Google LLC. https://angular.io/
+   * @license Angular v17.3.12
+   * (c) 2010-2024 Google LLC. https://angular.io/
    * License: MIT
    *)
 */

@@ -1,14 +1,14 @@
 <cn-section fragment="mod-skeleton-gen" route="generator" title="Mod Skeleton Generator">
   <span class="eop">This mod generator is designed to significantly accelerate the setup and development of new mods, offering a customizable yet standardized template adaptable to any mod. Built on <a href="https://github.com/jaredlll08/MultiLoader-Template" target="_blank">Jared's Multiloader template</a>, it enhances the original with additional Javadocs, annotations, standards, and the <a href="https://github.com/Crystal-Nest/cobweb" target="_blank">Cobweb</a> dependency, further simplifying development.</span>
-  <span>This is the same tool used by us, the Crystal Nest team, to create new mods or port them to new Minecraft versions.</span>
-  <span>The default license is <a href="https://github.com/Crystal-Nest/.github/blob/main/LICENSE" target="_blank">CNCLv1</a>, our custom (and suggested) license designed to enable open-source mod development while retaining full rights to monetization.</span>
+  <span>This is the same tool used to develop Crystal Nest mods or port them to new Minecraft versions.</span>
+  <span>The default license is <a href="https://github.com/Crystal-Nest/.github/blob/main/LICENSE" target="_blank">CNCLv1</a>, Crystal Nest's custom (and suggested) license designed to enable open-source mod development while retaining full rights to monetization.</span>
   <span class="eop">There are a couple of other licenses available, but you are free to use any license that better suits your needs.</span>
   <span class="eop">Check the toggle below <strong>only</strong> if you are a Crystal Nest member, otherwise fill in the <strong>Ownership</strong> step.</span>
   <cn-generator-form [formData]="form$ | async" [versions]="versions$ | async" (onSubmit)="buildSkeleton($event)" />
   <span class="cn-no-form-message"><strong>Increase the window size or go to a larger device to use the mod generator!</strong></span>
 </cn-section>
 <cn-section fragment="assumptions" route="generator" title="Assumptions">
-  <span>Our template works on the following few assumptions:</span>
+  <span>The template works on the following few assumptions:</span>
   <ul>
     <li>IntelliJ IDEA is the IDE of choice.</li>
     <li>Cobweb is a required dependency.</li>
@@ -35,5 +35,5 @@
 <cn-section fragment="setup" route="generator" title="Setup">
   <span>Extract the zip folder and open the contents with IntelliJ IDEA. If not done automatically, load the Gradle project.</span>
   <span class="eop">Follow the instruction on the readme to finish the setup!</span>
-  <span>Still have questions? Come chat with us on <a href="https://discord.gg/BP6EdBfAmt" target="_blank">Discord</a>!</span>
+  <span>Still have questions? Come chat on <a href="https://discord.gg/BP6EdBfAmt" target="_blank">Discord</a>!</span>
 </cn-section>
