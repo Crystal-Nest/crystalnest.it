@@ -1,6 +1,6 @@
 import {JSZipObject} from '@progress/jszip-esm';
 
-import {TemplateProcessor} from './template-processor.class';
+import {TemplateProcessorLegacy} from './template-processor-legacy.class';
 import {Change} from '../model/change.type';
 import {Platform} from '../model/platform.type';
 
@@ -12,9 +12,9 @@ import {ModLoader} from '~cn/core/model/mod-loader.type';
  * @export
  * @class TemplateProcessorOld
  * @typedef {TemplateProcessorOld}
- * @extends {TemplateProcessor}
+ * @extends {TemplateProcessorLegacy}
  */
-export class TemplateProcessorOld extends TemplateProcessor {
+export class TemplateProcessorOld extends TemplateProcessorLegacy {
   /**
    * @inheritdoc
    *
@@ -23,11 +23,11 @@ export class TemplateProcessorOld extends TemplateProcessor {
    * @param {string} path entry path.
    * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
    */
-  protected override handle(entry: JSZipObject, path: string): boolean {
+  protected override handleVersion(entry: JSZipObject, path: string): boolean {
     switch (true) {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           entry.async('string').then(content => this.processBuildGradle(
             this.process(content, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange),
@@ -38,14 +38,14 @@ export class TemplateProcessorOld extends TemplateProcessor {
         return true;
       case path === `${this.root}/forge/build.gradle`:
         // Forge build.gradle: update configuration dependency and platform publishing tasks.
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           this.alter(entry, this.fcapChange, [/\n.*publishing(.*\n)*?}\n/, '', this.excludedPlatforms.includes('maven')])
         );
         return true;
       case path.endsWith('build.gradle'):
         // Subprojects build.gradle: update configuration dependency.
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           this.alter(entry, this.fcapChange)
         );

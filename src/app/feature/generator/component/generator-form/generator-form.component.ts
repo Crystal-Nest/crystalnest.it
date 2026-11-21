@@ -9,11 +9,12 @@ import {Observable, map} from 'rxjs';
 import {MinecraftVersion} from '../../../../core/model/minecraft-version.type';
 import {MOD_LOADERS, ModLoader} from '../../../../core/model/mod-loader.type';
 import {GeneratorValidators} from '../../class/generator-validators.class';
+import {uses26Template} from '../../function/template-version.function';
 import {License} from '../../model/license.type';
 import {ModIdSpecialChar} from '../../model/mod-id-special-char.type';
 import {Platform} from '../../model/platform.type';
 import {SkeletonForm} from '../../model/skeleton-form.interface';
-import {LICENSES, TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.const';
+import {LICENSES, NEOFORGE_TEMPLATE_MINOR, TEMPLATE_AUTHORS, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP} from '../../model/template.const';
 
 import {FormComponent} from '~cn/core/abstract/form-component';
 import {FormType} from '~cn/core/model/form-type.type';
@@ -128,21 +129,21 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
   };
 
   /**
-   * Oldest Minecraft version (minor part) supported by NeoForge.
-   *
-   * @private
-   * @readonly
-   * @type {20}
-   */
-  private readonly neoforgeTransitionVersion = 20;
-
-  /**
    * Available mod loaders.
    *
    * @public
    * @type {Partial<Record<Lowercase<ModLoader>, ModLoader>>}
    */
   public loaders: Partial<Record<Lowercase<ModLoader>, ModLoader>> = {...MOD_LOADERS};
+
+  /**
+   * Reports whether the selected template includes a configuration example.
+   *
+   * @returns {boolean} whether to show the legacy configuration choice.
+   */
+  public get supportsConfiguration(): boolean {
+    return !uses26Template(this.form.controls.minecraftVersion.value);
+  }
 
   /**
    * @constructor
@@ -160,34 +161,36 @@ export class GeneratorFormComponent extends FormComponent<SkeletonForm> implemen
    * @param {TypedChanges<GeneratorFormComponent>} changes
    */
   public override ngOnChanges(changes: TypedChanges<GeneratorFormComponent>): void {
-    if (changes.versions) {
-      this.form.controls.minecraftVersion.setValue(Object.values(this.versions)[0] as MinecraftVersion);
+    super.ngOnChanges(changes);
+    const versions = Object.keys(this.versions);
+    if (changes.versions && versions.length) {
+      this.form.controls.minecraftVersion.setValue(versions[0] as MinecraftVersion);
     }
   }
 
   /**
    * @inheritdoc
-   * 
+   *
    * @public
    */
   public ngOnInit(): void {
     this.valueChanges('minecraftVersion', value => {
       const [major = 1, minor = 0, patch = 0] = value.split('.').map(version => +version);
-      if (major > 1 || minor > this.neoforgeTransitionVersion) {
+      if (major > 1 || minor > NEOFORGE_TEMPLATE_MINOR) {
         this.loaders = {...MOD_LOADERS};
-        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'forge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('forge')]);
         delete this.loaders.forge;
-      } else if (minor < this.neoforgeTransitionVersion || (minor === this.neoforgeTransitionVersion && patch === 1)) {
+      } else if (minor < NEOFORGE_TEMPLATE_MINOR || (minor === NEOFORGE_TEMPLATE_MINOR && patch === 1)) {
         this.loaders = {...MOD_LOADERS};
-        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS).filter(loader => loader !== 'neoforge') as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators([Validators.required, GeneratorValidators.notInclude('neoforge')]);
         delete this.loaders.neoforge;
       } else {
         this.loaders = {...MOD_LOADERS};
-        this.form.controls.loaders.setValue(Object.keys(MOD_LOADERS) as Lowercase<ModLoader>[]);
         this.form.controls.loaders.setValidators(Validators.required);
       }
+      const available = Object.keys(this.loaders) as Lowercase<ModLoader>[];
+      const selected = this.form.controls.loaders.value.filter(loader => available.includes(loader));
+      this.form.controls.loaders.setValue(selected.length ? selected : available);
       this.form.controls.loaders.updateValueAndValidity();
     }, value => !!value);
     this.valueChanges('autogenModId', value => {

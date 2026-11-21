@@ -3,8 +3,10 @@
     <cn-stepper [orientation]="orientation" [steps]="steps">
       <ng-template step>
         <div class="cn-grid">
-          <cn-select formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [ngClass]="getCellSpan(orientation, 6)" [options]="versions" />
-          <cn-checkbox formControlName="includeConfig" label="Include configuration" [ngClass]="getCellSpan(orientation, 6) + ' ' + orientation" />
+          <cn-select formControlName="minecraftVersion" hint="Target Minecraft version" label="Minecraft version" [ngClass]="getCellSpan(orientation, supportsConfiguration ? 6 : 12)" [options]="versions" />
+          @if (supportsConfiguration) {
+            <cn-checkbox formControlName="includeConfig" label="Include configuration" [ngClass]="getCellSpan(orientation, 6) + ' ' + orientation" />
+          }
           <cn-select formControlName="loaders" hint="Mod loaders to support" label="Loaders" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="loaders" />
           <cn-select formControlName="platforms" hint="Platforms to publish on" label="Platforms" [multiple]="true" [ngClass]="getCellSpan(orientation, 6)" [options]="platforms" />
         </div>

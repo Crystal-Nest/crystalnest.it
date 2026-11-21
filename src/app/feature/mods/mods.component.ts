@@ -14,6 +14,7 @@ import {ModsService} from './service/mods.service';
 import {MinecraftVersion} from '~cn/core/model/minecraft-version.type';
 import {CardComponent} from '~cn/shared/component/card/card.component';
 import {ScrollToTopComponent} from '~cn/shared/component/scroll-to-top/scroll-to-top.component';
+import {compareMinecraftVersions} from '~cn/shared/function/minecraft-version.function';
 
 /**
  * Mods showcase.
@@ -101,20 +102,7 @@ export class ModsComponent {
         }
       }
     }
-    // Semantic of the return value of sort is reversed, since the list must be in decreasing order.
-    return Object.keys(minecraftVersions).sort((v, w) => {
-      const [wMajor = 0, wMinor = 0, wPatch = 0] = w.split('.').map(s => +s);
-      const [vMajor = 0, vMinor = 0, vPatch = 0] = v.split('.').map(s => +s);
-      const majorDiff = wMajor - vMajor;
-      if (majorDiff === 0) {
-        const minorDiff = wMinor - vMinor;
-        if (minorDiff === 0) {
-          return wPatch - vPatch;
-        }
-        return minorDiff;
-      }
-      return majorDiff;
-    }).reduce((prev, curr) => ({
+    return Object.keys(minecraftVersions).sort(compareMinecraftVersions).reduce((prev, curr) => ({
       ...prev,
       [curr]: minecraftVersions[curr as MinecraftVersion]
     }), {});

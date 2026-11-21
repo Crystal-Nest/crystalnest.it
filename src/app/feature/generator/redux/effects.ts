@@ -7,10 +7,13 @@ import {filter, map, switchMap, withLatestFrom} from 'rxjs';
 
 import {buildMod, generateMod, retrieveTemplateMinecraftVersions, saveForm, saveTemplateAndForm, saveTemplateMinecraftVersions} from './actions';
 import {State, generatorFeature} from './feature';
+import {TemplateProcessor26} from '../class/template-processor-26.class';
 import {TemplateProcessorNew} from '../class/template-processor-new.class';
 import {TemplateProcessorOld} from '../class/template-processor-old.class';
 import {TemplateProcessor} from '../class/template-processor.class';
+import {templateVersionOptions, uses26Template} from '../function/template-version.function';
 import {SkeletonForm} from '../model/skeleton-form.interface';
+import {NEOFORGE_TEMPLATE_MINOR} from '../model/template.const';
 import {LicenseService} from '../service/license.service';
 import {TemplateService} from '../service/template.service';
 
@@ -27,15 +30,6 @@ import {decrementCallCounter, download, incrementCallCounter, saveLoadingType, s
 @Injectable()
 export class GeneratorEffects {
   /**
-   * Minecraft minor version since when the new processor is required.
-   *
-   * @private
-   * @readonly
-   * @type {21}
-   */
-  private readonly newProcessorVersion = 21;
-
-  /**
    * Intercepts the action {@link retrieveTemplateMinecraftVersions} to retrieve the list of available mod template Minecraft versions and,
    * if it wasn't retireved already, calls {@link TemplateService.getMinecraftVersions getMinecraftVersions} to retrieve it,
    * then emits the action {@link saveTemplateMinecraftVersions} to save it.
@@ -49,10 +43,7 @@ export class GeneratorEffects {
     withLatestFrom(this.store$.select(generatorFeature.selectMinecraftVersions)),
     filter(([, versions]) => !Object.keys(versions).length),
     switchMap(() => this.templateService.getMinecraftVersions().pipe(
-      map(versions => saveTemplateMinecraftVersions({minecraftVersions: versions.reverse().reduce((prev, curr) => ({
-        ...prev,
-        [curr.name]: curr.name
-      }), {})}))
+      map(versions => saveTemplateMinecraftVersions({minecraftVersions: templateVersionOptions(versions)}))
     ))
   ));
 
@@ -159,7 +150,10 @@ export class GeneratorEffects {
    */
   private getTemplateProcessor(form: SkeletonForm): TemplateProcessor {
     const parameters: [Store<State>, string, SkeletonForm] = [this.store$, this.licenseService.getLicense(form.license), form];
+    if (uses26Template(form.minecraftVersion)) {
+      return new TemplateProcessor26(...parameters);
+    }
     const [major = 1, minor = 0] = form.minecraftVersion.split('.').slice(0, 2).map(version => +version);
-    return major > 1 || minor >= this.newProcessorVersion ? new TemplateProcessorNew(...parameters) : new TemplateProcessorOld(...parameters);
+    return major > 1 || minor > NEOFORGE_TEMPLATE_MINOR ? new TemplateProcessorNew(...parameters) : new TemplateProcessorOld(...parameters);
   }
 }

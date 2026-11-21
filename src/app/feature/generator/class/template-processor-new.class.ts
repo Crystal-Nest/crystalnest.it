@@ -1,20 +1,20 @@
 import {JSZipObject} from '@progress/jszip-esm';
 
-import {TemplateProcessor} from './template-processor.class';
+import {TemplateProcessorLegacy} from './template-processor-legacy.class';
 import {Change} from '../model/change.type';
 import {Platform} from '../model/platform.type';
 
 import {ModLoader} from '~cn/core/model/mod-loader.type';
 
 /**
- * Template processor for Minecraft versions >= 1.21.
+ * Template processor for Minecraft 1.21.x templates.
  *
  * @export
  * @class TemplateProcessorNew
  * @typedef {TemplateProcessorNew}
- * @extends {TemplateProcessor}
+ * @extends {TemplateProcessorLegacy}
  */
-export class TemplateProcessorNew extends TemplateProcessor {
+export class TemplateProcessorNew extends TemplateProcessorLegacy {
   /**
    * @inheritdoc
    *
@@ -23,24 +23,24 @@ export class TemplateProcessorNew extends TemplateProcessor {
    * @param {string} path entry path.
    * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
    */
-  protected override handle(entry: JSZipObject, path: string): boolean {
+  protected override handleVersion(entry: JSZipObject, path: string): boolean {
     switch (true) {
       case path === `${this.root}/build.gradle`:
         // Handle build.gradle.
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           this.alter(entry, [/.*sonar.*\n(.*({|})\n){0,2}\n?/gi, '', this.othersMod], [/.+fabric.+\n/g, '', this.excludedLoaders.includes('fabric')], [/.+publisher.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')])
         );
         return true;
       case path === `${this.root}/fabric/build.gradle`:
         // Fabric build.gradle: update configuration dependency and platform publishing tasks.
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           this.alter(entry, this.fcapChange, [/\npublisher.+\n.+\n.+\n/, '', this.platforms.length === 1 && this.platforms.includes('maven')])
         );
         return true;
       case path.endsWith('multiloader-common.gradle'):
-        this.zip.file(
+        this.writeText(
           this.process(path, this.rootChange),
           entry.async('string').then(content => this.processBuildGradle(
             this.process(content, this.fcapChange, [/\s*maven.*\n(.*Fuzs.*\n){2}\s*}/, '', this.noConfig], this.licenseChange),
@@ -114,18 +114,5 @@ export class TemplateProcessorNew extends TemplateProcessor {
       // For readme
       [new RegExp(`\\[!\\[${loader}.+l=${loader}\\)(!.{95})?`, 'i'), '']
     ]);
-  }
-
-  /**
-   * Checks if the given list is made up only of the given element.
-   *
-   * @private
-   * @template T
-   * @param {T[]} list
-   * @param {T} element
-   * @returns {boolean}
-   */
-  private isListOnlyOf<T>(list: T[], element: T): boolean {
-    return list.length === 1 && list.includes(element);
   }
 }

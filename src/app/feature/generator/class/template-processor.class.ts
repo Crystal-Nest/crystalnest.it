@@ -5,455 +5,327 @@ import {Change} from '../model/change.type';
 import {License} from '../model/license.type';
 import {Platform} from '../model/platform.type';
 import {SkeletonForm} from '../model/skeleton-form.interface';
-import {LICENSES, TEMPLATE_AUTHORS, TEMPLATE_BANNER_LINK, TEMPLATE_GITHUB_USER, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from '../model/template.const';
+import {LICENSES, TEMPLATE_BANNER_LINK, TEMPLATE_GROUP, TEMPLATE_GROUP_PATH, TEMPLATE_LOADERS, TEMPLATE_MOD_ID, TEMPLATE_MOD_ID_KEBAB, TEMPLATE_MOD_TITLE, TEMPLATE_PLATFORMS, TEMPLATE_SUPPORT_SECTION} from '../model/template.const';
 import {State} from '../redux/feature';
 
 import {ModLoader} from '~cn/core/model/mod-loader.type';
 import {incrementProgress, saveLoadingType, saveProgress} from '~cn/core/redux/actions';
 
 /**
- * Template processor.
- *
- * @export
- * @abstract
- * @class TemplateProcessor
- * @typedef {TemplateProcessor}
+ * Radix used by Java-properties Unicode escape digits.
+ */
+const HEXADECIMAL_RADIX = 16;
+
+/**
+ * Number of hexadecimal digits representing one UTF-16 code unit in a property escape.
+ */
+const UNICODE_ESCAPE_WIDTH = 4;
+
+/**
+ * Processes archive content shared by every template family.
  */
 export abstract class TemplateProcessor {
   /**
-   * Zip file.
-   *
-   * @protected
-   * @readonly
-   * @type {JSZip}
+   * Generated project archive.
    */
   protected readonly zip = new JSZip();
 
   /**
-   * Mod authors.
-   *
-   * @protected
-   * @readonly
-   * @type {string}
+   * Author list supplied by the form.
    */
   protected readonly authors: string;
 
   /**
-   * Mod description.
-   *
-   * @protected
-   * @readonly
-   * @type {string}
+   * Project description supplied by the form.
    */
   protected readonly description: string;
 
   /**
-   * Mod GitHub owner.
-   *
-   * @protected
-   * @readonly
-   * @type {string}
+   * GitHub owner of the generated project.
    */
   protected readonly githubUser: string;
 
   /**
-   * Whether the mod is not from Crystal Nest.
-   *
-   * @protected
-   * @readonly
-   * @type {boolean}
+   * Whether Crystal Nest-specific defaults must be replaced.
    */
   protected readonly othersMod: boolean;
 
   /**
-   * Whether to not include the configuration setup.
-   *
-   * @protected
-   * @readonly
-   * @type {boolean}
-   */
-  protected readonly noConfig: boolean;
-
-  /**
-   * Selected publishing platforms.
-   *
-   * @protected
-   * @readonly
-   * @type {Lowercase<Platform>[]}
+   * Selected publishing destinations.
    */
   protected readonly platforms: Lowercase<Platform>[];
 
   /**
-   * Template root path.
-   *
-   * @protected
-   * @readonly
-   * @type {string}
+   * Source archive root derived from the selected Minecraft branch.
    */
   protected readonly root: string;
 
   /**
-   * Mod loaders to exclude from the template.
-   *
-   * @protected
-   * @readonly
-   * @type {Lowercase<ModLoader>[]}
+   * Loaders omitted from the generated project.
    */
   protected readonly excludedLoaders: Lowercase<ModLoader>[];
 
   /**
-   * Publishing platforms to exclude from the template.
-   *
-   * @protected
-   * @readonly
-   * @type {Lowercase<Platform>[]}
+   * Publishing destinations omitted from the generated project.
    */
   protected readonly excludedPlatforms: Lowercase<Platform>[];
 
   /**
-   * Change for the root.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
-   */
-  protected readonly rootChange: Change;
-
-  /**
-   * Change for the mod ID.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the template's Java mod ID.
    */
   protected readonly modIdChange: Change;
 
   /**
-   * Change for the mod ID in kebab case.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the template's project slug.
    */
   protected readonly modIdKebabChange: Change;
 
   /**
-   * Change for the mod title.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the template's display name.
    */
   protected readonly modTitleChange: Change;
 
   /**
-   * Change for the Jave group.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the project's Java group, preserving dependency namespaces.
    */
   protected readonly groupChange: Change;
 
   /**
-   * Change for the Java group in file paths.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the project's group in source paths.
    */
   protected readonly groupPathChange: Change;
 
   /**
-   * Change for the configuration dependency.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
-   */
-  protected readonly fcapChange: Change;
-
-  /**
-   * Changes for the mod loaders.
-   *
-   * @protected
-   * @readonly
-   * @type {Change[]}
-   */
-  protected readonly loaderChanges: Change[];
-
-  /**
-   * Chosen license.
-   *
-   * @protected
-   * @readonly
-   * @type {License}
+   * Chosen project license.
    */
   protected readonly licenseId: License;
 
   /**
-   * Change for the license URL when building the JARs.
-   *
-   * @protected
-   * @readonly
-   * @type {Change}
+   * Replacement of the SPDX link for the custom Crystal Nest license.
    */
   protected readonly licenseChange: Change;
 
   /**
-   * @constructor
-   * @public
-   * @param {Store<State>} store$
-   * @param {Store<State>} licenseText
-   * @param {SkeletonForm} param0
-   * @param {SkeletonForm} param0.minecraftVersion
-   * @param {SkeletonForm} param0.loaders
-   * @param {SkeletonForm} param0.platforms
-   * @param {SkeletonForm} param0.group
-   * @param {SkeletonForm} param0.modId
-   * @param {SkeletonForm} param0.modIdKebab
-   * @param {SkeletonForm} param0.modTitle
-   * @param {SkeletonForm} param0.authors
-   * @param {SkeletonForm} param0.description
-   * @param {SkeletonForm} param0.githubUser
-   * @param {SkeletonForm} param0.includeConfig
-   * @param {SkeletonForm} param0.crystalNestMod
+   * Replacement of the archive root with the generated project folder.
    */
-  public constructor(
-    private readonly store$: Store<State>,
-    private readonly licenseText: string,
-    {minecraftVersion, loaders, platforms, group, modId, modIdKebab, modTitle, authors, description, githubUser, includeConfig, crystalNestMod, license}: SkeletonForm
-  ) {
-    // Constants.
-    this.authors = authors;
-    this.description = description;
-    this.githubUser = githubUser;
-    this.othersMod = !crystalNestMod;
-    this.noConfig = !includeConfig;
-    this.platforms = platforms;
-    this.licenseId = license;
+  protected readonly rootChange: Change;
+
+  /**
+   * @constructor
+   * @param {Store<State>} store$ progress dispatcher.
+   * @param {string} licenseText selected license text.
+   * @param {SkeletonForm} form project settings.
+   */
+  public constructor(private readonly store$: Store<State>, private readonly licenseText: string, protected readonly form: SkeletonForm) {
+    this.authors = form.authors;
+    this.description = form.description;
+    this.githubUser = form.githubUser;
+    this.othersMod = !form.crystalNestMod;
+    this.platforms = form.platforms;
+    this.licenseId = form.license;
+    this.root = `${TEMPLATE_MOD_ID_KEBAB}-${form.minecraftVersion}`;
+    this.rootChange = [this.root, form.modIdKebab];
+    this.excludedLoaders = TEMPLATE_LOADERS.filter(loader => !form.loaders.includes(loader));
+    this.excludedPlatforms = TEMPLATE_PLATFORMS.filter(platform => !form.platforms.includes(platform));
+    this.modIdChange = [TEMPLATE_MOD_ID, form.modId];
+    this.modIdKebabChange = [TEMPLATE_MOD_ID_KEBAB, form.modIdKebab];
+    this.modTitleChange = [TEMPLATE_MOD_TITLE, form.modTitle.trim()];
+    this.groupChange = [new RegExp(`${TEMPLATE_GROUP.replaceAll('.', '\\.')}(?=\\.${TEMPLATE_MOD_ID}\\b)`, 'g'), form.group, this.othersMod];
+    this.groupPathChange = [`${TEMPLATE_GROUP_PATH}/${TEMPLATE_MOD_ID}`, `${form.group.replaceAll('.', '/')}/${TEMPLATE_MOD_ID}`, this.othersMod];
     // eslint-disable-next-line no-template-curly-in-string
     this.licenseChange = ['https://spdx.org/licenses/${license}.html', 'https://github.com/Crystal-Nest/.github/blob/main/LICENSE', this.licenseId === 'CNCLv1'];
-    this.root = `${TEMPLATE_MOD_ID_KEBAB}-${minecraftVersion}`;
-    this.excludedLoaders = TEMPLATE_LOADERS.filter(loader => !loaders.includes(loader));
-    this.excludedPlatforms = TEMPLATE_PLATFORMS.filter(platform => !platforms.includes(platform));
-    // Common changes.
-    this.rootChange = [this.root, modIdKebab];
-    this.modIdChange = [TEMPLATE_MOD_ID, modId];
-    this.modIdKebabChange = [TEMPLATE_MOD_ID_KEBAB, modIdKebab];
-    this.modTitleChange = [TEMPLATE_MOD_TITLE, modTitle.trim()];
-    this.groupChange = [new RegExp(`${TEMPLATE_GROUP.replace('.', '\\.')}(?!\\.cobweb\\.)`, 'g'), group, this.othersMod];
-    this.groupPathChange = [TEMPLATE_GROUP_PATH, group.replaceAll('.', '/'), this.othersMod];
-    this.fcapChange = [/.*f(orge-)?c(onfig-)?a(pi-)?p(ort)?.*\n/g, '', this.noConfig];
-    this.loaderChanges = this.loadersChanges(this.excludedLoaders);
   }
 
   /**
-   * Processes the given zip template according to the provided properties.  
-   * 
-   * @public
-   * @param {JSZip} template
-   * @returns {JSZip}
+   * Generates a project while delegating family-specific files to the specialization.
+   *
+   * @param {JSZip} template source project archive.
+   * @returns {JSZip} generated archive with asynchronous entry contents.
    */
   public processTemplate(template: JSZip): JSZip {
-    const increment = 100 / Object.keys(template.files).length;
-    // eslint-disable-next-line complexity
+    const paths = Object.keys(template.files);
+    const increment = 100 / paths.length;
     template.forEach((path, entry) => {
-      if (!((this.othersMod && path.includes('.github')) || (this.noConfig && path.includes('config')) || this.excludedLoaders.some(loader => path.startsWith(`${this.root}/${loader}`)))) {
-        switch (true) {
-          case entry.dir:
-            // Directory: replace the name of the root dir, group, and modid.
-            this.zip.folder(this.process(path, this.rootChange, this.groupPathChange, this.modIdChange));
-            break;
-          case this.handle(entry, path): break;
-          case path === `${this.root}/common/build.gradle`:
-            // Common build.gradle: update configuration dependency and platform publishing tasks.
-            this.zip.file(
-              this.process(path, this.rootChange),
-              this.alter(entry, this.fcapChange, ...this.excludedPlatforms.map(platform => [new RegExp(`.*publish${platform}.*\\n`, 'i'), ''] as Change))
-            );
-            break;
-          case path.endsWith('gradle.properties'):
-            // File gradle.properties: replace Gradle properties.
-            this.zip.file(
-              this.process(path, this.rootChange),
-              this.alter(
-                entry,
-                this.groupChange,
-                [TEMPLATE_AUTHORS.join(', '), this.authors, this.othersMod],
-                this.modTitleChange,
-                this.modIdKebabChange,
-                this.modIdChange,
-                [/^description = .*$/m, `description = ${this.description.trim().replaceAll('\n', '\\n')}`],
-                [TEMPLATE_GITHUB_USER, this.githubUser, this.othersMod],
-                this.fcapChange,
-                [/.*curse.*\n/, '', this.excludedPlatforms.includes('curseforge')],
-                ['GPL-3.0-or-later', this.licenseId],
-                ...this.loaderChanges
-              )
-            );
-            break;
-          case path.endsWith('README.md'):
-            // File README.md: replace link references.
-            this.zip.file(
-              this.process(path, this.rootChange),
-              this.alter(
-                entry,
-                [TEMPLATE_BANNER_LINK, 'Banner link here...', this.othersMod],
-                [`github.com/${TEMPLATE_GITHUB_USER}`, `github.com/${this.githubUser}`, this.othersMod],
-                this.modTitleChange,
-                this.modIdKebabChange,
-                this.modIdChange,
-                [TEMPLATE_SUPPORT_SECTION, '**Support us**\n\nSocial links here...\n', this.othersMod],
-                [/-.*configuration.*\n/, '', !this.noConfig],
-                ['template for any mod', 'for any modpack or video'],
-                ['GNU General Public License v3.0', LICENSES[this.licenseId]],
-                ...this.loaderChanges
-              )
-            );
-            break;
-          case path.endsWith('settings.gradle'):
-            // File settings.gradle: update project name and loaders.
-            this.zip.file(this.process(path, this.rootChange), this.alter(entry, this.modIdKebabChange, ...this.loaderChanges));
-            break;
-          case path.endsWith('.jar') || path.endsWith('.png'):
-            // Data files: parse them as arraybuffer rather than string.
-            this.zip.file(this.process(path, this.rootChange, this.modIdChange, this.modIdKebabChange), entry.async('arraybuffer'));
-            break;
-          case path.endsWith('LICENSE'):
-            this.zip.file(this.process(path, this.rootChange, this.groupPathChange, this.modIdChange), this.licenseText);
-            break;
-          case path.endsWith('CommonModLoader.java'):
-            // File CommonModLoader.java: replace mod properties and optionally remove configuration references.
-            this.zip.file(
-              this.process(path, this.rootChange, this.groupPathChange, this.modIdChange),
-              this.alter(entry, [/\n.*config.*\n */gi, '', this.noConfig], this.groupChange, this.modIdChange)
-            );
-            break;
-          case path.endsWith('fabric.mod.json'):
-            // File fabric.mod.json: optionally remove FCAP dependency and change homepage link.
-            this.zip.file(
-              this.process(path, this.rootChange),
-              // eslint-disable-next-line no-template-curly-in-string
-              this.alter(entry, [/,\n.*fcap.*/, '', this.noConfig], [/https.*modrinth.*mod\//, this.platforms.includes('curseforge') ? 'www.curseforge.com/minecraft/mc-mods/' : 'github.com/${github_user}/', this.excludedPlatforms.includes('modrinth')])
-            );
-            break;
-          case path.endsWith('mods.toml'):
-            // Files mods.toml: optionally remove FCAP dependency and change updateJSON link.
-            this.zip.file(
-              this.process(path, this.rootChange),
-              this.alter(entry, [/.*(\n.*){3}fcap(.*\n){3}/, '', this.noConfig], ['updateJSONURL', '#updateJSONURL', this.excludedPlatforms.includes('modrinth')])
-            );
-            break;
-          default:
-            // All other files: replace mod properties.
-            this.zip.file(
-              this.process(path, this.rootChange, this.groupPathChange, this.groupChange, this.modIdChange),
-              this.alter(entry, this.groupChange, this.modIdKebabChange, this.modIdChange)
-            );
-            break;
-        }
+      if (this.includeFile(path)) {
+        this.processEntry(path, entry);
       }
       this.store$.dispatch(incrementProgress({increment}));
     });
     this.store$.dispatch(saveProgress({progress: 100}));
-    this.store$.dispatch(saveLoadingType({
-      loadingType: 'indeterminate',
-      force: true
-    }));
-    return this.removeEmptyDirs(this.zip);
+    this.store$.dispatch(saveLoadingType({loadingType: 'indeterminate',
+      force: true}));
+    for (const directory of this.zip.filter((_path, entry) => entry.dir).map(entry => entry.name).sort((a, b) => b.length - a.length)) {
+      if (!this.zip.filter((path, entry) => !entry.dir && path.startsWith(directory)).length) {
+        this.zip.remove(directory);
+      }
+    }
+    return this.zip;
   }
 
   /**
-   * Handle a specific case.
+   * Determines whether the entry belongs to a retained project component.
    *
-   * @protected
-   * @abstract
-   * @param {JSZipObject} entry file entry.
-   * @param {string} path entry path.
-   * @returns {boolean} whether the entry had been handled and no further processing should be done on it.
+   * @param {string} path source entry path.
+   * @returns {boolean} whether to include the entry.
+   */
+  protected includeFile(path: string): boolean {
+    const relative = path.slice(this.root.length + 1);
+    return !(this.othersMod && relative.startsWith('.github/')) && !this.excludedLoaders.some(loader => relative === loader || relative.startsWith(`${loader}/`));
+  }
+
+  /**
+   * Writes a file when the specialization owns its format.
+   *
+   * @param {JSZipObject} entry source entry.
+   * @param {string} path source path.
+   * @returns {boolean} whether the entry was handled.
    */
   protected abstract handle(entry: JSZipObject, path: string): boolean;
 
   /**
-   * Processes the content of the root build.gradle file excluding the given loaders and platforms.
+   * Writes UTF-8 text, including promised content that the ZIP library otherwise treats as binary.
    *
-   * @protected
-   * @abstract
-   * @param {string} content
-   * @param {Lowercase<ModLoader>[]} loaders loaders to exclude.
-   * @param {Lowercase<Platform>[]} platforms platforms to exclude.
-   * @returns {string}
+   * @param {string} path generated entry path.
+   * @param {string | Promise<string>} content generated text.
    */
-  protected abstract processBuildGradle(content: string, loaders: Lowercase<ModLoader>[], platforms: Lowercase<Platform>[]): string;
-
-  /**
-   * Returns the {@link Change changes} needed to exclude the given loaders from files.
-   *
-   * @protected
-   * @abstract
-   * @param {Lowercase<ModLoader>[]} loaders
-   * @returns {Change[]}
-   */
-  protected abstract loadersChanges(loaders: Lowercase<ModLoader>[]): Change[];
-
-  /**
-   * Alters the promise content with the given changes.
-   *
-   * @protected
-   * @async
-   * @param {JSZipObject} value
-   * @param {Change[]} changes
-   * @returns {Promise<string>}
-   */
-  protected async alter(value: JSZipObject, ...changes: Change[]): Promise<string> {
-    return this.process(await value.async('string'), ...changes);
+  protected writeText(path: string, content: string | Promise<string>): void {
+    this.zip.file(path, content, {binary: false});
   }
 
   /**
-   * Applies the given changes to the value.
+   * Reads normalized text and applies literal replacements.
    *
-   * @protected
-   * @param {string} value
-   * @param {Change[]} changes
-   * @returns {string}
+   * @param {JSZipObject} entry source entry.
+   * @param {Change[]} changes requested replacements.
+   * @returns {Promise<string>} transformed text.
+   */
+  protected async alter(entry: JSZipObject, ...changes: Change[]): Promise<string> {
+    return this.process(await entry.async('string'), ...changes);
+  }
+
+  /**
+   * Applies replacements without interpreting dollar signs in supplied values.
+   *
+   * @param {string} value source text.
+   * @param {Change[]} changes requested replacements.
+   * @returns {string} transformed text.
    */
   protected process(value: string, ...changes: Change[]): string {
-    return changes.reduce((content, [search, replace, flag]) => flag ?? true ? content[typeof search === 'string' ? 'replaceAll' : 'replace'](search, replace) : content, value);
-  }
-
-  /**
-   * Removes all empty directories.
-   *
-   * @private
-   * @param {JSZip} zip
-   * @returns {JSZip}
-   */
-  private removeEmptyDirs(zip: JSZip): JSZip {
-    for (const dir of zip.filter((path, entry) => entry.dir && this.isEmptyDir(zip.files, path)).map(entry => entry.name)) {
-      zip.remove(dir);
-    }
-    return zip;
-  }
-
-  /**
-   * Checks whether the given directory is empty.
-   *
-   * @private
-   * @param {Record<string, JSZipObject>} files
-   * @param {string} dir
-   * @returns {boolean}
-   */
-  private isEmptyDir(files: Record<string, JSZipObject>, dir: string) {
-    for (const [path, entry] of Object.entries(files)) {
-      if (entry.dir) {
-        if (path.startsWith(dir) && path !== dir) {
-          return false;
-        }
-      } else if (path.startsWith(dir)) {
-        return false;
+    return changes.reduce((text, [search, replacement, enabled]) => {
+      if (enabled ?? true) {
+        return typeof search === 'string' ? text.replaceAll(search, () => replacement) : text.replace(search, () => replacement);
       }
+      return text;
+    }, value.replaceAll('\r\n', '\n'));
+  }
+
+  /**
+   * Updates project properties while leaving dependency coordinates untouched.
+   *
+   * @param {string} text project properties.
+   * @returns {string} updated properties.
+   */
+  protected processProperties(text: string): string {
+    const values: [string, string][] = [
+      ['mod_title', this.form.modTitle.trim()],
+      ['mod_id', this.form.modId],
+      ['mod_id_kebab', this.form.modIdKebab],
+      ['description', this.description.trim()],
+      ['license', this.licenseId]
+    ];
+    if (this.othersMod) {
+      values.push(['group', this.form.group], ['mod_authors', this.authors], ['github_user', this.githubUser]);
     }
-    return true;
+    return this.process(text, ...values.map(([key, value]): Change => [new RegExp(`^${key}\\s*=.*$`, 'm'), `${key} = ${this.escapeProperty(value)}`]));
+  }
+
+  /**
+   * Updates README branding and removes setup instructions already completed or excluded by generation.
+   *
+   * @param {string} text template README.
+   * @returns {string} README retaining the template prose with the shared project substitutions and setup cleanup.
+   */
+  protected processReadme(text: string): string {
+    let value = this.process(text, ...this.readmeChanges());
+    value = value.replace(/^- Replace the template mod ID,.*\n/m, '');
+    if (this.othersMod) {
+      value = value.replace(/^!\[.*\]\(Banner link here\.\.\..*\)\n/, '<!-- Add your project banner here. -->\n');
+      value = value.replace(/\[Support us\]\(#[^)]*\)/, '[Support us](#support-us)');
+    }
+    if (!this.platforms.includes('curseforge')) {
+      value = value.replace(/^- Add your project CurseForge ID.*\n/m, '');
+    }
+    return value;
+  }
+
+  /**
+   * Supplies README replacements shared by the template families.
+   *
+   * @returns {Change[]} project branding and license replacements.
+   */
+  protected readmeChanges(): Change[] {
+    return [
+      [TEMPLATE_BANNER_LINK, 'Banner link here...', this.othersMod],
+      ['github.com/crystal-nest', `github.com/${this.githubUser}`, this.othersMod],
+      ['github.com/Crystal-Nest', `github.com/${this.githubUser}`, this.othersMod],
+      this.modTitleChange,
+      this.modIdKebabChange,
+      this.modIdChange,
+      [TEMPLATE_SUPPORT_SECTION, '## **Support us**\n\nSocial links here...\n', this.othersMod],
+      ['template for any mod', 'for any modpack or video'],
+      ['GNU General Public License v3.0', LICENSES[this.licenseId]]
+    ];
+  }
+
+  /**
+   * Selects an absolute homepage from the retained publishing destinations.
+   *
+   * @returns {string} homepage containing Gradle expansion placeholders.
+   */
+  protected homepage(): string {
+    // eslint-disable-next-line no-template-curly-in-string
+    const slug = '${mod_id_kebab}';
+    if (this.platforms.includes('modrinth')) {
+      return `https://modrinth.com/mod/${slug}`;
+    }
+    if (this.platforms.includes('curseforge')) {
+      return `https://www.curseforge.com/minecraft/mc-mods/${slug}`;
+    }
+    return `https://github.com/\${github_user}/${slug}`;
+  }
+
+  /**
+   * Escapes a value for a single Java-properties entry, including Unicode for the native ISO-8859-1 reader.
+   *
+   * @param {string} value supplied value.
+   * @returns {string} escaped property value.
+   */
+  private escapeProperty(value: string): string {
+    return value
+      .replaceAll('\\', '\\\\')
+      .replaceAll('\r', '\\r')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t')
+      .replaceAll(/[^\x20-\x7e]/g, character => `\\u${character.charCodeAt(0).toString(HEXADECIMAL_RADIX).padStart(UNICODE_ESCAPE_WIDTH, '0')}`);
+  }
+
+  /**
+   * Writes generic entries and delegates textual formats.
+   *
+   * @param {string} path source path.
+   * @param {JSZipObject} entry source entry.
+   */
+  private processEntry(path: string, entry: JSZipObject): void {
+    const output = this.process(path, this.rootChange, this.groupPathChange, this.groupChange, this.modIdChange, this.modIdKebabChange);
+    if (entry.dir) {
+      this.zip.folder(output);
+    } else if (/\.(?:jar|png|jpg|jpeg|gif|webp|ico|zip)$/i.test(path) || /\/gradlew(?:\.bat)?$/.test(path)) {
+      this.zip.file(output, entry.async('uint8array'), {date: entry.date,
+        unixPermissions: entry.unixPermissions});
+    } else if (path === `${this.root}/LICENSE`) {
+      this.writeText(output, this.licenseText);
+    } else if (!this.handle(entry, path)) {
+      this.writeText(output, this.alter(entry, this.groupChange, this.modIdKebabChange, this.modIdChange));
+    }
   }
 }

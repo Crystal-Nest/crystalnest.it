@@ -4,6 +4,18 @@ import {Platform} from './platform.type';
 import {ModLoader} from '../../../core/model/mod-loader.type';
 
 /**
+ * First Minecraft minor version (indicating a major version in the old format) supporting NeoForge.
+ *
+ * @type {20}
+ */
+export const NEOFORGE_TEMPLATE_MINOR = 20;
+/**
+ * First Minecraft major version using the configuration-free template family.
+ *
+ * @type {26}
+ */
+export const MODERN_TEMPLATE_MAJOR = 26;
+/**
  * Template java group.
  *
  * @type {"it.crystalnest"}
@@ -20,7 +32,7 @@ export const TEMPLATE_GROUP_PATH = 'it/crystalnest';
  *
  * @type {string[]}
  */
-export const TEMPLATE_AUTHORS = ['Crystal Spider', 'Moonstone Webber', 'Noir'];
+export const TEMPLATE_AUTHORS = ['Crystal Spider'];
 /**
  * Template mod ID.
  *
@@ -48,15 +60,15 @@ export const TEMPLATE_GITHUB_USER = 'crystal-nest';
 /**
  * Template readme banner link.
  *
- * @type {`https://raw.githubusercontent.com/${typeof TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${typeof TEMPLATE_MOD_ID}/banner.png`}
+ * @type {`https://raw.githubusercontent.com/${typeof TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${typeof TEMPLATE_MOD_ID_KEBAB}/banner.png`}
  */
-export const TEMPLATE_BANNER_LINK = `https://raw.githubusercontent.com/${TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${TEMPLATE_MOD_ID}/banner.png`;
+export const TEMPLATE_BANNER_LINK = `https://raw.githubusercontent.com/${TEMPLATE_GITHUB_USER}/mod-fancy-assets/main/${TEMPLATE_MOD_ID_KEBAB}/banner.png`;
 /**
  * Template readme support section.
  *
  * @type {RegExp}
  */
-export const TEMPLATE_SUPPORT_SECTION = /\*\*Support us\*\*(.|\n)*/;
+export const TEMPLATE_SUPPORT_SECTION = /^##[^\n]*\*\*Support (?:us|the Nest)\*\*[^\n]*\n[\s\S]*$/m;
 /**
  * Template supported mod loaders.
  *
